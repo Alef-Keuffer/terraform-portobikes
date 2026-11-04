@@ -84,7 +84,9 @@ S1/S2/S3 are placeholders. Assign people later.
 4. → **LIVE DEMO**
 5. Backup slide: the same code targeting AWS. Only the provider block changes.
 
-**Demo script** (driver types; S2 narrates). Rehearsed on 2026-11-04 with Terraform 1.17.1 and the Docker provider 4.6.0. The outputs below are real. Setup and full commands are in `demo/README.md`.
+**Demo script** (driver types; S2 narrates). Rehearsed on 2026-11-04 with Terraform 1.17.1 and the Docker provider 4.6.0. The outputs below are real. The driver runs `demo/demo.sh`, which types each command and waits for Enter, so nothing is typed by hand. Setup is in `demo/README.md`. The backup video is `demo/recording.mp4`.
+
+**Don't destroy here.** The server keeps running until the debate, where OpenTofu takes it over.
 
 | Step | Command | What the class sees (real output) | Line for S2 |
 |---|---|---|---|
@@ -94,7 +96,6 @@ S1/S2/S3 are placeholders. Assign people later.
 | 4 | `docker rm -f portobikes-web` | the page stops loading | "**Friday, 18:00.**" |
 | 5 | `terraform plan` | `# docker_container.web will be created`, `Plan: 1 to add` | "Terraform re-read reality, saw the server is gone, and wants to put it back. That's **drift** detection." |
 | 6 | `terraform apply` | `Resources: 1 added` in under a second → the page is back | "So, how long did it take you to rebuild yours?" |
-| 7 | `terraform destroy` | `Resources: 2 destroyed.` | |
 
 During step 1 or 2, S2 says one sentence: *"By the way, this Docker provider is maintained by one volunteer, not by HashiCorp. Remember that when we talk about who controls these tools."*
 
@@ -162,7 +163,8 @@ Demo-day risks:
    - One line on Crossplane: "the option nobody argued for."
 7. QR poll, vote #2. Show both results side by side.
 8. 📍 **Real anchors: what companies actually did.** Fidelity moved ~50k state files to OpenTofu (*"really is a drop-in"*). GitLab replaced its Terraform templates with OpenTofu ones.
-   - 🎬 **Live:** the OpenTofu speaker reruns the demo's `plan` with `tofu`. Skip this if it fails.
+   - 🎬 **Live** (the last part of `demo/demo.sh`): the OpenTofu speaker runs `tofu init`, then `tofu plan` against the server Terraform built. Result: `No changes. Your infrastructure matches the configuration.` Then `tofu destroy` cleans up. If it fails, play the end of `demo/recording.mp4`.
+   - Honest caveat for the "stay" speaker: `tofu init` rewrites the provider lock file, so the two tools can't share one without re-running `init`. "Drop-in, mostly."
 
 **Speaker notes**
 > No winner gets announced. The honest answer is "it depends on the company." The research found **no named company publicly saying it's staying on Terraform**. The "stay" speaker should argue from usage share (62% in Firefly's vendor survey) and features, and can say openly: "companies that stay don't write blog posts about it." Full argument briefs, with counter-arguments, are in the research file.
