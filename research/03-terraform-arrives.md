@@ -111,9 +111,9 @@ The trend for the talk: after 1.0, the features increasingly work *through the p
 **Drift scenario, step by step:**
 1. `terraform init` installs the provider and writes the lock file.
 2. `terraform apply` shows the plan (`2 to add`) and asks for `yes`. It pulls the image, then creates the container, in graph order.
-3. Edit one line, then `terraform plan` shows `1 to add, 0 to change, 1 to destroy` for a replacement **(!)** (expected counts; rehearse). Then `terraform apply`.
+3. Edit one line, then `terraform plan` shows `1 to add, 0 to change, 1 to destroy` for a replacement (**rehearsed 2026-11-04**: confirmed, with `upload { # forces replacement`). Then `terraform apply`.
 4. Run `docker rm -f portobikes-web` by hand. This is ClickOps-style drift.
-5. `terraform plan`. During refresh, the provider's `resourceDockerContainerRead` lists all containers. If the ID is not found, it runs `d.SetId("")`, with the comment "This container doesn't exist anymore" [P, source]. Terraform then drops the object from state and should report "Objects have changed outside of Terraform … has been deleted", then plan `+ create` **(!)** (exact wording from Terraform core not verified; rehearse).
+5. `terraform plan`. During refresh, the provider's `resourceDockerContainerRead` lists all containers. If the ID is not found, it runs `d.SetId("")`, with the comment "This container doesn't exist anymore" [P, source]. Terraform then drops the object from state and should report "Objects have changed outside of Terraform … has been deleted", then plan `+ create`. **Rehearsed 2026-11-04:** Terraform 1.17.1 printed no "Objects have changed outside of Terraform" note. The plan only says `# docker_container.web will be created`, `Plan: 1 to add, 0 to change, 0 to destroy.`
 6. `terraform apply` recreates the container. The image still exists, so only one resource is added.
 7. `terraform destroy` removes the container, then the image: `docker_image` deletes the local image on destroy unless `keep_locally = true` [P]. Set `keep_locally = true` to avoid re-pulling between rehearsals.
 

@@ -78,30 +78,32 @@ S1/S2/S3 are placeholders. Assign people later.
 **Key message:** You describe what should exist. `plan` shows exactly what will change before anything happens.
 
 **Slides**
-1. 2014: Terraform v0.1, with only AWS and DigitalOcean, chosen to prove that multiple **providers** could work. Downloads stayed flat for 18 months and the team considered shutting it down. In 2017, downloads doubled every month.
+1. 📍 **Real anchor: Terraform almost didn't make it.** In 2014, Terraform v0.1 supported only AWS and DigitalOcean, chosen to prove that multiple **providers** could work. Its creator, Mitchell Hashimoto: downloads were "mostly stagnant for the first 18 months", and the team talked about "maybe shutting down the project". In 2017, "downloads continued to double every single month".
 2. The core model as a diagram: code + **state** + reality → **plan** → **apply**.
 3. The symbols in a plan: `+` create, `~` change, `-` destroy, `-/+` replace.
 4. → **LIVE DEMO**
 5. Backup slide: the same code targeting AWS. Only the provider block changes.
 
-**Demo script** (driver types; S2 narrates)
+**Demo script** (driver types; S2 narrates). Rehearsed on 2026-11-04 with Terraform 1.17.1 and the Docker provider 4.6.0. The outputs below are real. Setup and full commands are in `demo/README.md`.
 
-| Step | Command | What the class sees | Line for S2 |
+| Step | Command | What the class sees (real output) | Line for S2 |
 |---|---|---|---|
-| 1 | `terraform init && terraform apply` | the nginx container serves the PortoBikes booking page | "This is our booking server, written down." |
-| 2 | edit the page text → `terraform plan` | `-/+ … forces replacement` | "Before touching anything, it tells us exactly what it will do, and this change means a replacement." |
-| 3 | `terraform apply` | the new page is live | |
-| 4 | `docker rm -f portobikes` | the page is gone | "**Friday, 18:00.**" |
-| 5 | `terraform plan` | `+ create`: it noticed | "Terraform noticed reality doesn't match the code. That's **drift**." |
-| 6 | `terraform apply` | back within seconds | "So, how long did it take you to rebuild yours?" |
-| 7 | `terraform destroy` | clean slate | |
+| 1 | `terraform apply` | `Plan: 2 to add` → the page at `localhost:8080`: "PortoBikes — 5 EUR per hour" | "This is our booking server, written down." |
+| 2 | change the price in `main.tf` → `terraform plan -out=tfplan` | `# docker_container.web must be replaced`, `upload { # forces replacement`, `Plan: 1 to add, 0 to change, 1 to destroy.` | "Before touching anything, it tells us exactly what it will do. And notice: this replaces the server. In production that means downtime, and we found out **before** pressing enter." |
+| 3 | `terraform apply tfplan` | `Resources: 1 added, 0 changed, 1 destroyed.` → the new price is live | "What we reviewed is exactly what runs. Nothing gets recalculated." |
+| 4 | `docker rm -f portobikes-web` | the page stops loading | "**Friday, 18:00.**" |
+| 5 | `terraform plan` | `# docker_container.web will be created`, `Plan: 1 to add` | "Terraform re-read reality, saw the server is gone, and wants to put it back. That's **drift** detection." |
+| 6 | `terraform apply` | `Resources: 1 added` in under a second → the page is back | "So, how long did it take you to rebuild yours?" |
+| 7 | `terraform destroy` | `Resources: 2 destroyed.` | |
 
-Demo-day risks (from `research/03`):
-- Changing the port or page text forces a **replacement**, not an in-place update. That's fine, just narrate it.
-- Run `init` beforehand on the demo laptop, commit `.terraform.lock.hcl`, and pre-pull `nginx:alpine`.
-- Set `keep_locally = true` on the image.
-- Don't use `-refresh=false` during the drift step.
-- Rehearse the exact plan output; it is marked **(!)** in the research.
+During step 1 or 2, S2 says one sentence: *"By the way, this Docker provider is maintained by one volunteer, not by HashiCorp. Remember that when we talk about who controls these tools."*
+
+Demo-day risks:
+- Terraform does **not** print "Objects have changed outside of Terraform" when a container is deleted. The plan just says `will be created`. Don't promise the class a warning message.
+- On Colima (and other non-default Docker setups), Terraform needs `DOCKER_HOST` set. See `demo/README.md`.
+- Run `terraform init` beforehand on the demo laptop, and pre-pull `nginx:alpine`. The provider version is pinned by the committed `.terraform.lock.hcl`.
+- Don't use `-refresh=false` or `-minimal-refresh`: both would hide the drift.
+- Port 8080 must be free.
 - Have a recorded backup ready.
 
 **Research:** `research/03-terraform-arrives.md`
