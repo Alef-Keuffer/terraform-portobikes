@@ -33,7 +33,11 @@ brew install pv            # for the typing effect
 ./demo.sh -d               # rehearsal: no typing effect
 ```
 
-`demo.sh` checks the tools, Docker and port 8080 first, and resets `main.tf` when it finishes. It pauses after turning point 3 ("Back to the slides…"): leave the window open and continue at the debate. Each step in the script names the part of `../outline.md` that its speaker narrates.
+`demo.sh` checks the tools, Docker and port 8080 first. It pauses after turning point 3 ("Back to the slides…"): leave the window open and continue at the debate. Each step in the script names the part of `../outline.md` that its speaker narrates.
+
+However the script ends (finished, Ctrl+C or an error), it destroys the demo containers and restores `main.tf` and the lock file, so the next run always starts clean.
+
+**Pressed Ctrl+C by accident during the talk?** Switch the projector to the slides, run `./demo.sh -d` and press Enter quickly until you're back where you were. Reaching the debate takes about 30 seconds.
 
 If anything fails live, play `recording.mp4`. To re-record it after changing the demo: `brew install vhs && vhs recording.tape`.
 
@@ -43,8 +47,8 @@ If anything fails live, play `recording.mp4`. To re-record it after changing the
 2. Change the price in `main.tf`, then `terraform plan -out=tfplan`: the container "must be replaced"
 3. `terraform apply tfplan`: refresh the page
 4. `docker rm -f portobikes-web`: the server "dies"
-5. `terraform plan`: Terraform notices and plans to recreate it
-6. `terraform apply`: the page is back
+5. `terraform plan -out=tfplan`: Terraform notices and plans to recreate it
+6. `terraform apply tfplan`: the page is back
 7. *(at the debate)* `tofu init`, `tofu plan`: "No changes"
 8. `tofu destroy`
 

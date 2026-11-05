@@ -94,8 +94,8 @@ S1/S2/S3 are placeholders. Assign people later.
 | 2 | change the price in `main.tf` → `terraform plan -out=tfplan` | `# docker_container.web must be replaced`, `upload { # forces replacement`, `Plan: 1 to add, 0 to change, 1 to destroy.` | "Before touching anything, it tells us exactly what it will do. And notice: this replaces the server. In production that means downtime, and we found out **before** pressing enter." |
 | 3 | `terraform apply tfplan` | `Resources: 1 added, 0 changed, 1 destroyed.` → the new price is live | "What we reviewed is exactly what runs. Nothing gets recalculated." |
 | 4 | `docker rm -f portobikes-web` | the page stops loading | "**Friday, 18:00.**" |
-| 5 | `terraform plan` | `# docker_container.web will be created`, `Plan: 1 to add` | "Terraform re-read reality, saw the server is gone, and wants to put it back. That's **drift** detection." |
-| 6 | `terraform apply` | `Resources: 1 added` in under a second → the page is back | "So, how long did it take you to rebuild yours?" |
+| 5 | `terraform plan -out=tfplan` | `# docker_container.web will be created`, `Plan: 1 to add` | "Terraform re-read reality, saw the server is gone, and wants to put it back. That's **drift** detection." |
+| 6 | `terraform apply tfplan` | `Resources: 1 added` in under a second, with no `yes` prompt (a saved plan was already reviewed) → the page is back | "So, how long did it take you to rebuild yours?" |
 
 During step 1 or 2, S2 says one sentence: *"By the way, this Docker provider is maintained by one volunteer, not by HashiCorp. Remember that when we talk about who controls these tools."*
 

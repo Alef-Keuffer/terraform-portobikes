@@ -57,10 +57,6 @@ Enter
 Sleep 2s
 Enter
 Sleep 6s
-Type "yes"
-Sleep 500ms
-Enter
-Sleep 8s
 Enter
 Sleep 2s
 Enter

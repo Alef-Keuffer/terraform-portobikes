@@ -21,9 +21,18 @@ for tool in terraform tofu docker; do
   command -v $tool >/dev/null || { echo "Missing: $tool (see README.md)"; exit 1; }
 done
 docker info >/dev/null 2>&1 || { echo "Docker isn't running (try: colima start)"; exit 1; }
-lsof -i :8080 >/dev/null 2>&1 && { echo "Port 8080 is busy"; exit 1; }
+lsof -nP -iTCP:8080 -sTCP:LISTEN >/dev/null 2>&1 && { echo "Port 8080 is busy"; exit 1; }
 docker image inspect nginx:alpine >/dev/null 2>&1 || docker pull -q nginx:alpine >/dev/null
 terraform init -input=false >/dev/null || exit 1
+
+# However the script ends (finished, Ctrl+C or an error), leave a clean slate.
+# Restore the files first: after `tofu init`, Terraform refuses to run until the lock file is restored.
+cleanup() {
+  git checkout -- main.tf .terraform.lock.hcl
+  rm -f tfplan
+  terraform destroy -auto-approve -input=false >/dev/null 2>&1
+}
+trap cleanup EXIT
 clear
 
 # === Turning point 3 ========================================================
@@ -46,8 +55,8 @@ pe "curl -s localhost:8080"
 say "Friday, 18:00. Someone deletes the server by hand."
 pe "docker rm -f portobikes-web"
 pe "curl -s localhost:8080 || echo 'Booking server is down!'"
-pe "terraform plan"
-pe "terraform apply"
+pe "terraform plan -out=tfplan"
+pe "terraform apply tfplan"
 pe "curl -s localhost:8080"
 
 say "Back to the slides: turning points 4 and 5. Leave this window open."
@@ -59,7 +68,3 @@ say "Same code, same server, different tool: OpenTofu"
 pe "tofu init"
 pe "tofu plan"
 pe "tofu destroy"
-
-# --- Reset for the next run (not shown) -----------------------------------
-git checkout -- main.tf .terraform.lock.hcl
-rm -f tfplan
