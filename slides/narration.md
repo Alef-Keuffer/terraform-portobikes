@@ -212,19 +212,131 @@ These are three separate, current exams. None replaced another. Each is valid fo
 So PortoBikes now has a team, a pipeline, policies, and maybe a certified engineer or two. Everything depends on one tool, and one vendor: HashiCorp. In 2023, HashiCorp changed the rules.
 
 ## 029-01
-So PortoBikes must decide. Stay on Terraform, move to OpenTofu, or rewrite in Pulumi? In the live talk, the room votes here, hears all three sides argued, and votes again.
+On the tenth of August 2023, HashiCorp changed the rules. From version one point six, the Terraform C L I is no longer open source. It moves from the Mozilla Public License to the Business Source License, the B S L. Everything up to one point five point seven stays open source.
+
+## 029-02
+PortoBikes' lawyer asks the obvious question: are we affected?
+
+## 029-03
+For PortoBikes: no. The license explicitly allows production use, including inside a commercial company. You can still write modules and build providers, and the providers themselves were never relicensed.
+What it forbids is offering Terraform to other people, hosted or embedded, in a product that competes with HashiCorp's paid versions. So who was affected? HashiCorp's competitors: companies like Spacelift, env zero and Scalr, which sell hosted Terraform runs.
+HashiCorp's reason: some vendors were profiting from the open-source project without contributing back.
+
+## 030-01
+The reaction was fast. Within days, a group of companies published a manifesto asking HashiCorp to go back to an open-source license. HashiCorp didn't answer, so they forked. On the twentieth of September, about six weeks after the change, the Linux Foundation announced OpenTofu.
+
+## 030-02
+And who backed it? The very companies the B S L was aimed at: Spacelift, env zero, Scalr, Harness, Gruntwork. More than a hundred and forty organisations pledged support.
+
+## 030-03
+It's a fork of the last open-source version, under the old M P L license. The first stable release came in January 2024.
+
+## 030-04
+Since April 2025 it's a C N C F Sandbox project, so no single company owns it. And it's no longer just a copy: it has its own features, like encrypting the state file, which often holds secrets in plain text. Terraform has features OpenTofu doesn't have either. They are drifting apart.
+
+## 031-01
+Then, in April 2024, IBM announced it was buying HashiCorp, for six point four billion dollars. The deal closed on the twenty-seventh of February 2025.
+
+## 031-02
+What changed since? The license is still the B S L: no move back to open source. C D K for Terraform, the tool for writing Terraform in programming languages, was archived in December 2025. The old free tier of H C P Terraform ended in March 2026; the new one is capped at five hundred resources.
+To be fair: Terraform itself is very much alive. Stacks, terraform query and Terraform Policy all shipped since, and HashiCorp still releases every few weeks.
+
+## 032-01
+And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting. Except for MongoDB, a fork appears.
+But look at the last column. Elastic added an open-source license back in 2024. Redis did the same in 2025, and admitted the change had hurt its relationship with the community.
+
+## 032-02
+HashiCorp, now IBM: not so far. Will it? Nobody knows.
+So: when a tool becomes the standard, who controls its license matters as much as its features.
 
 ## 033-01
+So PortoBikes must decide. Stay on Terraform, move to OpenTofu, or rewrite in Pulumi? In the live talk, the room votes here, hears all three sides argued, and votes again.
+
+## 035-02
+Side A: stay on Terraform. The license doesn't apply to a company using Terraform internally. It's the standard, with the biggest community and job market, and it has features only it offers, like Stacks and H C P Terraform. And switching always costs something.
+
+## 035-03
+Side B: move to OpenTofu. An open-source license, under neutral governance, so no single company can relicense it. Its own features, like state encryption. And real migrations at scale. The catch: once a team uses OpenTofu-only features, going back is hard.
+
+## 035-04
+Side C: rewrite in Pulumi. Real programming languages, with loops, types and unit tests. It can read HCL and use Terraform providers, so migration can be gradual. The catch: Pulumi is also a single, venture-funded vendor, and a rewrite is the most expensive option.
+
+## 035-05
+And Crossplane, which manages cloud resources from inside Kubernetes. It only makes sense if you already run everything on Kubernetes, and PortoBikes doesn't.
+There's no winner to announce. The honest answer is: it depends on the company.
+
+## 038-01
+So what did real companies do?
+
+## 038-02
+Fidelity Investments: more than fifty thousand state files on Terraform and OpenTofu. They made OpenTofu the default for new deployments. In their words, "a technical drop-in", and "changing the C L I in a pipeline is trivial". Their lesson: the code change is the easy part; versioning, C I C D and governance are the hard parts.
+
+## 038-03
+GitLab removed its Terraform C I C D templates and ships OpenTofu components instead, and the B S L is the stated reason.
+And the other side: we found no named company publicly announcing it's staying on Terraform. That proves nothing: a company that stays just says nothing.
+"Drop-in" is a big claim. Let's test it on our own server.
+
+## video recording.mp4 79.9 117.24
+Same code, same server, different tool: OpenTofu. tofu init downloads the same Docker provider, from its own registry.
+tofu plan: no changes. A different tool read Terraform's state, compared it with the real server, and has nothing to do. That's what drop-in means. And tofu destroy cleans up what Terraform built.
+Drop-in, mostly: init rewrote the lock file to OpenTofu's registry, so a team can't share one lock file between the two tools.
+
+## 041-01
+That was 2023 to 2025. Now 2026, and then ten years ahead.
+First, what grew up around Terraform, all because infrastructure became reviewable code. Policy as code: rules checked against every plan. GitOps, with Argo C D and Flux: a controller pulls the desired state from Git and keeps correcting drift. Drift detection: H C P Terraform re-plans on a schedule and tells you when reality has moved. Platform engineering: modules wrapped in a self-service portal like Backstage. Security scanners like Checkov and Trivy flag an open bucket before it exists. And Terraform Stacks deploys many modules together.
+Same idea, six times: the plan is the thing everyone checks.
+
+## 042-01
+And now the newest writer of infrastructure code: AI.
+The Terraform M C P server connects AI assistants to Terraform. It became generally available in June, and by default, the tools that create runs are off.
+Pulumi has its own agent, Neo, with human approvals built in.
+And H C P Terraform has been rebuilt with agents in mind: credentials issued per run, mandatory policy between plan and apply, and a new command line whose delete commands ask for interactive confirmation. In HashiCorp's words, that makes them "effectively inoperable by autonomous agents, by design".
+
+## 043-01
+Can AI write good Terraform? "Good" hides three questions. Valid: does terraform validate accept it? Correct: does it do what you asked? Secure: would a security scanner pass it?
+
+## 043-02
+Correct. IaC-Eval, a benchmark from NeurIPS 2024: four hundred and fifty-eight AWS scenarios, in Terraform. The best model they tested, GPT-4, got nineteen percent right on the first try. The same model scores eighty-six point six percent on a Python benchmark. To be fair, those were 2023 and 2024 models.
+
+## 043-03
+Secure. A 2026 security paper tested seven models. One wrote Terraform that passed validate seventy-seven point eight percent of the time, and passed the Checkov security scanner zero percent of the time. The authors' conclusion: validity and security are "largely independent".
+Valid is the easy part. The other two still need review.
+
+## 044-01
+Here's what happens when nobody reviews. February 2026. Alexey Grigorev, who runs DataTalks.Club, adds a second website to the same Terraform setup as his course platform.
+He starts from a new laptop, but the state file is still on the old one, so Terraform thinks nothing exists. He lets an AI coding agent run plan and apply without reading the plan, and duplicates start appearing. He asks the agent to clean up, and it unpacks an old state file, the one that describes production, over the current one. Then it proposes terraform destroy. He lets it run. The network, the database, the cluster and the load balancers are deleted, snapshots included. About twenty-four hours later, AWS support restores the database.
+This is not "AI went rogue". In his own post-mortem, Grigorev blames his setup: "I over-relied on the AI agent to run Terraform commands." Remote state and a reviewed plan would have stopped it.
+It's Knight Capital again: a missing double-check, now with an AI agent in the operator's seat.
+
+## 045-01
+HashiCorp puts it in one line: "The agent can propose. It should not decide."
+The agent writes the code and produces the plan. A human, plus the policies, decides whether it runs. And it's exactly what Grigorev changed afterwards: he reviews every plan, and runs anything destructive himself.
+
+## 046-01
+So where does that leave PortoBikes in 2036? These are our bets: opinion, not fact.
+
+## 046-02
+One: people review HCL far more than they write it, and agents write most of it. Agents can only take over the writing because infrastructure became code that can be read.
+
+## 046-03
+Two: no agent will be allowed to apply a destroy without a human approving the plan. That's HashiCorp's line, and DataTalks.Club is the price of skipping it.
+
+## 046-04
+Three: most plan review becomes machine to machine. Policies and scanners check every plan before a person sees it, because, as you just saw, valid is not secure.
+[pause]
+Put together: the AI writes, the machines check, and a human still decides what can't be undone.
+
+## 047-01
 At the start, we asked how long it would take you to rebuild that server.
 
-## 033-02
+## 047-02
 terraform apply.
 
-## 033-03
+## 047-03
 You just watched it take seconds.
 
-## 034-01
+## 048-01
 Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
 
-## 035-01
+## 049-01
 Everything you saw, the demo included, is in this repo. Scan the code and run it yourself. Thank you for watching.
