@@ -12,6 +12,8 @@ The debate vote runs on a live copy of the deck on Netlify, with a free AnyCable
 3. Redeploy. The variables are read at build time, so a deploy started before you added them has no poll.
 4. Check the functions and the round trip: `npx -p create-slide-quiz verify-slide-quiz --site https://<site>.netlify.app --ws-url wss://<app>/cable`
 
+Before the first deploy, and after changing the poll code, run `npm run rehearse:poll` in `slides/` (needs `brew install anycable-go`). It runs AnyCable, the vote functions and three scripted phones on the laptop, and checks that every tab shows the same counts.
+
 ## Phone test (by 2026-11-24)
 
 Use at least two phones with Wi-Fi off, on mobile data. The laptop can be on any network.

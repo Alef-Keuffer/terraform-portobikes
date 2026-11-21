@@ -20,6 +20,7 @@ npm run dev       # edit with live reload; presenter mode with notes at /present
 npm run build     # static site in slides/dist
 npm run preview   # serve the build, works offline
 npm run check:offline   # after a build: fails if any slide fetches from the network (needs Google Chrome)
+npm run rehearse:poll   # rehearses the live poll locally with scripted phones (needs anycable-go, Chrome, internet)
 ```
 
 To present, build and preview on the laptop beforehand, then open the presenter view (`/presenter`) for the speaker notes. Nothing is fetched from the network, so it runs with Wi-Fi off. CI checks this on every pull request that touches `slides/`.

@@ -6,7 +6,8 @@
     "dev": "slidev --open",
     "build": "slidev build",
     "preview": "vite preview --outDir dist",
-    "check:offline": "node check-offline.mjs"
+    "check:offline": "node check-offline.mjs",
+    "rehearse:poll": "node rehearse-poll.mjs"
   },
   "dependencies": {
     "@anycable/serverless-js": "^0.2.3",
