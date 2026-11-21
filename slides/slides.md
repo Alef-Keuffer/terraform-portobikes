@@ -61,6 +61,8 @@ terraform {
 }
 ```
 
+<p class="text-sm opacity-80">Terraform docs: state locking; S3 backend; 1.11 changelog.</p>
+
 <!--
 [S2]
 
@@ -150,7 +152,7 @@ So where does all this sit in a DevOps pipeline? Here's the whole picture.
 
 [top row] A commit goes into a pull request. CI runs terraform init and terraform plan. And then, in yellow, the step this whole talk is about: a human reviews the plan.
 
-[bottom row] After approval, the change is merged, CI applies the *saved* plan, exactly what was reviewed, and only then does the application get deployed onto that infrastructure.
+[bottom row] After approval, the change is merged, CI applies a *saved* plan, so what runs is exactly what that plan showed, and only then does the application get deployed onto that infrastructure.
 
 This isn't our invention. HashiCorp's own guide to running Terraform in automation lists the same four steps: initialize, produce a plan, "have a human operator review that plan", apply.
 
@@ -208,18 +210,18 @@ The reviewer is no longer only a colleague. It's a colleague plus a set of rules
 
 <p class="pt-6">HashiCorp: <b>4,856 customers</b>, <b>946</b> of them paying over $100k a year</p>
 
-<p class="text-sm opacity-80">Pricing page as of 2026-11-04. Customers: all HashiCorp products, quarter ending Oct 2024, the last report before IBM.</p>
+<p class="text-sm opacity-80">Pricing page as of 2026-11-04; the two higher tiers are sold through sales, so these may be list prices. Customers: all HashiCorp products, quarter ending Oct 2024, the last report before IBM.</p>
 
 <!--
 [S2]
 
 So who pays for all this? The Terraform CLI is free. Even HCP Terraform, HashiCorp's hosted service, has a free tier, and it already includes remote runs and single sign-on.
 
-Teams pay for the things that only matter once you're a team. More applies running at the same time. Drift detection, which tells you when someone clicked something in the console in production. Audit logs, for when someone asks who changed what. HCP Terraform charges per managed resource per month: ten cents, forty-seven cents or ninety-nine cents, depending on the tier. Those are the prices on HashiCorp's pricing page as of the fourth of November.
+Teams pay for the things that only matter once you're a team. More applies running at the same time. Drift detection, which tells you when someone clicked something in the console in production. Audit logs, for when someone asks who changed what. HCP Terraform charges per managed resource per month: ten cents, forty-seven cents or ninety-nine cents, depending on the tier. Those are the prices on HashiCorp's pricing page as of the fourth of November; the two higher tiers go through sales, so treat them as list prices.
 
 So people don't pay for the CLI. They pay for running it as a team: coordination and governance. And those needs grow with headcount, which is exactly what happened to PortoBikes.
 
-For scale: in its last quarterly report before IBM bought it, HashiCorp had 4,856 customers, and 946 of them paid more than a hundred thousand dollars a year. That's all HashiCorp products, not Terraform alone.
+For scale: in its last quarterly report before IBM bought it, HashiCorp had 4,856 customers, and 946 of them paid more than a hundred thousand dollars a year. That's all HashiCorp products, not just HCP Terraform.
 -->
 
 ---
@@ -229,7 +231,7 @@ For scale: in its last quarterly report before IBM bought it, HashiCorp had 4,85
 <div class="grid grid-cols-2 gap-8 pt-6 text-center">
   <div>
     <div class="text-6xl font-bold">18.4%</div>
-    <div class="pt-2">of developers use Terraform</div>
+    <div class="pt-2">of respondents use Terraform</div>
     <div class="text-sm opacity-80">Stack Overflow survey 2025</div>
   </div>
   <div>
@@ -239,14 +241,14 @@ For scale: in its last quarterly report before IBM bought it, HashiCorp had 4,85
   </div>
 </div>
 
-<p class="pt-10">What they ask for is the team workflow: remote state, modules, CI/CD, policy.</p>
+<p class="pt-10">Our reading, not a measured fact: they ask for the team workflow (remote state, modules, CI/CD, policy).</p>
 
 <!--
 [S2]
 
 This is also why so many job ads ask for Terraform.
 
-In the 2025 Stack Overflow survey, 18.4% of developers said they had done extensive work with Terraform in the past year. That measures usage, not jobs.
+In the 2025 Stack Overflow survey, 18.4% of respondents said they had done extensive work with Terraform in the past year. That measures usage, not jobs.
 
 For jobs: in the UK, IT Jobs Watch counted about 2,300 permanent job ads mentioning Terraform in the six months to the twenty-first of November, with a median salary of seventy-five thousand pounds.
 
@@ -267,6 +269,8 @@ And what do those jobs actually want? Our reading, not a measured fact: not some
 
 <p class="pt-4">Three separate, current exams. Each is valid for 2 years; only Advanced includes a free retake.</p>
 
+<p class="text-sm opacity-80">HashiCorp's official certification pages (checked 2026-11-04, names re-checked 2026-11-21).</p>
+
 <!--
 [S2]
 
@@ -282,7 +286,7 @@ These are three separate, current exams. None replaced another. Each is valid fo
 
 [pause]
 
-So PortoBikes now has a team, a pipeline, policies, and maybe a certified engineer or two. Everything depends on one tool from one company. In 2023, that company changed the rules.
+So PortoBikes now has a team, a pipeline, policies, and maybe a certified engineer or two. Everything depends on one tool, and one vendor: HashiCorp. In 2023, HashiCorp changed the rules.
 -->
 
 ---
