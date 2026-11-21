@@ -32,7 +32,7 @@ jobs:
           cache: npm
           cache-dependency-path: slides/package-lock.json
       - run: npm ci
-      - run: npx slidev build --base /${{ github.event.repository.name }}/
+      - run: npm run build -- --base /${{ github.event.repository.name }}/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

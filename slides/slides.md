@@ -5,6 +5,8 @@ info: DCN (DevOps e Computação na Nuvem), FEUP MESW. The PortoBikes story, fro
 # The deck must run offline on the presenter's laptop, so don't fetch web fonts.
 fonts:
   provider: none
+# The seriph cover layout otherwise loads a remote Unsplash image.
+background: ''
 transition: fade
 ---
 

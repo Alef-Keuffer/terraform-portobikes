@@ -9,7 +9,7 @@ The talk follows PortoBikes, an invented startup, from ClickOps to AI-written in
 - `outline.md`: the talk, one turning point at a time, with speaker notes
 - `docs/adr/`: decisions and the reasons behind them
 - `demo/`: the live demo, scripted, with a backup recording
-- `slides/`: the deck, in [Slidev](https://sli.dev). Published to GitHub Pages on every push to `main`: https://alef-keuffer.github.io/terraform-portobikes/
+- `slides/`: the deck, in [Slidev](https://sli.dev). Published to GitHub Pages on every push to `main` that touches `slides/`: https://alef-keuffer.github.io/terraform-portobikes/
 
 ## Slides
 
