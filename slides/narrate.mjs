@@ -1,16 +1,22 @@
 // Builds an AI-narrated video of the deck: slide frames + narration.md read aloud by VoiceStudio.
 // Usage: npm run narrate   (needs ffmpeg and VoiceStudio's backend on VOICESTUDIO_URL)
-//   NARRATE_TTS=say npm run narrate     quick preview with the macOS voice instead
-//   NARRATE_VOICE / NARRATE_INSTRUCT    VoiceStudio voice profile, and OmniVoice voice-design tags
+//   npm run narrate:preview             slides 1–3 only (about a minute) → .narration/preview.mp4, to check the voice
+//   NARRATE_TTS=say npm run narrate     quick draft with the macOS voice instead
+//   NARRATE_MODEL / NARRATE_VOICE       VoiceStudio engine and voice; default: Kokoro preset am_michael
+//                                       fallback narrator: NARRATE_MODEL=omnivoice NARRATE_VOICE='Demo Voice'
+//   NARRATE_INSTRUCT                    style instruction (OmniVoice: voice-design tags)
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 const WORK = '.narration'
-const OUT = join(WORK, 'presentation.mp4')
+const PREVIEW = process.argv.includes('--preview')
+const OUT = join(WORK, PREVIEW ? 'preview.mp4' : 'presentation.mp4')
 const URL = process.env.VOICESTUDIO_URL ?? 'http://127.0.0.1:3900'
-const VOICE = process.env.NARRATE_VOICE ?? 'default'
+// One narrator for every shot: a Kokoro preset is always the same speaker (OmniVoice's 'default' is not).
+const MODEL = process.env.NARRATE_MODEL ?? 'mlx-audio'
+const VOICE = process.env.NARRATE_VOICE ?? 'am_michael'
 const INSTRUCT = process.env.NARRATE_INSTRUCT
 const GAP = 0.6 // seconds of silence after each shot
 const PAUSE = 1 // seconds per [pause]
@@ -27,16 +33,17 @@ const shots = readFileSync('narration.md', 'utf8')
   .replace(/^<!--[\s\S]*?-->/, '')
   .split(/^## /m).slice(1)
   .map(b => { const [head, ...rest] = b.split('\n'); return { head: head.trim(), text: rest.join(' ').trim() } })
+  .filter(({ head }) => !PREVIEW || /^00[1-3]-/.test(head))
 
 mkdirSync(join(WORK, 'tts'), { recursive: true })
-run('npx', ['slidev', 'export', '--format', 'png', '--with-clicks', '--output', join(WORK, 'frames'), '--timeout', '60000'])
+run('npx', ['slidev', 'export', '--format', 'png', '--with-clicks', '--output', join(WORK, 'frames'), '--timeout', '60000', ...(PREVIEW ? ['--range', '1-3'] : [])])
 for (const { head } of shots) {
   if (!head.startsWith('video ') && !existsSync(join(WORK, 'frames', `${head}.png`))) throw new Error(`narration.md: no exported frame ${head}.png`)
 }
 
 async function tts(text) {
   // Cached by content, so re-running after editing one block only re-voices that block.
-  const file = join(WORK, 'tts', createHash('sha1').update([process.env.NARRATE_TTS, VOICE, INSTRUCT, text].join('\0')).digest('hex') + '.wav')
+  const file = join(WORK, 'tts', createHash('sha1').update([process.env.NARRATE_TTS, MODEL, VOICE, INSTRUCT, text].join('\0')).digest('hex') + '.wav')
   if (existsSync(file)) return file
   if (process.env.NARRATE_TTS === 'say') {
     run('say', ['-o', file, '--data-format=LEI16@24000', text])
@@ -48,7 +55,7 @@ async function tts(text) {
       const res = await fetch(`${URL}/v1/audio/speech`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ model: 'omnivoice', input: text, voice: VOICE, instructions: INSTRUCT, response_format: 'wav' }),
+        body: JSON.stringify({ model: MODEL, input: text, voice: VOICE, instructions: INSTRUCT, response_format: 'wav' }),
       })
       if (!res.ok) throw new Error(`VoiceStudio ${res.status}: ${await res.text()}`)
       writeFileSync(file, Buffer.from(await res.arrayBuffer()))
