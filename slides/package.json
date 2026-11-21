@@ -8,6 +8,7 @@
     "preview": "vite preview --outDir dist",
     "check:offline": "node check-offline.mjs",
     "rehearse:poll": "node rehearse-poll.mjs",
+    "narrate": "node narrate.mjs",
     "timing": "node timing.mjs"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "playwright": "^1.65.1"
+    "playwright": "^1.65.1",
+    "playwright-chromium": "^1.65.1"
   }
 }

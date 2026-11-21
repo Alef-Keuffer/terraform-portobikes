@@ -18,6 +18,10 @@ _Avoid_: "act", "chapter", "phase"
 A real, sourced event or company shown alongside a turning point to prove that the invented problem actually happens.
 _Avoid_: "example" (doesn't say whether it's invented or real)
 
+**Narrated video**:
+A pre-rendered, standalone version of the talk: the slides with a single AI narrator reading a script adapted from the speaker notes, for people who weren't in the room.
+_Avoid_: "recording" (that's the backup recording of the live demo), "presentation" (that's the live talk)
+
 ### The practice
 
 **Infrastructure as Code (IaC)**:
