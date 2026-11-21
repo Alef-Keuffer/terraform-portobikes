@@ -83,7 +83,7 @@ Alef opens, closes, drives the demo and argues for OpenTofu in the debate. Danie
 2. The core model as a diagram: code + **state** + reality → **plan** → **apply**.
 3. The symbols in a plan: `+` create, `~` change, `-` destroy, `-/+` replace.
 4. → **LIVE DEMO**
-5. Backup slide: the same code targeting AWS. Only the provider block changes.
+5. Backup slide: the same code targeting AWS. The provider and its resource types change; the workflow stays the same.
 6. *(added 2026-11-21)* **How Terraform changed, 0.x → 1.x:** 0.1 (July 2014): AWS and DigitalOcean only. 0.12 (May 2019): HCL2, a real expression language. 0.13 (Aug 2020): providers installed from the Registry. 1.0 (June 2021): a compatibility promise, so upgrades within 1.x keep your configuration working. 1.5 (2023): import through a plan. 1.6 (Oct 2023): `terraform test`, and the first BSL release. 1.11 (2025): S3 locks state itself. 1.17 (Oct 2026): Terraform Policy is generally available. After 1.0, new features increasingly work *through the plan*. Answers "how did it change since it started?" from `ideas.md`. Source: `research/03-terraform-arrives.md` Part 3.
 
 **Demo script** (driver types; S2 narrates). Rehearsed on 2026-11-04 with Terraform 1.17.1 and the Docker provider 4.6.0. The outputs below are real. The driver runs `demo/demo.sh`, which types each command and waits for Enter, so nothing is typed by hand. Setup is in `demo/README.md`. The backup video is `demo/recording.mp4`.
