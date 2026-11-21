@@ -1,4 +1,4 @@
-Output recording.mp4
+Output ../slides/public/recording.mp4
 Set FontSize 16
 Set Width 1400
 Set Height 850
