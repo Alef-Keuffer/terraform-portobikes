@@ -8,12 +8,12 @@
 
 | # | Section | Speaker | ~min |
 |---|---|---|---|
-| 0 | Opening hook: Friday 18:00 | Alef | 2 |
+| 0 | Opening hook: Friday 18:00 | Alef | 1.5 |
 | 1 | ClickOps (2015) | S1 | 5.5 |
 | 2 | Scripts and configuration management (2016) | S1 | 4 |
-| 3 | Terraform arrives, plus the live demo | S2 + Alef (demo driver) | 13 |
+| 3 | Terraform arrives, plus the live demo | S2 + Alef (demo driver) | 7.5 |
 | 4 | The team grows (2019–2022) | S2 | 7.5 |
-| 5 | The plot twist: the license change, plus the debate (2023–2025) | S3 + all speakers | 8 |
+| 5 | The plot twist: the license change, plus the debate (2023–2025) | S3 + all speakers | 14 |
 | 6 | The future (2026 → 2036) | S3 | 6 |
 | 7 | Closing: Friday 18:00, again | Alef | 1 |
 
