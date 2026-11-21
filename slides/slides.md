@@ -69,7 +69,7 @@ We call this ClickOps: managing infrastructure by hand, through web consoles. Th
 <v-clicks>
 
 - **Snowflake servers**: hand-tuned until each one is unique.<br>*"Good for a ski resort, bad for a data center."*
-- **Drift**: staging and production quietly stop matching
+- **Staging and production** quietly stop matching
 - **Only one person** knows how to rebuild it
 
 </v-clicks>
@@ -79,9 +79,9 @@ We call this ClickOps: managing infrastructure by hand, through web consoles. Th
 <!--
 [S1] Here's how it goes wrong.
 
-[click] First, snowflake servers. That's Martin Fowler's name, from 2012, for a server hand-tuned through command lines, GUI screens and text-file edits until it's unique. His line: good for a ski resort, bad for a data center. You can't reproduce it, and soon nobody understands it well enough to change it.
+[click] First, snowflake servers. That's Martin Fowler's name, from 2012, for a server hand-tuned through command lines, GUI screens and text-file edits until it's unique. His line: good for a ski resort, bad for a data center.
 
-[click] Second, staging and production drift apart. Someone fixes production at midnight and forgets staging. Now a bug shows up in one and not the other, and nobody can say which difference caused it.
+[click] Second, staging and production quietly stop matching. Someone fixes production at midnight and forgets staging. Now a bug shows up in one and not the other, and nobody can say which difference caused it.
 
 [click] And third, the one we opened with: only one person knows how to rebuild it. When that machine dies on a Friday at 18:00, the only documentation is the dead machine.
 -->
@@ -150,7 +150,7 @@ A deployment to **8 servers**. One was missed. Nobody double-checked.
 
 [click] In about 45 minutes it sent four million executions into the market. Knight lost 460 million dollars.
 
-[click] And that's not a blogger's opinion. The SEC investigated, and its order says: a written procedure requiring a simple double-check of the deployment could have identified that a server had been missed.
+[click] The SEC investigated, and its order says: a written procedure requiring a simple double-check of the deployment could have identified that a server had been missed.
 
 One person did it, and nobody checked. Remember that word: review. It's the thread of this talk.
 -->
@@ -174,7 +174,7 @@ An engineer follows a playbook and types a command by hand.
 <!--
 [S1] A second one, from AWS itself. February 2017. An S3 engineer, following an established playbook, runs a command to remove a few servers from a billing system. One input is typed wrong, and a much larger set of servers is removed, including the ones holding S3's index of where every object lives.
 
-[click] S3 in us-east-1 was down for about four hours. AWS couldn't even update its own status page, because the status page depended on S3.
+[click] S3 in us-east-1 was down for about four hours.
 
 To be fair: this wasn't console clicking. It was a command typed by hand from a written procedure, so call it manual operations. The lesson is the same. A human typing values into a live system, with no preview of what's about to happen.
 -->
@@ -225,7 +225,7 @@ The idea that matters for us: if infrastructure is a file, a change is a diff. A
 
 [click] Consistency. Microsoft: the same environment every time it deploys.
 
-[click] An audit trail. Every change can be logged, so you know who changed what, and why.
+[click] An audit trail. Every change can be logged, so you know who changed what.
 
 [click] Safe rollback. At worst, you go back to the last working configuration.
 
