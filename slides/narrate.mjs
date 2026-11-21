@@ -4,6 +4,7 @@
 //   NARRATE_TTS=say npm run narrate     quick draft with the macOS voice instead
 //   NARRATE_MODEL / NARRATE_VOICE       VoiceStudio engine and voice; default: Kokoro preset am_michael
 //                                       fallback narrator: NARRATE_MODEL=omnivoice NARRATE_VOICE='Demo Voice'
+//   NARRATE_SPEED                       speaking rate, 0.25–4 (default 1.1)
 //   NARRATE_INSTRUCT                    style instruction (OmniVoice: voice-design tags)
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -17,6 +18,7 @@ const URL = process.env.VOICESTUDIO_URL ?? 'http://127.0.0.1:3900'
 // One narrator for every shot: a Kokoro preset is always the same speaker (OmniVoice's 'default' is not).
 const MODEL = process.env.NARRATE_MODEL ?? 'mlx-audio' // VoiceStudio's engine that runs Kokoro
 const VOICE = process.env.NARRATE_VOICE ?? 'am_michael'
+const SPEED = Number(process.env.NARRATE_SPEED ?? 1.1)
 const INSTRUCT = process.env.NARRATE_INSTRUCT
 const GAP = 0.6 // seconds of silence after each shot
 const PAUSE = 1 // seconds per [pause]
@@ -43,7 +45,7 @@ for (const { head } of shots) {
 
 async function tts(text) {
   // Cached by content, so re-running after editing one block only re-voices that block.
-  const file = join(WORK, 'tts', createHash('sha1').update([process.env.NARRATE_TTS, MODEL, VOICE, INSTRUCT, text].join('\0')).digest('hex') + '.wav')
+  const file = join(WORK, 'tts', createHash('sha1').update([process.env.NARRATE_TTS, MODEL, VOICE, SPEED, INSTRUCT, text].join('\0')).digest('hex') + '.wav')
   if (existsSync(file)) return file
   if (process.env.NARRATE_TTS === 'say') {
     run('say', ['-o', file, '--data-format=LEI16@24000', text])
@@ -55,7 +57,7 @@ async function tts(text) {
       const res = await fetch(`${URL}/v1/audio/speech`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ model: MODEL, input: text, voice: VOICE, instructions: INSTRUCT, response_format: 'wav' }),
+        body: JSON.stringify({ model: MODEL, input: text, voice: VOICE, speed: SPEED, instructions: INSTRUCT, response_format: 'wav' }),
       })
       if (!res.ok) throw new Error(`VoiceStudio ${res.status}: ${await res.text()}`)
       writeFileSync(file, Buffer.from(await res.arrayBuffer()))
