@@ -19,8 +19,9 @@ npm install
 npm run dev       # edit with live reload; presenter mode with notes at /presenter
 npm run build     # static site in slides/dist
 npm run preview   # serve the build, works offline
+npm run check:offline   # after a build: fails if any slide fetches from the network (needs Google Chrome)
 ```
 
-To present, build and preview on the laptop beforehand, then open the presenter view (`/presenter`) for the speaker notes. Nothing is fetched from the network, so it runs with Wi-Fi off.
+To present, build and preview on the laptop beforehand, then open the presenter view (`/presenter`) for the speaker notes. Nothing is fetched from the network, so it runs with Wi-Fi off. CI checks this on every pull request that touches `slides/`.
 
 Claims marked **(!)** in the research have not been verified yet. Check them before they go on a slide.

@@ -1,26 +1,19 @@
-name: Deploy slides to GitHub Pages
+name: Slides
 
 on:
   push:
     branches: [main]
     paths: ['slides/**', '.github/workflows/slides.yml']
+  pull_request:
+    paths: ['slides/**', '.github/workflows/slides.yml']
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     defaults:
       run:
         working-directory: slides
@@ -32,10 +25,27 @@ jobs:
           cache: npm
           cache-dependency-path: slides/package-lock.json
       - run: npm ci
+      # The local build is what the presenter runs with Wi-Fi off; ubuntu-latest ships Chrome.
+      - run: npm run build
+      - run: npm run check:offline
       - run: npm run build -- --base /${{ github.event.repository.name }}/
-      - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: slides/dist
+
+  deploy:
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4

@@ -7,6 +7,7 @@ fonts:
   provider: none
 # The seriph cover layout otherwise loads a remote Unsplash image.
 background: ''
+favicon: /favicon.svg
 transition: fade
 ---
 
