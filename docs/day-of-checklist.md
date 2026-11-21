@@ -6,6 +6,8 @@ The talk is on 2026-11-25. This page covers the timing, the speaker slots still 
 
 `npm run timing` in `slides/` counts the spoken words in the speaker notes, section by section, at 130 words per minute. Stage directions in `[brackets]`, instructions to the speaker, "Detail if there's time" lines and the backup slides don't count. The demo, the debate and the votes are timed by the clock instead. Each section's budget comes from its `<!-- ===== … ~N min ===== -->` marker in `slides.md`.
 
+As of 2026-11-21 (`npm run timing` always has the current numbers):
+
 | Section | Speaker | Budget | Words | Estimate |
 |---|---|---|---|---|
 | Opening hook | Alef | 1.5 | 76 | 0.6 |
@@ -18,7 +20,7 @@ The talk is on 2026-11-25. This page covers the timing, the speaker slots still 
 | Closing | Alef | 1 | 66 | 0.5 |
 | **Whole talk** | | **47** | | **45.0** |
 
-The budgets were moved, not grown: the `tofu` demo and the debate live in section 5, so it gets the minutes section 3 doesn't need. Sections 4 and 6 were over and were trimmed in the notes. No slide was cut. Clicks, hand-offs and nerves aren't in the estimate. That's what the 2 minutes left over, and the 13-minute buffer before Q&A, are for.
+The budgets were moved, not grown: the `tofu` demo and the debate live in section 5, so it gets the minutes section 3 doesn't need. Sections 4 and 6 were over and were trimmed in the notes to within half a minute of their budget. No slide was cut. Clicks, hand-offs and nerves aren't in the estimate. That's what the 2 minutes left over, and the 13-minute buffer before Q&A, are for.
 
 If your read-through runs long, trim your notes, not the slides, and run `npm run timing` again.
 
@@ -53,7 +55,7 @@ git diff --word-diff   # check that only speaker labels changed
 - [ ] Re-check the IT Jobs Watch number in turning point 4 (it's a rolling window).
 - [ ] On the laptop that will present: follow `demo/README.md` setup, then run `./demo.sh` start to finish, including the `tofu` part. Then run it once more with `-d`.
 - [ ] On that laptop: `npm run build && npm run check:offline && npm run preview` in `slides/`. Play both backup recordings (after "LIVE DEMO" and after "LIVE: `tofu plan`") with Wi-Fi off.
-- [ ] Poll: the phone test and the Mentimeter backup in `poll-checklist.md`, including one show-of-hands rehearsal with the timekeeper. Switch the group ID to `talk` afterwards.
+- [ ] Poll: the phone test and the Mentimeter backup in `poll-checklist.md`, including one show-of-hands rehearsal with the timekeeper. Afterwards, switch the group ID to `talk` and redeploy.
 - [ ] Make the timekeeper cards: "2 min left", "wrap up", "30 seconds", "stop".
 
 ## 25 November
@@ -64,7 +66,7 @@ Set up in this order, before people arrive:
 2. [ ] Colima started, `DOCKER_HOST` set, port 8080 free. `./demo.sh` open in a terminal, waiting at its first step.
 3. [ ] Deck: open the Netlify copy in a **new browser window**, the projected view and `/presenter` in two tabs. Check vote #1 shows no votes.
 4. [ ] Backup deck: `npm run preview` running locally, in case the Wi-Fi or Netlify goes down.
-5. [ ] Backup video: on the "Backup: the demo, recorded" slide, check the video loads. Then go back to the title slide.
+5. [ ] Backup videos: on "Backup: the demo, recorded" and "Backup: `tofu plan`, recorded", check each video loads. Then go back to the title slide.
 6. [ ] Mentimeter open in another window, results reset.
 7. [ ] Timekeeper has the cards, a pen and paper for the show of hands.
 

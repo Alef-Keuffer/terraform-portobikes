@@ -34,6 +34,9 @@ for (const s of slides) {
     .filter(Boolean).length
 }
 
+const unmatched = Object.keys(FIXED).filter((t) => !slides.some((s) => s.title === t))
+if (unmatched.length) throw new Error(`FIXED titles not in slides.md (renamed?): ${unmatched.join(', ')}`)
+
 const fmt = (n) => n.toFixed(1).padStart(5)
 let total = 0, budget = 0
 console.log(`At ${WPM} words per minute:\n`)
