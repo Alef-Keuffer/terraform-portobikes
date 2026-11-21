@@ -78,7 +78,8 @@ Key: [P] = primary source, [S] = secondary source, (!) = uncertain or contested.
   - Cielo: provisioning time down 90%
   - TMX Group: up to 75% faster
   - Skechers: one week to two hours
-- **Move to OpenTofu:** Fidelity Investments (Oct 2025): 50k+ state files, 4M+ resources on Terraform/OpenTofu, OpenTofu now the default for new deployments. Quotes: "a technical drop-in"; "Changing the CLI in a pipeline is trivial." (The earlier quote "OpenTofu really is a drop-in" is not on the page; corrected 2026-11-21.) [P] https://opentofu.org/blog/fidelity-investment-migration/ (!) Other named adopters are unverified.
+- **Move to OpenTofu:** Fidelity Investments (Oct 2025): 50k+ state files, 4M+ resources on Terraform/OpenTofu, OpenTofu now the default for new deployments. Quotes: "a technical drop-in"; "Changing the CLI in a pipeline is trivial." (The earlier quote "OpenTofu really is a drop-in" is not on the page; corrected 2026-11-21.) [P] https://opentofu.org/blog/fidelity-investment-migration/
+- Other named OpenTofu adopters (not Fidelity) are unverified (!).
 - **AI agent incident:** DataTalks.Club, 2026-02-26.
   - A Claude Code agent restored an outdated state file and ran `terraform destroy`.
   - This deleted the VPC, ECS, RDS and the snapshots. AWS support recovered the database.

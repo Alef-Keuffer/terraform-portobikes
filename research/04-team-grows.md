@@ -46,7 +46,7 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
   - On `pull_request`, upload a *speculative* configuration (a run that "cannot modify infrastructure"), run a plan, and comment the add/change/destroy counts with a link.
   - On push to `main` (i.e. merge), create a run and apply it if HCP Terraform reports it confirmable.
   - It uses the `hashicorp/tfc-workflows-github` actions.
-  - Teams without HCP Terraform typically use `hashicorp/setup-terraform` and run the CLI in the runner with a remote backend **(!)** (not covered by the fetched tutorial).
+  - The outline names GitHub Actions only as the CI runner in this tutorial's setup. Running the plain CLI in Actions without HCP Terraform (`hashicorp/setup-terraform`) is not covered by the tutorial and is not used in the outline.
 - **HCP Terraform VCS-driven runs** [P]:
   - "HCP Terraform also performs a speculative plan when a pull request is opened against that branch". It posts a link and re-plans when the PR updates. There are no speculative plans for PRs from forks.
   - Merging to the linked branch queues a run. By default, "run plans require confirmation before HCP Terraform will apply them", unless auto-apply is enabled.
@@ -106,7 +106,7 @@ The 109% retention means existing customers spent ~9% more year on year. That is
 Use only the evidence in `research-notes.md`:
 - **Stack Overflow 2025:** 18.4% of all respondents and 19.7% of professional developers did "extensive development work" with Terraform in the past year [P, re-read 2026-11-21 from the "cloud platforms … infrastructure as code solutions" question]. The 17.8% / 18.7% in `research-notes.md` don't match the published page; use 18.4%. This measures *usage*.
 - **IT Jobs Watch UK** [P, re-read 2026-11-21; the page is a rolling 6-month window, so the numbers move every week]: 2,337 permanent ads citing Terraform in the 6 months to 2026-11-21 (1,380 a year earlier), median salary £75,000. But as a share of all UK permanent jobs it fell from 2.59% to 1.90%. The raw count rose while the share fell, so "up X% year on year" is misleading on its own. Outline: quote the count and the median salary with the date, and drop the growth figure. (The earlier 2,390 / +49% / 3.19%→1.96% were an earlier window.)
-- **Firefly 2025** (vendor survey) **(!)**.
+- **Firefly 2025** (vendor survey, secondary; resolved 2026-11-21, see `05-license-change.md` debate brief 2).
 - **Do not use** "88% of DevOps ads".
 
 The defensible explanation ties back to this turning point. Job ads ask for the *team workflow*: remote state, modules, CI/CD, policy. That is the same content HashiCorp's own Professional exam objectives list (below). This is an inference, not a measured fact.

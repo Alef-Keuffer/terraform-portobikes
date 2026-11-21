@@ -39,7 +39,7 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 - Symbols: `+` create, `~` update in place, `-` destroy, `-/+` replace.
 - `-refresh=false` skips refresh and therefore "causes Terraform to ignore external changes" (no drift detection).
 - `-refresh-only` builds a plan that only updates state to match reality, with no infrastructure changes. Use it to *accept* drift instead of reverting it.
-- **New in 1.17.0 (2026-10-21):** `-minimal-refresh` refreshes only resources that have proposed changes [P, changelog]. Do **not** use it in the demo: it hides the drift. Tested 2026-11-21 with Terraform 1.17.2 and the demo config: after `docker rm -f` on the container, `plan -minimal-refresh` and `plan -refresh=false` both print "No changes", while a plain `plan` shows `will be created`.
+- **New in 1.17.0 (2026-10-21):** `-minimal-refresh` refreshes only resources that have proposed changes [P, changelog]. Do **not** use it in the demo: it hides the drift [P: own test]. Tested 2026-11-21 with Terraform 1.17.2 and the demo config: after `docker rm -f` on the container, `plan -minimal-refresh` and `plan -refresh=false` both print "No changes", while a plain `plan` shows `will be created`.
 - `-detailed-exitcode` returns 0 for no changes, 1 for an error, 2 for changes present. This is what CI pipelines and drift-checking cron jobs build on.
 
 **Why `plan` matters as a reviewable artifact.**
