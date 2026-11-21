@@ -1,0 +1,7 @@
+# The live copy of the deck, with the debate poll. It exists only for the talk: see docs/poll-checklist.md.
+# Set VITE_SLIDE_QUIZ_WS_URL, ANYCABLE_BROADCAST_URL and ANYCABLE_BROADCAST_KEY in the Netlify dashboard.
+[build]
+  base = "slides"
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"

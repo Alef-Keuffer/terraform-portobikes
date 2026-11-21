@@ -24,4 +24,6 @@ npm run check:offline   # after a build: fails if any slide fetches from the net
 
 To present, build and preview on the laptop beforehand, then open the presenter view (`/presenter`) for the speaker notes. Nothing is fetched from the network, so it runs with Wi-Fi off. CI checks this on every pull request that touches `slides/`.
 
+The debate poll is live only on a temporary Netlify copy, built with `VITE_SLIDE_QUIZ_WS_URL` set. Everywhere else its slides show the question as plain text. Setup, the phone test and teardown are in `docs/poll-checklist.md`.
+
 Claims marked **(!)** in the research have not been verified yet. Check them before they go on a slide.

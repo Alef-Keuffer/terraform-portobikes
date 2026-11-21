@@ -8,6 +8,9 @@ fonts:
 # The seriph cover layout otherwise loads a remote Unsplash image.
 background: ''
 favicon: /favicon.svg
+# Live debate poll; it stays offline unless the build sets VITE_SLIDE_QUIZ_WS_URL (see layouts/poll.vue).
+addons:
+  - slidev-addon-slide-quiz
 transition: fade
 ---
 
@@ -40,6 +43,95 @@ So: how long would it take *you* to rebuild it?
 [pause]
 
 Hold that number. We'll come back to it.
+-->
+
+---
+layout: poll
+poll: vote
+quizId: debate-1
+question: PortoBikes must decide. What should it do?
+options:
+  - { label: A, text: Stay on Terraform }
+  - { label: B, text: Move to OpenTofu }
+  - { label: C, text: Rewrite in Pulumi }
+---
+
+# PortoBikes must decide. What should it do?
+
+- A. Stay on Terraform
+- B. Move to OpenTofu
+- C. Rewrite in Pulumi
+
+<p class="opacity-70">Show of hands.</p>
+
+<!--
+Vote #1, before the debate. Scan the QR code and vote. [wait for the bars to settle]
+
+If the QR code fails: timekeeper, count a show of hands for A, B and C and note the numbers.
+-->
+
+---
+layout: poll
+poll: results
+quizId: debate-1
+question: "Vote #1: before the debate"
+options:
+  - { label: A, text: Stay on Terraform }
+  - { label: B, text: Move to OpenTofu }
+  - { label: C, text: Rewrite in Pulumi }
+---
+
+# Vote #1: before the debate
+
+<p class="opacity-70">The live results from the talk will be shown here.</p>
+
+<!--
+Here's where the room stands before anyone argues. Hold on to it.
+-->
+
+---
+layout: poll
+poll: vote
+quizId: debate-2
+question: You've heard all three sides. What should PortoBikes do?
+options:
+  - { label: A, text: Stay on Terraform }
+  - { label: B, text: Move to OpenTofu }
+  - { label: C, text: Rewrite in Pulumi }
+---
+
+# You've heard all three sides. What should PortoBikes do?
+
+- A. Stay on Terraform
+- B. Move to OpenTofu
+- C. Rewrite in Pulumi
+
+<p class="opacity-70">Show of hands.</p>
+
+<!--
+Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
+
+If the QR code fails: timekeeper, count a show of hands again.
+-->
+
+---
+layout: poll
+poll: compare
+columns:
+  - { quizId: debate-1, title: Before the debate }
+  - { quizId: debate-2, title: After the debate }
+options:
+  - { label: A, text: Stay on Terraform }
+  - { label: B, text: Move to OpenTofu }
+  - { label: C, text: Rewrite in Pulumi }
+---
+
+# Before and after the debate
+
+<p class="opacity-70">The live results from the talk will be shown here.</p>
+
+<!--
+Before and after, side by side. We're not announcing a winner: this is what the room thinks.
 -->
 
 ---

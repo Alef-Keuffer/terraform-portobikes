@@ -9,8 +9,11 @@
     "check:offline": "node check-offline.mjs"
   },
   "dependencies": {
+    "@anycable/serverless-js": "^0.2.3",
     "@slidev/cli": "^53.1.0",
     "@slidev/theme-seriph": "^0.25.0",
+    "slidev-addon-slide-quiz": "^0.5.2",
+    "valibot": "^1.5.0",
     "vue": "^3.5.0"
   },
   "devDependencies": {
