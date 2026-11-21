@@ -41,7 +41,7 @@ These are the same scanners the AI-quality papers use as their yardstick (Part 2
 ## Part 2: AI + IaC today
 
 **Terraform MCP server.** It connects AI assistants (Claude Code, GitHub Copilot, IBM Bob) to Terraform through the Model Context Protocol [P].
-- **History:** open-sourced in May 2025; GA for HCP Terraform and Terraform Enterprise on 2026-06-11 (already in research-notes).
+- **History:** open-sourced in May 2025; GA for HCP Terraform and Terraform Enterprise announced 2026-06-11 (research-notes). The GitHub release v1.0.0 is dated 2026-06-09 [P: GitHub releases, checked 2026-11-21].
 - **Capabilities:** searching the private registry for approved modules, answering questions about workspaces, and explaining plans in natural language.
 - **Safety model:** it uses the user's existing authentication and authorisation, and credentials never reach the model [P].
 - **Default:** the setting that enables run-creating tools, `ENABLE_TF_OPERATIONS`, defaults to `false` [P, GitHub README]. One blog says the flag gates `create_run` (applying against a workspace); this is unconfirmed in the README **(!)** [S].
@@ -54,10 +54,10 @@ These are the same scanners the AI-quality papers use as their yardstick (Part 2
 **Pulumi Neo.** An AI "platform engineer" agent, launched in public preview 2025-09-16. It works within Pulumi's RBAC, policy as code and audit trail, with "human-in-the-loop approvals and controls" [P]. Later updates added operating modes, CLI access via `pulumi neo`, and Claude Sonnet 4.5 as the default model [P]. Pulumi also says Neo can turn policy violations into fix pull requests [P].
 
 **Research on AI-generated IaC quality.**
-- **IaC-Eval (NeurIPS 2024):** 458 human-curated AWS scenarios. "Contemporary LLMs perform poorly": GPT-4 reached 19.36% pass@1, against 86.6% on a Python benchmark [P]. Sources disagree on whether the benchmark targets Terraform or CloudFormation; the abstract names neither **(!)**.
+- **IaC-Eval (NeurIPS 2024):** 458 human-curated AWS scenarios, written in **Terraform** (the paper: Terraform "is the focus of our paper"). "Contemporary LLMs perform poorly": the top-performing model, GPT-4, reached 19.36% pass@1, against 86.6% on EvalPlus, a Python benchmark. Next were WizardCoder-33B (8.93%) and GPT-3.5 (7.99%); the worst, CodeLlama-7B instruct, scored 1.97% [P: full paper, re-checked 2026-11-21]. Only 2023–24 models were tested.
 - **Error taxonomy (arXiv 2512.14792):** few-shot and chain-of-thought prompting helped little; retrieval-augmented generation helped most [P].
 - **GenSIaC (arXiv 2511.12385):** LLMs often miss security misconfigurations. Fine-tuning on a security dataset raised F1 from 0.303 to 0.858 [P].
-- **SBSeg 2026 (Vargas, Mansilha, Kreutz, UNIPAMPA):** seven models on 17 AWS Terraform scenarios, scanned with Checkov and Trivy. Validity and security are "largely independent": WizardCoder-33B had a 77.8% validate rate and 0% Checkov compliance, while Claude Opus 4 with detailed security prompts reached 23.1% Checkov and 92.5% Trivy pass rates. "Prompt engineering alone is insufficient" [P].
+- **SBSeg 2026, "Security-First Evaluation of Text-to-Terraform" (Vargas, Mansilha, Kreutz, UNIPAMPA; full text re-checked 2026-11-21):** seven models on 17 AWS Terraform scenarios, scanned with Checkov and Trivy. Validity and security are "largely independent": WizardCoder-33B had a 77.8% validate rate and 0% Checkov compliance, while Claude Opus 4 with detailed security prompts reached 23.1% Checkov and 92.5% Trivy pass rates. "Prompt engineering alone is insufficient" [P].
 - **Earlier study:** only 8.4% security compliance even after several rounds of iterative correction [S, cited by the SBSeg paper and Sonar].
 - **Sector context:** the 2025 DORA report found 90% of developers use AI at work, but 30% have little or no trust in AI-generated code [P].
 
@@ -79,7 +79,7 @@ The primary source is Alexey Grigorev's own post-mortem, "How I Dropped Our Prod
    - Agents no longer execute commands. He reviews every plan and runs destructive actions himself.
    - Considering separate AWS accounts for development and production.
 
-The AI Incident Database lists this as Incident 1424, dated 2026-02-26 [P]. Media coverage framed it as "Claude Code wiped 2.5 years of data" [S], but the data was recovered after about 24 hours.
+The AI Incident Database lists this as Incident 1424, dated 2026-02-26 [P]. Media coverage framed it as "Claude Code wiped 2.5 years of data" [S], but the data was recovered: "Exactly 24 hours after the database had been deleted, AWS restored the snapshot" [P: post-mortem, re-checked 2026-11-21]. Say "about 24 hours".
 
 **Gruntwork's counter-view.** In a post of 2026-04-15, Oreoluwa Agunbiade (Gruntwork) argues "That's not exactly what happened." He calls it "a story about brittle state handling, ad hoc execution, broad permissions", not AI acting on its own. AI only increases the number and speed of changes. "The solution is not to remove AI": instead, run AI-proposed changes through CI, with remote state, separate plan and apply steps, scoped credentials, reviewed destructive changes and protected critical resources. "The operating model is what determined the blast radius." [S, vendor opinion]
 
@@ -92,15 +92,15 @@ The AI Incident Database lists this as Incident 1424, dated 2026-02-26 [P]. Medi
 Everything in this section is **opinion or forecast**, not fact.
 
 **Analyst forecasts**
-- **Gartner, *Hype Cycle for AI in IT Operations* (July 2026), as reported by The Register** [S] **(!)** (the Gartner document itself is paywalled; not checked):
+- **Gartner, *Hype Cycle for AI in IT Operations* (July 2026), as reported by The Register** [S, second-hand: the Gartner document is paywalled. Use only as labelled opinion, citing The Register]:
   - 60% of enterprises will deploy agentic AI in infrastructure operations by 2029, up from fewer than 10%.
   - By 2029, only 20% of AI-suggested actions will pass through human approval, down from 80% in 2025.
   - By 2028, 40% of organisations running agentic I&O at scale will suffer a business-critical disruption.
   - By 2030, 25% of I&O work will be done by AI alone and 75% by humans augmented with AI.
-- **Gartner, *Market Guide for AI Assistants for IaC* (27 March 2026), as quoted by the vendor Itential** [S] **(!)**:
+- **Gartner, *Market Guide for AI Assistants for IaC* (27 March 2026), as quoted by the vendor Itential** [S, second-hand via a vendor; paywalled. Use only as labelled opinion]:
   - 70% of enterprises will use agentic AI for IaC generation and drift remediation by 2029, up from under 1% in 2026.
   - 90% of infrastructure and operations (I&O) organisations will have context-aware AI assistants in their IaC workflows by 2029, up from 5%.
-- **Gartner, platform teams:** the "80% of software engineering organisations by 2026" forecast (2022). Useful for checking how the 2026 forecasts turned out; quoted second-hand **(!)** [S].
+- **Gartner, platform teams:** the "80% of software engineering organisations by 2026" forecast, from *Top Strategic Technology Trends for 2023* (Oct 2022), as quoted on a HashiCorp-hosted page [S, second-hand]. Gartner's public platform-engineering article does not carry the figure, and some sources say it covered only *large* organisations (re-checked 2026-11-21). Use only as "Gartner forecast, reported".
 
 **Contrarian views**
 - **"IaC has gone as far as it can go":** Adam Jacob (co-founder of Chef) built System Initiative on the argument that "We've taken that idea [declarative configuration] as far as it can go", modelling infrastructure as a live digital twin instead. In August 2025 it relaunched as an "AI-native" platform where engineers and agents edit the model directly [S]. Its 2026 status is not checked **(!)**.
@@ -150,7 +150,10 @@ Questions the group could take a position on:
 - IaC-Eval: https://proceedings.neurips.cc/paper_files/paper/2024/hash/f26b29298ae8acd94bd7e839688e329b-Abstract.html
 - Error taxonomy: https://arxiv.org/abs/2512.14792
 - GenSIaC: https://arxiv.org/abs/2511.12385
-- SBSeg 2026: https://sol.sbc.org.br/index.php/sbseg/article/view/44342
+- SBSeg 2026: https://sol.sbc.org.br/index.php/sbseg/article/view/44342 (PDF: https://sol.sbc.org.br/index.php/sbseg/article/download/44342/44105/)
+- IaC-Eval full paper: https://par.nsf.gov/servlets/purl/10646999
+- Terraform MCP server releases: https://github.com/hashicorp/terraform-mcp-server/releases
+- Gartner 2023 trends, as hosted by HashiCorp: https://www.hashicorp.com/on-demand/gartner-top-trends-for-2023-platform-engineering
 - Sonar (8.4% figure): https://www.sonarsource.com/blog/ai-is-writing-more-of-your-terraform/
 - Gartner via The Register: https://www.theregister.com/a/5274712
 - Gartner via Itential: https://www.itential.com/resource/analyst-report/gartner-market-guide-for-ai-assistants-for-infrastructure-as-code/

@@ -82,7 +82,7 @@ Key: **(!)** = uncertain, or our own interpretation. Don't state it as fact with
 
 ### 13. How is this different from Ansible?
 **Answer:** They solve neighbouring problems. Ansible is agentless, connects over SSH and runs YAML playbooks of ordered tasks. Its main strength is *configuration management*: keeping existing machines in a consistent state (packages, files, services). Terraform focuses on *provisioning*: creating and wiring the infrastructure itself. It also keeps state and shows a plan of the whole change before doing anything. A common combination is Terraform to create the VMs, then Ansible to configure what runs on them.
-**Go deeper:** The overlap is real: Ansible has cloud modules and Red Hat also describes provisioning with playbooks. Without a state file, Ansible doesn't know about a resource you *removed* from the playbook, while Terraform plans to destroy it. Per the Stack Overflow 2025 survey (research-notes), Terraform was used by 17.8% of respondents and Ansible by 11.7%.
+**Go deeper:** The overlap is real: Ansible has cloud modules and Red Hat also describes provisioning with playbooks. Without a state file, Ansible doesn't know about a resource you *removed* from the playbook, while Terraform plans to destroy it. Per the Stack Overflow 2025 survey (research-notes), Terraform was used by 18.4% of respondents and Ansible by 11.7%.
 **Sources:** https://www.redhat.com/en/topics/automation/learning-ansible-tutorial ; https://survey.stackoverflow.co/2025/technology
 
 ### 14. Why not just use the cloud provider's own tool (CloudFormation, Bicep)?

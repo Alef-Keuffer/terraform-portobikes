@@ -39,7 +39,7 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 - Symbols: `+` create, `~` update in place, `-` destroy, `-/+` replace.
 - `-refresh=false` skips refresh and therefore "causes Terraform to ignore external changes" (no drift detection).
 - `-refresh-only` builds a plan that only updates state to match reality, with no infrastructure changes. Use it to *accept* drift instead of reverting it.
-- **New in 1.17.0 (2026-10-21):** `-minimal-refresh` refreshes only resources that have proposed changes [P, changelog]. Do **not** use it in the demo: it would likely hide the drift **(!)** (inference from the description, not tested).
+- **New in 1.17.0 (2026-10-21):** `-minimal-refresh` refreshes only resources that have proposed changes [P, changelog]. Do **not** use it in the demo: it hides the drift [P: own test]. Tested 2026-11-21 with Terraform 1.17.2 and the demo config: after `docker rm -f` on the container, `plan -minimal-refresh` and `plan -refresh=false` both print "No changes", while a plain `plan` shows `will be created`.
 - `-detailed-exitcode` returns 0 for no changes, 1 for an error, 2 for changes present. This is what CI pipelines and drift-checking cron jobs build on.
 
 **Why `plan` matters as a reviewable artifact.**
@@ -50,13 +50,15 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 
 ## Part 3: From 0.x to 1.x (all dates from HashiCorp blog or `CHANGELOG.md`)
 
+Every `.0` date below was re-checked on 2026-11-21 against the GitHub release dates (`api.github.com/repos/hashicorp/terraform/releases/tags/v<version>`); all match. 0.15.0 was released on 2021-04-14.
+
 | Version | Date | What changed | Why it matters for the story |
 |---|---|---|---|
-| 0.1.0 | 2014-07-28 | First release: AWS + DigitalOcean | multi-cloud bet |
-| 0.12 | 2019-05-22 | New language: first-class expressions (no `"${…}"` everywhere), rich types, `for` expressions, dynamic blocks, structural plan rendering, better errors [P] | HCL becomes a real language. The blog post doesn't use the label "HCL2"; that name comes from HCL library v2 **(!)** |
+| 0.1.0 | 2014-07-28 | First release: AWS + DigitalOcean [P, `v0.1.0` tag commit "Set version 0.1", 2014-07-28] | multi-cloud bet |
+| 0.12 | 2019-05-22 | New language: first-class expressions (no `"${…}"` everywhere), rich types, `for` expressions, dynamic blocks, structural plan rendering, better errors [P] | HCL becomes a real language. Calling it "HCL2" is accurate: v0.12.0's `go.mod` depends on `github.com/hashicorp/hcl2`, whose README describes "HCL2, which merged the original HCL and HIL languages into this single new language" [P, checked 2026-11-21] |
 | 0.13 | 2020-08-10 | `required_providers` with source addresses (`namespace/name`). `init` auto-installs partner/community providers from the Registry. `count`/`for_each`/`depends_on` on modules [P] | why `source = "kreuzwerker/docker"` works in the demo |
-| 0.15 | 2021 | experimental testing feature, later replaced by `terraform test` [P, 1.6 blog] | |
-| 1.0 | 2021-06-08 | GA. 100M downloads and 5,000+ add-ons at launch [P, notes] | maturity signal |
+| 0.15 | 2021-04-14 | experimental testing feature, later replaced by `terraform test` [P, 1.6 blog] | |
+| 1.0 | 2021-06-08 | GA. 100M downloads and 5,000+ add-ons at launch [P, notes]. The v1.x compatibility promises: "From Terraform v1.0 onwards the Terraform team promises to preserve backward compatibility for most of the Terraform language and the primary CLI workflow, until the next major release" [P] | maturity signal: upgrades within 1.x stop breaking configurations |
 | 1.5 | 2023-06-12 | `import` blocks: "Import is now a plannable operation, not a state operation". `plan -generate-config-out=…` writes HCL for imported resources. `check` blocks: assertions run at the end of plan/apply and warn without halting [P] | ClickOps leftovers can be adopted *through a reviewed plan* |
 | 1.5.7 | 2023 | last MPL 2.0 release [P, notes] | BSL boundary (turning point 5) |
 | 1.6 | 2023-10-04 | `terraform test`: `.tftest.hcl` files, `run` blocks, assertions, automatic teardown. First BUSL release [P] | |
@@ -70,7 +72,7 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 | 1.14 | 2025-11-19 | `terraform query` + list resources (`*.tfquery.hcl`) to discover existing infrastructure and generate import config; **Actions** blocks for provider-defined non-CRUD operations [P] | |
 | 1.15 | 2026-04-29 | Variables/locals in module `source`/`version`; `deprecated` on variables/outputs; `validate` checks the backend block [P] | |
 | 1.16 | 2026-08-26 | `import` blocks inside modules; `terraform_data` `store` block [P] | |
-| 1.17 | 2026-10-21 (1.17.1 on 10-28) | **Terraform Policy GA** (`-policies` flag on plan/apply/query); `-minimal-refresh`; variables in provider requirements [P] | the plan is now policy-checked by the CLI itself |
+| 1.17 | 2026-10-21 (1.17.1 on 10-28; 1.17.2, the current release, on 11-11) | **Terraform Policy GA** (`-policies` flag on plan/apply/query); `-minimal-refresh`; variables in provider requirements [P] | the plan is now policy-checked by the CLI itself |
 | 1.18 | unreleased | experimental deferred actions (`-allow-deferral`), `test cleanup` [P, main changelog] | |
 
 The trend for the talk: after 1.0, the features increasingly work *through the plan*. Import, checks, query and policy all became plannable or plan-inspecting operations.
@@ -146,7 +148,9 @@ All of these are customer stories on HashiCorp's own site, so the outcomes are s
 - 1.5 import/check: https://www.hashicorp.com/blog/terraform-1-5-brings-config-driven-import-and-checks
 - 1.6 test framework: https://www.hashicorp.com/blog/terraform-1-6-adds-a-test-framework-for-enhanced-code-validation
 - Changelogs (one per minor version): https://github.com/hashicorp/terraform/blob/v1.17/CHANGELOG.md (replace `v1.17` with `v1.7` … `v1.16`); unreleased: https://github.com/hashicorp/terraform/blob/main/CHANGELOG.md
-- HCL: https://github.com/hashicorp/hcl
+- HCL: https://github.com/hashicorp/hcl ; HCL2 README: https://github.com/hashicorp/hcl2 ; Terraform v0.12.0 `go.mod`: https://github.com/hashicorp/terraform/blob/v0.12.0/go.mod
+- v1.x compatibility promises: https://developer.hashicorp.com/terraform/language/v1-compatibility-promises
+- Release dates: https://github.com/hashicorp/terraform/releases
 - Docker provider Registry API: https://registry.terraform.io/v2/providers/kreuzwerker/docker?include=provider-versions
 - Docker provider repo and releases: https://github.com/kreuzwerker/terraform-provider-docker ; https://github.com/kreuzwerker/terraform-provider-docker/releases/tag/v3.9.0
 - Provider source (v4.6.0): https://github.com/kreuzwerker/terraform-provider-docker/blob/v4.6.0/internal/provider/resource_docker_container_funcs.go ; `resource_docker_container.go` ; `resource_docker_image.go` (same folder)

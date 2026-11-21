@@ -1,13 +1,13 @@
 # Turning point 1: ClickOps (2015)
 
-Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, **(!)** = uncertain or contested; check before it goes on a slide.
+Research checked 2026-11-04; (!) items the outline uses re-checked 2026-11-21 (issue #1). Key: [P] = primary source, [S] = secondary source, **(!)** = uncertain or contested; check before it goes on a slide.
 
 ## Key points for the talk
 
 - **ClickOps works until the server dies.** In 2015 the PortoBikes founders click their AWS setup together in the console. Nothing is written down, so nothing can be reviewed, repeated or audited. When the Friday 18:00 server dies, the only "documentation" is the dead machine.
 - **The failure modes have names.** Martin Fowler called a hand-tuned production machine a *snowflake server* in 2012: "good for a ski resort, bad for a data center" [P]. **Drift** is what happens when hand-made changes pile up. *Pets vs cattle* is the mindset shift: stop nursing irreplaceable servers and build ones you can replace.
 - **Real anchors: humans running one-off commands take down real systems.** In the AWS S3 outage (2017), one mistyped command input took S3 in us-east-1 offline for about four hours [P]. At Knight Capital (2012), one of eight servers was missed during a deployment, and the firm lost $460 million in about 45 minutes [P, SEC order].
-- **Infrastructure as Code is the answer the industry converged on.** The term appears around 2009 in the DevOps, Puppet and Chef communities **(!)**. Kief Morris's O'Reilly book (1st ed. 2016, 3rd ed. 2025) became the reference text [P/S].
+- **Infrastructure as Code is the answer the industry converged on.** The term appears around 2009 in the DevOps, Puppet and Chef communities: Morris's earliest uses are Andrew Clay Shafer's Velocity 2009 talk, with Adam Jacob (Chef) and Luke Kanies (Puppet) "also using the phrase around this time" [P, Morris's book site, re-checked 2026-11-21]. Kief Morris's O'Reilly book (1st ed. 2016, 3rd ed. 2025) became the reference text [P/S].
 
 ---
 
@@ -55,7 +55,7 @@ From Amazon's own post-event summary [P]:
   - Other operational tools are being audited for similar safety checks.
   - The Health Dashboard console now runs across multiple regions.
 
-**How to frame it (!):** this was a command-line action run from a playbook, not console clicking. It is a *manual-operations* anchor rather than strictly ClickOps. The lesson that carries over: a human typing parameters into a live system, with no preview and no guardrail. That is exactly what Terraform's **plan** later adds.
+**How to frame it (resolved 2026-11-21):** the AWS summary says "an authorized S3 team member using an established playbook executed a command" and "one of the inputs to the command was entered incorrectly" [P, re-read 2026-11-21]. So this was a command-line action run from a playbook, not console clicking. It is a *manual-operations* anchor rather than strictly ClickOps. The lesson that carries over: a human typing parameters into a live system, with no preview and no guardrail. That is exactly what Terraform's **plan** later adds.
 
 ### B. Knight Capital, 2012-08-01 (SEC order, Release No. 34-70694, 2013-10-16)
 
@@ -68,7 +68,7 @@ From the SEC order [P] (paragraph numbers in brackets):
 - **[41]** "A written procedure requiring a simple double-check of the deployment … could have identified that a server had been missed."
 - **Penalty:** $12 million, paid without admitting or denying the findings [P, SEC press release / digest].
 
-**Framing:** this is an *application deployment*, not infrastructure provisioning. But it is the clearest documented case of one machine out of N silently differing from the rest: a snowflake caused by a hand-performed, unreviewed step. The popular "manual deployment" summary is a fair reading, but the SEC's wording is "did not copy the new code" and missing review/procedures **(!)**. Quote the SEC, not the blogs.
+**Framing:** this is an *application deployment*, not infrastructure provisioning. But it is the clearest documented case of one machine out of N silently differing from the rest: a snowflake caused by a hand-performed, unreviewed step. The popular "manual deployment" summary is a fair reading. Re-checked against the SEC order 2026-11-21 [P]: "one of Knight's technicians did not copy the new code to one of the eight SMARS computer servers. Knight did not have a second technician review this deployment" [15], and "a simple double-check … could have identified that a server had been missed" [41]. The outline's "one of eight servers was missed; nobody double-checked" matches this. Quote the SEC, not the blogs.
 
 ### C. Optional third anchor: GitLab.com database outage, 2017-01-31
 
@@ -93,7 +93,7 @@ From GitLab's own postmortem (published 2017-02-10) [P]:
 - Small changes.
 - Keep services available during changes.
 
-**Origins of the term (!):** the term's origin is genuinely fuzzy.
+**Origins of the term:** the term's origin is genuinely fuzzy, so no single inventor goes on a slide (Morris's account re-read 2026-11-21 [P]).
 - Morris's book site says the earliest uses *he* found were Andrew Clay Shafer's "Agile Infrastructure" talk at Velocity 2009 and John Willis's write-up of it. The term emerged around the Agile 2008 talk by Clay Shafer and Patrick Debois that sparked the DevOps movement.
 - Morris adds that Adam Jacob (Chef co-founder) and Luke Kanies (Puppet founder) "were also using the phrase around this time" [P, author's own account].
 - A 2010 *Web Operations* chapter by Adam Jacob is often cited, but we could not verify it **(!)**. Say "around 2009, in the DevOps / Puppet / Chef community", not a single inventor.
@@ -109,6 +109,14 @@ From GitLab's own postmortem (published 2017-02-10) [P]:
 - **Author:** Morris is a Thoughtworks engineer (Thoughtworks lists him as a "distinguished infrastructure engineer") [P].
 - **Nice talk detail:** the book itself moved from *configuring servers* to *defining stacks*. That mirrors PortoBikes' move from turning point 2 to turning point 3.
 
+**What IaC buys you (benefits slide, sourced 2026-11-21):**
+- **Speed.** "Creating new servers is just a case of running the script"; computers "provision hundreds of servers faster than any human could type" [P, Fowler]. AWS: "use IaC to automatically set up your environment within minutes" [P, AWS].
+- **Consistency.** "Using code to define the server configuration means that there is greater consistency between servers" [P, Fowler]. Microsoft: "an IaC model generates the same environment every time it deploys", and IaC "evolved to solve the problem of environment drift" [P, Microsoft Learn].
+- **Audit trail.** "Every change to your configuration can be logged and isn't susceptible to faulty record keeping" [P, Fowler].
+- **Safe changes and rollback.** "At worst changes can be reverted to the last working configuration" [P, Fowler]; AWS: roll back "to the last known stable configuration files" [P, AWS].
+- **Disaster recovery.** AWS's DR whitepaper: "To enable infrastructure to be redeployed quickly without errors, you should always deploy using infrastructure as code"; without it, restoring in a recovery Region "may be complex … and possibly exceed your RTO" [P, AWS DR whitepaper].
+- **Identical copies of environments.** "The same environment can be deployed on a different system in another location using the same IaC" [P, AWS].
+
 ---
 
 ## Sources
@@ -122,6 +130,9 @@ From GitLab's own postmortem (published 2017-02-10) [P]:
 - Martin Fowler, "InfrastructureAsCode" (2016) [P]: https://martinfowler.com/bliki/InfrastructureAsCode.html
 - Randy Bias, "The History of Pets vs Cattle and How to Use the Analogy Properly" (2016) [P]: https://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/
 - Kief Morris, book site (term origins, editions) [P]: https://infrastructure-as-code.com/book/
+- AWS, "What is Infrastructure as Code?" (benefits) [P]: https://aws.amazon.com/what-is/iac/
+- Microsoft Learn, "What is infrastructure as code (IaC)?" [P]: https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code
+- AWS whitepaper, *Disaster Recovery of Workloads on AWS*, "Disaster recovery options in the cloud" [P]: https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html
 - Thoughtworks, *Infrastructure as Code* 3rd ed. [P]: https://www.thoughtworks.com/insights/books/infrastructure-as-code-3rd-ed
 - O'Reilly listing, 3rd ed. [P]: https://www.oreilly.com/library/view/-/9781098150341/
 - TUM library record, 1st ed. 2016 [S]: https://search.ub.tum.de/vufind/Record/DE-604.BV043682394
