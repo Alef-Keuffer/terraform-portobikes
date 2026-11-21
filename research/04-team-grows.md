@@ -67,13 +67,13 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 - Terraform Policy is the only one that also covers Stacks, and it needs Terraform ≥ 1.17.
 - "HCP Terraform checks the Terraform plan against the policy set during each run". Failed policies can stop the run, and people with the right permission can override.
 - Terraform 1.17.0 (2026-10-21): "Terraform Policy is now generally available. The `-policies` flag for `plan`, `apply`, and `query` no longer requires an experimental build" [P, changelog]. Policy checks are no longer exclusive to the paid platform.
-- **(!)** HCP docs are inconsistent on tiers. The comparison table shows policy enforcement on Standard/Premium, while the Free section allows "one policy set of up to five policies".
+- **Tiers, re-checked 2026-11-21** [P, HCP Terraform plans page]: the page still contradicts itself. Its Free-plan text lists "policy enforcement" among free features, while its comparison table marks policy enforcement and policy sets as Standard/Premium only. Outline consequence: don't say which tier policy needs; say that paid tiers add governance at scale (more concurrent runs, drift detection, audit logging).
 
 ## Part 4: How HashiCorp makes money, and why teams pay
 
 **Open core** (notes): the Terraform CLI is free (BSL since 1.6). HCP Terraform (SaaS) and Terraform Enterprise (self-hosted, now branded "IBM Terraform Enterprise", custom pricing) are paid.
 
-**HCP Terraform tiers** (per managed resource per month: Essentials $0.10, Standard $0.47, Premium $0.99) [P, pricing].
+**HCP Terraform tiers** (per managed resource per month: Essentials $0.10, Standard $0.47, Premium $0.99) [P, pricing page, read 2026-11-04]. Re-check 2026-11-21: the pricing page now sits behind a bot checkpoint and could not be re-read. The HCP docs say Essentials is pay-as-you-go and send Standard/Premium buyers to sales, so the two higher prices may be list prices only. A pricing tracker's 2026-06-13 snapshot shows the same three figures [S]. Remote runs and SSO are on every tier, including Free, so they are not what teams pay for [P, plans page].
 
 **What a ten-person team actually buys** [P, HCP overview, pricing, health docs]:
 
@@ -83,15 +83,15 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 | Applies not from laptops; credentials not on laptops | Remote runs (plan & apply), secure variable storage | all |
 | Several applies at once | Concurrency: Free 1 remote/1 agent; Essentials 3/1; Standard 10/10; Premium 200/300 | grows with tier |
 | Know when someone ClickOps'd prod | Health assessments (drift detection + continuous validation) | **Standard, Premium only** |
-| Guardrails | Policy enforcement | Standard/Premium (**(!)** see above) |
+| Guardrails | Policy enforcement | Standard/Premium per the comparison table; the Free-plan text also lists it (see Part 3) |
 | Login with company accounts | SSO (SAML) | all |
-| Auditors | Audit logging, custom RBAC | **Premium only** |
+| Auditors | Audit logging | **Premium only** (custom RBAC is Essentials and up, per the 2026-11-21 table) |
 | Platform team serving developers | No-code provisioning, change requests, module deprecation | Standard+ |
 
 - **The argument for the talk:** the CLI solves "one person, one laptop". People pay for *coordination and governance*: who may apply, what may be applied, what drifted, who did it. Those needs grow with headcount, which is exactly this turning point.
 - The legacy free plan ended 2026-03-31. The new free tier is capped at 500 resources, with unlimited users [P, notes].
 
-**Numbers** (all HashiCorp products, not Terraform alone) [P, SEC EX-99.1, Q3 FY2025, quarter ended 2024-10-31]:
+**Numbers** (all HashiCorp products, not Terraform alone) [P, SEC EX-99.1, Q3 FY2025, quarter ended 2024-10-31; re-read 2026-11-21, figures confirmed. This was the last quarter HashiCorp reported before IBM closed the deal]:
 - Revenue $173.4M, up 19% YoY
 - 4,856 customers
 - 946 customers with ≥ $100k ARR (up 8% YoY)
@@ -104,8 +104,8 @@ The 109% retention means existing customers spent ~9% more year on year. That is
 ## Part 5: Why job ads ask for Terraform
 
 Use only the evidence in `research-notes.md`:
-- **Stack Overflow 2025:** 17.8% of all respondents and 18.7% of professional developers used Terraform. This measures *usage*.
-- **IT Jobs Watch UK:** 2,390 permanent ads in the 6 months to Nov 2026, up 49% YoY, with a median of £75k. But the share of all IT ads fell from 3.19% to 1.96% **(!)**. Present both numbers honestly.
+- **Stack Overflow 2025:** 18.4% of all respondents and 19.7% of professional developers did "extensive development work" with Terraform in the past year [P, re-read 2026-11-21 from the "cloud platforms … infrastructure as code solutions" question]. The 17.8% / 18.7% in `research-notes.md` don't match the published page; use 18.4%. This measures *usage*.
+- **IT Jobs Watch UK** [P, re-read 2026-11-21; the page is a rolling 6-month window, so the numbers move every week]: 2,337 permanent ads citing Terraform in the 6 months to 2026-11-21 (1,380 a year earlier), median salary £75,000. But as a share of all UK permanent jobs it fell from 2.59% to 1.90%. The raw count rose while the share fell, so "up X% year on year" is misleading on its own. Outline: quote the count and the median salary with the date, and drop the growth figure. (The earlier 2,390 / +49% / 3.19%→1.96% were an earlier window.)
 - **Firefly 2025** (vendor survey) **(!)**.
 - **Do not use** "88% of DevOps ads".
 
@@ -116,7 +116,7 @@ The defensible explanation ties back to this turning point. Job ads ask for the 
 | | Associate (004) | Infrastructure Engineer Professional (002) | Authoring & Operations Advanced |
 |---|---|---|---|
 | Level | foundational | intermediate, "mid-career" | advanced, lab-based |
-| Version tested | Terraform 1.12 | Terraform 1.15 | Terraform 1.6 **(!)** (old version) |
+| Version tested | Terraform 1.12 | Terraform 1.15 | Terraform 1.6 (as stated on the official page, 2026-11-21) [P] |
 | Format / time | MC, 1 h | MC, 90 min | labs + MC, 4 h (AWS or Azure) |
 | Price | $70.50, no free retake | $200, no free retake | $295, free retake |
 | Prerequisite | terminal + cloud basics | Associate "strongly recommended" + production experience | Associate recommended + production experience |
@@ -142,7 +142,7 @@ The defensible explanation ties back to this turning point. Job ads ask for the 
   - HCP Terraform/Enterprise operations (cost tracking, "Define Policy as Code in a CI/CD pipeline")
 - **Advanced** has 6 objectives: resource lifecycle and drift; dynamic configuration; collaborative workflows; modules; providers; HCP Terraform collaboration.
   - Passing the Advanced exam also extends an unexpired Professional credential (recertification path).
-  - **(!)** The notes call Advanced "formerly Professional". The current pages do not state a rename, and they treat Professional (002) as a separate, newer exam. Reword before putting it on a slide.
+  - **Naming, settled 2026-11-21** [P, official pages]: these are three separate, current exams. The hub lists "Terraform Associate", "Terraform Infrastructure Engineer Professional" and "Terraform Authoring and Operations Advanced" side by side, and none of the pages says one replaced another. "Formerly Professional" in `research-notes.md` is wrong; drop it. All three list "Credential Expiration 2 years"; only Advanced includes a free retake.
 
 ## Part 7: Where IaC sits in a DevOps pipeline
 
@@ -151,7 +151,9 @@ The defensible explanation ties back to this turning point. Job ads ask for the 
   - "Research consistently shows that comprehensive use of version control predicts continuous delivery" [P].
   - The page does not use the phrase "infrastructure as code"; it covers the practice by example.
 - **CALMS** (Culture, Automation, Lean, Measurement, Sharing): IaC is the "Automation" pillar, and the PR workflow is "Sharing".
-  - **(!)** Attribution (commonly Jez Humble, extending Willis/Edwards' CAMS) and the Atlassian page text could not be verified; the page did not render.
+  - **(!)** Attribution (commonly Jez Humble, extending Willis/Edwards' CAMS) and the Atlassian page text could not be verified; the page did not render. Not used in the outline: the pipeline slide uses HashiCorp's and DORA's wording instead.
+- **HashiCorp's own pipeline** ("Running Terraform in automation" tutorial) [P]: the automated workflow is "broadly the same as for CLI usage": 1. "Initialize the Terraform working directory" (`terraform init -input=false`). 2. "Produce a plan" (`terraform plan -out=tfplan -input=false`). 3. "Have a human operator review that plan, to ensure it is acceptable". 4. "Apply the changes described by the plan" (`terraform apply tfplan`). For pull requests it runs `terraform plan` without `-out` as a check, triggered by the version-control system for "each new commit under review".
+- **The GitHub Actions version** [P, tutorial]: "Generate a plan for every commit to a pull request branch" and "Apply the configuration when you update the main branch".
 - **In the pipeline:** IaC sits *before* application deploy. Environments are created from the same reviewed repo. The PR/plan/policy/apply loop is the infrastructure equivalent of build, test and deploy.
 
 ## Sources
@@ -172,5 +174,9 @@ The defensible explanation ties back to this turning point. Job ads ask for the 
 - HashiCorp Q3 FY2025 results (SEC): https://www.sec.gov/Archives/edgar/data/0001720671/000172067124000022/hcp-q3fy25xex991.htm
 - Certifications: https://developer.hashicorp.com/certifications/infrastructure-automation ; https://developer.hashicorp.com/certifications/terraform-associate ; https://developer.hashicorp.com/certifications/terraform-infrastructure-engineer-professional ; https://developer.hashicorp.com/certifications/terraform-advanced
 - DORA version control: https://dora.dev/capabilities/version-control/
+- Running Terraform in automation: https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform
+- Stack Overflow 2025 technology: https://survey.stackoverflow.co/2025/technology
+- IT Jobs Watch Terraform (rolling): https://www.itjobswatch.co.uk/jobs/uk/terraform.do
+- Pricing tracker [S]: https://pricingsaas.com/companies/terraform/diffs/2025Q2
 - CALMS (could not be read; unverified): https://www.atlassian.com/devops/frameworks/calms-framework
 - Job-market figures: see `research-notes.md` (Stack Overflow 2025, IT Jobs Watch, Firefly)

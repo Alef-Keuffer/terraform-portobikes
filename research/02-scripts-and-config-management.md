@@ -1,6 +1,6 @@
 # Turning point 2: scripts, then configuration management (2016)
 
-Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, **(!)** = uncertain or contested; check before it goes on a slide.
+Research checked 2026-11-04; (!) items the outline uses re-checked 2026-11-21 (issue #1). Key: [P] = primary source, [S] = secondary source, **(!)** = uncertain or contested; check before it goes on a slide.
 
 ## Key points for the talk
 
@@ -37,7 +37,7 @@ Change `2` to `3`, and the **plan** says "1 to add". Run it again unchanged, and
 - With an old-style Ansible `ec2` task, changing `count: 10` to `count: 15` and re-running "would create 15 new servers, giving 25 total".
 - With Terraform, the same edit gives "Plan: 5 to add, 0 to change, 0 to destroy".
 
-**Nuance (!):** the line between imperative and declarative is about *how a tool or module is used*, not the brand.
+**Nuance (sourced; outline speaker notes use it):** the line between imperative and declarative is about *how a tool or module is used*, not the brand.
 - Brikman classes Ansible and Chef as procedural, and Puppet, CloudFormation and Terraform as declarative [S].
 - But today's Ansible `amazon.aws.ec2_instance` module has an `exact_count` parameter: "how many instances that match the filters parameter should be running. Instances are either created or terminated based on this value" [P]. That is declarative behaviour.
 - Ansible's own glossary says its resource models bring the system "back to a desired state regardless of the actual state" [P].
@@ -76,7 +76,7 @@ Why it matters for the story:
 | Typical model | agent (Puppet/Chef) or SSH (Ansible) **(!)** | calls cloud APIs directly; keeps **state** (Terraform) or a stack (CloudFormation) |
 
 - **Source:** this division follows Brikman's comparison [S].
-- **Overlap (!):** Ansible can create EC2 instances, and Terraform can run boot scripts, so this describes each tool's centre of gravity, not a hard wall. Brikman's own recommendation is to *combine* them: provision with Terraform, configure with a config-management tool or a pre-built image [S].
+- **Overlap (sourced 2026-11-21):** Ansible's `amazon.aws.ec2_instance` module is described as "Create & manage EC2 instances" [P], and Terraform's `aws_instance` takes `user_data` boot scripts [P, AWS provider docs], so this describes each tool's centre of gravity, not a hard wall. Brikman's own recommendation is to *combine* them: provision with Terraform, configure with a config-management tool or a pre-built image [S].
 
 **Why the distinction matters for the talk:**
 - Ansible would have helped PortoBikes rebuild the *software on* the dead server.
@@ -94,10 +94,10 @@ Why it matters for the story:
 ## Part 5: The limits of CloudFormation
 
 - **Launched 2011-02-25** (in research-notes) [P]. Templates are declarative and describe a "stack" of AWS resources.
-- **It got a preview step early.** CloudFormation added **change sets** on 2016-03-29: you can "preview" which resources will be added, modified or deleted before updating a stack [P]. So "Terraform invented plan" is wrong. Terraform's distinctive move was making the plan multi-provider and central to the workflow **(!)** (our interpretation).
+- **It got a preview step early.** CloudFormation added **change sets** on 2016-03-29: you can "preview" which resources will be added, modified or deleted before updating a stack [P]. So "Terraform invented plan" is wrong. What Terraform claims for itself is "a consistent workflow to provision and manage all of your infrastructure", cloud and on-prem, DNS and SaaS included, and that it "generates a plan and prompts you for your approval before modifying your infrastructure" [P, HashiCorp "What is Terraform", re-read 2026-11-21]. Put that on a slide as HashiCorp's claim, not as our verdict.
 - **Drift detection** arrived 2018-11-13 [P]. It compares the template's expected values with what actually exists.
 - **The real limit: AWS only.** Brikman lists CloudFormation as the only tool in his comparison that is closed source and single-cloud [S].
-- **Nuance (!):** since 2021-06-21 the CloudFormation Public Registry lets third parties publish resource types. Launch partners included MongoDB, Datadog, JFrog and Snyk [P]. So "AWS only" means "runs only inside AWS, and covers non-AWS services only where a vendor published a type". It still can't manage another cloud.
+- **Nuance (resolved 2026-11-21; the slide must not say a bare "AWS only"):** since 2021-06-21 the CloudFormation Public Registry lets third parties publish resource types. Launch partners included MongoDB, Datadog, JFrog and Snyk [P]. So "AWS only" means "runs only inside AWS, and covers non-AWS services only where a vendor published a type". It still can't manage another cloud.
 - **For PortoBikes:** their payments, DNS (e.g. at an external registrar), monitoring SaaS and anything outside AWS stay ClickOps. One tool for everything, with one plan, is the promise of turning point 3.
 
 ## Part 6: Timeline
@@ -108,7 +108,7 @@ Why it matters for the story:
 | 2004–2005 | Puppet: first prototype summer 2004; full-time project from February 2005 (Kanies). Reductive Labs founded 2005 | [P] Kanies, AOSA vol. 2; [S] SCALE 6x speaker bio |
 | 2009-01-15 | Chef announced by Opscode (Adam Jacob) | [P] Chef blog, Adam Jacob author page |
 | 2011-02-25 | AWS CloudFormation launched | [P] AWS What's New |
-| 2012 (Feb) | Ansible by Michael DeHaan; the earliest commits in the public repo date from February 2012. The exact first-release date varies by source **(!)** | [P] GitHub commit history |
+| 2012 | Ansible by Michael DeHaan. Earliest commit in the public repo 2012-02-23; the first tags (`0.01`, `0.0.1`) point at commits from 2012-03-08 and 2012-03-13; `0.3` on 2012-04-24. Say "2012", not a day | [P] GitHub commit history and tags, checked 2026-11-21 |
 | 2012-07-10 | Fowler, "SnowflakeServer" | [P] |
 | 2013-06 | "ImmutableServer" (Morris) and "Trash Your Servers" (Chad Fowler) | [P] |
 | 2014-07-28 | Terraform v0.1.0 (in research-notes) | [P] |
@@ -123,7 +123,10 @@ Why it matters for the story:
 - Yevgeniy Brikman (Gruntwork), "Why we use Terraform and not Chef, Puppet, Ansible, Pulumi, or CloudFormation" (2016, updated 2022) [S]: https://www.gruntwork.io/blog/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation
 - Ansible glossary (idempotency, resource model), docs source [P]: https://github.com/ansible/ansible-documentation/blob/devel/docs/docsite/rst/reference_appendices/glossary.rst (rendered: https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html)
 - `amazon.aws.ec2_instance` module, `exact_count` [P]: https://github.com/ansible-collections/amazon.aws/blob/main/plugins/modules/ec2_instance.py (rendered: https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_instance_module.html)
-- Ansible commit history (Feb 2012) [P]: https://github.com/ansible/ansible/commits/devel?until=2012-02-12
+- Ansible commit history (first commit 2012-02-23) [P]: https://github.com/ansible/ansible/commits/devel?until=2012-02-25
+- Ansible tags (0.01, 0.0.1, 0.3) [P]: https://github.com/ansible/ansible/tags?after=0.4
+- HashiCorp, "What is Terraform" [P]: https://developer.hashicorp.com/terraform/intro
+- Terraform AWS provider, `aws_instance` (`user_data`) [P]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
 - Luke Kanies, "Puppet", *The Architecture of Open Source Applications* vol. 2 [P]: https://aosabook.org/en/v2/puppet.html
 - SCALE 6x speaker bio, Luke Kanies (Reductive Labs founded 2005) [S]: https://socallinuxexpo.org/scale6x/conference-info/speakers/Luke-Kanies/index.html
 - Chef blog, Adam Jacob author page ("on January 15, 2009 we announced Chef") [P]: https://www.chef.io/blog/author/adam

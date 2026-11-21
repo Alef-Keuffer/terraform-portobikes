@@ -38,7 +38,7 @@ Key: [P] = primary source, [S] = secondary source, (!) = uncertain or contested.
   - CNCF Sandbox since April 2025; 10M+ downloads [P] https://www.cncf.io/projects/opentofu/
 - **IBM acquisition:**
   - Announced 2024-04-24: $6.4B enterprise value, $35/share [P] https://newsroom.ibm.com/2024-04-24-IBM-to-Acquire-HashiCorp-Inc-Creating-a-Comprehensive-End-to-End-Hybrid-Cloud-Platform
-  - Closed 2025-02-27 [S]
+  - Closed 2025-02-27 [P] https://newsroom.ibm.com/2025-02-27-ibm-completes-acquisition-of-hashicorp,-creates-comprehensive,-end-to-end-hybrid-cloud-platform
 - **Since IBM took over:**
   - CDK for Terraform deprecated and archived 2025-12-10 [P]
   - HCP Consul Dedicated retired
@@ -50,7 +50,7 @@ Key: [P] = primary source, [S] = secondary source, (!) = uncertain or contested.
 |---|---|---|---|---|
 | Terraform Associate (004), replaced 003 on 2026-01-08 | $70.50, no free retake | 1 h | multiple choice, online | 2 years |
 | Terraform Infrastructure Engineer Professional (002) | $200 | 90 min | multiple choice | 2 years |
-| Terraform Authoring & Operations Advanced (!) (sources conflict on whether this replaced "Professional"; see research/04) | $295, free retake | 4 h | lab + multiple choice, AWS or Azure | 2 years |
+| Terraform Authoring & Operations Advanced (a separate, current exam alongside Professional; neither replaced the other, see research/04) | $295, free retake | 4 h | lab + multiple choice, AWS or Azure | 2 years |
 
 - **Sources:** https://developer.hashicorp.com/certifications
 - **Prep time:** HashiCorp publishes no official estimate (!).
@@ -58,18 +58,18 @@ Key: [P] = primary source, [S] = secondary source, (!) = uncertain or contested.
 
 ## Job market
 - **Stack Overflow 2025 survey (cloud development):**
-  - Terraform: 17.8% of all respondents / 18.7% of professional developers
+  - Terraform: 18.4% of all respondents / 19.7% of professional developers (corrected 2026-11-21 from the published page; see research/04)
   - Ansible: 11.7%
   - Measures usage, not jobs [P] https://survey.stackoverflow.co/2025/technology
 - **IT Jobs Watch, UK, 6 months to Nov 2026:**
-  - 2,390 permanent ads mentioning Terraform, up 49% year on year
+  - 2,390 permanent ads mentioning Terraform, up 49% year on year (an earlier window; superseded by research/04: 2,337 in the 6 months to 2026-11-21)
   - Median salary £75k
   - Share of all IT ads: 1.96%, down from 3.19%
   - Source [P]: https://www.itjobswatch.co.uk/jobs/uk/terraform.do
 - **Firefly State of IaC 2025 (vendor survey):**
   - Terraform: 62% use it
   - OpenTofu: 12% use it; 27% plan to adopt it
-  - (!) Not checked against the full report.
+  - Vendor survey (350+ respondents); 62% is described as "market share", 12% as "currently using". The full report is gated; figures from Firefly's own write-up in The New Stack (May 2025). Re-checked 2026-11-21; see research/05.
 - **Do not use:** "Terraform in 88% of DevOps ads" and similar LinkedIn claims. They have no methodology.
 
 ## Real-world anchors
@@ -78,7 +78,7 @@ Key: [P] = primary source, [S] = secondary source, (!) = uncertain or contested.
   - Cielo: provisioning time down 90%
   - TMX Group: up to 75% faster
   - Skechers: one week to two hours
-- **Move to OpenTofu:** Fidelity Investments (Oct 2025): ~50k state files, 4M+ resources, OpenTofu now the default for new deployments. Quote: "OpenTofu really is a drop-in." [P] https://opentofu.org/blog/fidelity-investment-migration/ (!) Other named adopters are unverified.
+- **Move to OpenTofu:** Fidelity Investments (Oct 2025): 50k+ state files, 4M+ resources on Terraform/OpenTofu, OpenTofu now the default for new deployments. Quotes: "a technical drop-in"; "Changing the CLI in a pipeline is trivial." (The earlier quote "OpenTofu really is a drop-in" is not on the page; corrected 2026-11-21.) [P] https://opentofu.org/blog/fidelity-investment-migration/ (!) Other named adopters are unverified.
 - **AI agent incident:** DataTalks.Club, 2026-02-26.
   - A Claude Code agent restored an outdated state file and ran `terraform destroy`.
   - This deleted the VPC, ECS, RDS and the snapshots. AWS support recovered the database.

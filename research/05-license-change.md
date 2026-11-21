@@ -8,7 +8,7 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 - **Our main argument applies here too.** Terraform is valuable because infrastructure became shared, reviewable code. Once something is a shared standard, who controls its licence matters as much as its features. That is why a licence change caused a fork within about six weeks.
 - **OpenTofu is now a real, separate project, not just a copy.** It sits in the CNCF Sandbox (since April 2025) and has features Terraform lacks (state encryption, provider `for_each`, `-exclude`, OCI registries). Terraform has features OpenTofu lacks (Stacks, actions, `terraform query`). The two are no longer guaranteed to be drop-in replacements for each other. [P]
 - **This has happened before.** MongoDB (2018), Elastic (2021) and Redis (2024) all moved to source-available licences to stop cloud providers profiting from their code. Elastic (2024) and Redis (2025) later **added an OSI-approved licence back (AGPL)**. HashiCorp, now part of IBM, has not done this. [P]
-- **Real anchors:** Fidelity moved ~50k state files to OpenTofu ("OpenTofu really is a drop-in"). GitLab deprecated its Terraform CI/CD templates and now offers OpenTofu components instead. [P]
+- **Real anchors:** Fidelity runs 50,000+ state files on Terraform/OpenTofu and has made OpenTofu the default for new deployments; it found OpenTofu "a technical drop-in" and says "Changing the CLI in a pipeline is trivial" (re-checked 2026-11-21; the earlier quote "OpenTofu really is a drop-in" is not on the page). GitLab deprecated its Terraform CI/CD templates and now offers OpenTofu components instead. [P]
 
 ---
 
@@ -48,13 +48,13 @@ Research checked 2026-11-04. Key: [P] = primary source, [S] = secondary source, 
 - 1.10: providers and modules from **OCI registries** (useful in air-gapped environments); experimental OpenTelemetry tracing; external key providers for encryption.
 - 1.11–1.13: ephemeral values (Terraform has these too), `enabled` meta-argument, dynamic `prevent_destroy`; 1.13 (2026-09-29) adds experimental linting and "symbol libraries".
 
-**Features Terraform has that OpenTofu does not:** HCP Terraform **Stacks** (GA at HashiConf 2025 [P: HashiCorp blog]); Terraform 1.14 (2025-11-19) **actions** blocks and **`terraform query`** with list resources [P: GitHub release notes]. **(!)** A third-party comparison says OpenTofu 1.10–1.13 has no equivalent of these, and also mentions "Terraform Policy" in 1.17. Neither claim is checked against primary sources.
+**Features Terraform has that OpenTofu does not:** HCP Terraform **Stacks** (GA at HashiConf 2025 [P: HashiCorp blog]); Terraform 1.14 (2025-11-19) **actions** blocks and **`terraform query`** with list resources [P: GitHub release notes]. OpenTofu has neither yet (checked 2026-11-21): its tracker has open issues for `query`/list resources (#3787, "Support 'query' CLI and provider 'list' resources as in Terraform 1.14") and for action blocks (#3309) [P: GitHub opentofu/opentofu]. "Terraform Policy" in 1.17 is checked in `04-team-grows.md`.
 
-**Compatibility drift.** OpenTofu says it "aims to maintain compatibility with Terraform configurations" and warns that setups using `terraform_remote_state` across projects need extra care [P: OpenTofu migration docs]. State format is still shared, but plan files cannot be swapped between the tools, and lock files are rewritten to `registry.opentofu.org` [S: community migration reports] **(!)**. In practice the switch is easy for code written for Terraform ≤1.9. It gets harder once a team uses features only one tool has. Migration has become a **one-way door** for teams using `.tofu` files, state encryption, Stacks or actions.
+**Compatibility drift.** OpenTofu says it "aims to maintain compatibility with Terraform configurations" and warns that setups using `terraform_remote_state` across projects need extra care [P: OpenTofu migration docs]. State format is still shared, but plan files cannot be swapped between the tools [S: community migration reports]. `tofu init` rewrites `.terraform.lock.hcl` from `registry.terraform.io/...` to `registry.opentofu.org/...`: confirmed first-hand on 2026-11-21 with OpenTofu 1.13.9 on `demo/main.tf`, and seen in the demo rehearsal (`demo/README.md`) [P: own test]. In practice the switch is easy for code written for Terraform ≤1.9. It gets harder once a team uses features only one tool has. Migration has become a **one-way door** for teams using `.tofu` files, state encryption, Stacks or actions.
 
 ## 3. The IBM acquisition and what has changed since
 
-The deal was announced 2024-04-24 ($6.4B, $35/share). It closed 2025-02-27, after UK CMA approval. HashiCorp runs as a division of IBM Software, not inside Red Hat [S: TechRepublic; press release syndications] (research-notes has the primary link). Changes since then:
+The deal was announced 2024-04-24 ($6.4B, $35/share). It closed 2025-02-27 [P: IBM newsroom, "IBM Completes Acquisition of HashiCorp", 2025-02-27], after UK CMA approval. HashiCorp runs as a division of IBM Software, not inside Red Hat [S: TechRepublic]. Changes since then:
 - **The licence is still BSL.** There has been no move back to MPL. The licensor named in the `LICENSE` file is now "IBM Corp." [P].
 - **Product cuts and changes** (research-notes): CDK for Terraform archived 2025-12-10; the legacy free plan ended 2026-03-31 (new free tier capped at 500 resources); HCP Consul Dedicated retired; Infragraph preview in May 2026.
 - **New features keep shipping**: Stacks GA (2025), actions/query (1.14), the Terraform MCP server GA (2026-06-11), Terraform 1.17.1 (2026-10-28).
@@ -64,9 +64,9 @@ The deal was announced 2024-04-24 ($6.4B, $35/share). It closed 2025-02-27, afte
 
 | Company | Change | Fork | Later |
 |---|---|---|---|
-| MongoDB | AGPL → **SSPL**, 2018-10-16; pulled from OSI review in March 2019 [S] | none of note | Still SSPL |
-| Elastic | Apache 2.0 → **SSPL/ELv2**, 2021, because of "issues with AWS" | AWS **OpenSearch** | **Added AGPL** on 2024-08-29: "Elasticsearch is open source again" [P] |
-| Redis | BSD → **RSAL/SSPL**, March 2024 | **Valkey** (LF, 2024-03-28; AWS, Google, Oracle, Ericsson, Snap) [S] | **Added AGPLv3** with Redis 8, 2025-05-01; admits the change "hurt our relationship with the Redis community" [P] |
+| MongoDB | AGPL → **SSPL**, 2018-10-16 [P: MongoDB press release]; pulled from OSI review in March 2019 [S] | none of note | Still SSPL |
+| Elastic | Apache 2.0 → **SSPL/Elastic License** dual licence, announced January 2021, from 7.11 [P: Elastic, "Licensing change"], because of "issues with AWS" | AWS **OpenSearch** | **Added AGPL** on 2024-08-29: "Elasticsearch is open source again" [P] |
+| Redis | BSD → **RSALv2/SSPLv1**, announced 2024-03-20, from Redis 7.4 [P: Redis blog] | **Valkey** (LF, 2024-03-28; AWS, Google, Oracle, Ericsson, Snap) [S] | **Added AGPLv3** with Redis 8, 2025-05-01; admits the change "hurt our relationship with the Redis community" [P] |
 | HashiCorp | MPL → **BSL**, 2023-08-10 | **OpenTofu** (LF → CNCF) | Still BSL under IBM |
 
 The pattern is the same each time. A single-vendor project relicenses to stop cloud or SaaS rivals from profiting. A foundation-hosted fork appears. The rivals keep their own fork going, as Redis CEO Rowan Trollope wrote: "AWS and Google now maintain their own fork". Some vendors later go back to an OSI licence. In 2021 the OSI also said SSPL is not open source [S]. Possible debate line: *Elastic and Redis came back; will IBM?*
@@ -75,7 +75,7 @@ The pattern is the same each time. A single-vendor project relicenses to stop cl
 
 ### Stay on Terraform
 1. **The licence does not apply to us.** PortoBikes uses Terraform internally, and the BSL explicitly allows production use [P: LICENSE].
-2. **It is the market standard.** In the Stack Overflow 2025 survey, 17.8% of respondents use Terraform (research-notes). In Firefly's survey, 62% use Terraform vs 12% OpenTofu **(!)** (vendor survey). Hiring, certifications and tutorials all assume Terraform.
+2. **It is the market standard.** In the Stack Overflow 2025 survey, 18.4% of respondents use Terraform (research/04). In Firefly's *State of IaC 2025* (a **vendor survey** of 350+ respondents; Firefly sells IaC tooling), Terraform holds 62% "market share" and 12% currently use OpenTofu, with 27% planning to adopt it [P/vendor: Firefly's write-up in The New Stack, May 2025; full report gated behind a form]. The two figures are measured differently, so say "62% vs 12% in one vendor survey", not a precise ratio. Hiring, certifications and tutorials all assume Terraform.
 3. **Features only Terraform has:** Stacks (GA), actions and `terraform query` (1.14), and the integrated HCP Terraform features (policy, Infragraph, MCP server) [P].
 4. **A large vendor behind it:** IBM can offer enterprise support, and HashiCorp is still releasing every few weeks (1.17.1, October 2026).
 5. **Switching has a cost, even when it's "trivial"**: CI images, procurement, tooling with Terraform hard-coded, and retraining [S: practitioner blogs].
@@ -85,7 +85,7 @@ The pattern is the same each time. A single-vendor project relicenses to stop cl
 1. **Licence and governance:** MPL-2.0, with neutral governance under the Linux Foundation and CNCF. No single company can relicense it [P: CNCF; GitHub].
 2. **Drop-in, shown at scale:** Fidelity moved 2,000+ apps, 50k+ state files and 4M+ resources. "Changing the CLI in a pipeline is trivial"; OpenTofu is now the default for new deployments [P].
 3. **Features only OpenTofu has, for problems users actually report:** state encryption, provider `for_each`, `-exclude`, OCI registries [P].
-4. **The ecosystem is moving with it:** GitLab deprecated its Terraform CI/CD templates (announced in 16.9, removed in 18.0) and offers OpenTofu components instead [P: GitLab issue 438010]. GitLab's docs give the licence change as the reason **(!)** (the issue page itself does not state it).
+4. **The ecosystem is moving with it:** GitLab deprecated its Terraform CI/CD templates (announced in 16.9, removed in 18.0) and offers OpenTofu components instead [P: GitLab issue 438010]. The licence change is the stated reason: GitLab's epic says HashiCorp "switched to BuSL" and that it is "deprecating the minimal necessary to comply with the BuSL license"; it can keep Terraform features on GitLab.com but "not allowed to ship the Terraform CI templates with GitLab Self-Managed". GitLab adds that it "does not plan to remove support for Terraform" [P: GitLab epic 12401].
 5. **Uses the same providers, so it builds on everything learned so far.**
 - **Strongest counter-argument:** The main backers (Spacelift, env0, Harness, Scalr) sell products that compete with HCP Terraform, so their support is also a business decision. Critics argued at launch that only four companies committed real resources [S: Vlad Ionescu thread]. The two tools are drifting apart, and OpenTofu's market share is still a fraction of Terraform's.
 
@@ -103,11 +103,11 @@ The pattern is the same each time. A single-vendor project relicenses to stop cl
 
 ## 6. Real anchors
 
-- **Fidelity Investments → OpenTofu** (2025-10-06): see the numbers above. Lesson: "the code change is the easy part"; versioning, CI/CD and governance are the hard parts [P].
+- **Fidelity Investments → OpenTofu** (2025-10-06): 2,000+ applications and 50,000+ state files on Terraform/OpenTofu; reached 70% OpenTofu adoption before switching the pipeline CLI; OpenTofu is now the default for new deployments. Quotes on the page: "a technical drop-in", "Changing the CLI in a pipeline is trivial" [P]. Lesson: "the code change is the easy part"; versioning, CI/CD and governance are the hard parts [P].
 - **GitLab:** removed its Terraform CI/CD templates and ships OpenTofu components instead [P].
 - **TrueCar → OpenTofu**, by its own account on Spacelift's blog (Sept 2025) **(!)** (vendor-hosted, not independently checked).
 - **Allianz:** backed OpenTofu at launch; its CIO said it "aligns with this strategy" [S: The Register].
-- **Decisions to stay on Terraform:** **(!)** We found no named company publicly announcing that it is staying. All the "we stayed" posts we found are individual engineers' blogs. A company that says nothing has, by default, stayed, so the silence says little.
+- **Decisions to stay on Terraform:** we found no named company publicly announcing that it is staying (searched 2026-11-04). All the "we stayed" posts we found are individual engineers' blogs. This can't be proven either way, so the outline uses it only as a stated caveat: a company that says nothing has, by default, stayed, so the silence says little.
 
 ## Sources
 
@@ -138,6 +138,12 @@ The pattern is the same each time. A single-vendor project relicenses to stop cl
 - Pulumi preview docs: https://www.pulumi.com/docs/iac/cli/commands/pulumi_preview/
 - Elastic, "Elasticsearch is Open Source. Again!" (2024-08-29): https://www.elastic.co/blog/elasticsearch-is-open-source-again
 - Redis, "Redis is now available under the AGPLv3" (2025-05-01): https://redis.io/blog/agplv3/
+- IBM, "IBM Completes Acquisition of HashiCorp" (2025-02-27): https://newsroom.ibm.com/2025-02-27-ibm-completes-acquisition-of-hashicorp,-creates-comprehensive,-end-to-end-hybrid-cloud-platform
+- MongoDB SSPL press release (2018-10-16): https://investors.mongodb.com/news-releases/news-release-details/mongodb-issues-new-server-side-public-license-mongodb-community
+- Elastic, "Licensing change" (Jan 2021): https://www.elastic.co/blog/licensing-change
+- Redis, "Redis adopts dual source-available licensing" (2024-03-20): https://redis.io/blog/redis-adopts-dual-source-available-licensing/
+- OpenTofu issues: https://github.com/opentofu/opentofu/issues/3787 ; https://github.com/opentofu/opentofu/issues/3309
+- Firefly State of IaC 2025 (vendor; gated): https://www.firefly.ai/state-of-iac-2025 ; write-up: https://thenewstack.io/the-maturing-state-of-infrastructure-as-code-in-2025/
 - MongoDB SSPL / OSI withdrawal: https://opensourceforu.com/2019/03/mongodb-withdraws-its-server-side-public-license-from-osi-consideration-process/ ; OSI review list: https://lists.opensource.org/pipermail/license-review_lists.opensource.org/2019-March/003989.html
 - Valkey launch: https://www.phoronix.com/news/Linux-Foundation-Valkey ; https://www.linuxfoundation.org/blog/a-year-of-valkey
 - Fidelity migration (2025-10-06): https://opentofu.org/blog/fidelity-investment-migration/
