@@ -867,7 +867,7 @@ So PortoBikes now has a team, a pipeline, policies, and maybe a certified engine
 
 ---
 
-# August 2023: Terraform moves to the BSL
+# August 2023: the Terraform CLI moves to the BSL
 
 From version 1.6, the Terraform CLI is under the **Business Source License**. Up to 1.5.7 it stays MPL 2.0.
 
@@ -885,7 +885,7 @@ PortoBikes' lawyer asks: **"Are we affected?"**
 </div>
 <div>
 
-**Forbidden:** offering Terraform to others, hosted or embedded, to compete with the vendor's paid versions.
+**Forbidden:** offering the Terraform CLI to others, hosted or embedded, to compete with the vendor's paid versions.
 
 </div>
 </div>
@@ -901,7 +901,7 @@ PortoBikes' lawyer asks: **"Are we affected?"**
 
 What it forbids is offering Terraform to other people, hosted or embedded, in a product that competes with HashiCorp's paid versions. So who was affected? HashiCorp's competitors: companies like Spacelift, env0 and Scalr, which sell hosted Terraform runs.
 
-HashiCorp's reason, in its own words: some vendors were profiting from the open-source project without contributing back.
+HashiCorp's reason: "commercial open source models need to evolve", because some vendors were profiting from the open-source project without contributing back.
 
 Detail if there's time: since the acquisition, the license text names IBM, not HashiCorp, as the company you may not compete with. And each version turns back into MPL four years after release.
 -->
@@ -960,7 +960,7 @@ Since then:
 
 [click] What changed since? The license is still the BSL: no move back to open source. CDK for Terraform, the tool for writing Terraform in programming languages, was archived in December 2025. The old free tier of HCP Terraform ended in March 2026; the new one is capped at 500 resources.
 
-To be fair: Terraform itself is very much alive. Stacks, terraform query, Terraform Policy in 1.17 last month. HashiCorp still ships every few weeks.
+To be fair: Terraform itself is very much alive: Stacks went GA in 2025, terraform query came in 1.14, and Terraform Policy in 1.17 last month. HashiCorp still ships every few weeks.
 -->
 
 ---
@@ -974,12 +974,12 @@ To be fair: Terraform itself is very much alive. Stacks, terraform query, Terraf
 | Redis | 2024 | 2025 |
 | HashiCorp | 2023 | <v-click>?</v-click> |
 
-<p class="pt-4">Each time: one company changes the license to stop rivals profiting, and a fork appears (OpenSearch, Valkey, OpenTofu).</p>
+<p class="pt-4">Each time, one company changes the license to stop rivals profiting. Usually a fork appears: OpenSearch, Valkey, OpenTofu.</p>
 
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: MongoDB SSPL press release (2018-10-16); Elastic, "Licensing change" (2021) and "Elasticsearch is open source. Again!" (2024-08-29); Redis blog (2024-03-20, 2025-05-01)</p>
 
 <!--
-[S3] And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting, and a fork appears.
+[S3] And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting. Except for MongoDB, a fork appears.
 
 But look at the last column. Elastic added an open-source license back in 2024, with the headline "Elasticsearch is open source. Again!". Redis did the same in 2025, and admitted the change had hurt its relationship with the community.
 
@@ -1096,7 +1096,7 @@ Expect this counter: IBM can change the terms again, and every change since the 
 
 [click] B. MOVE TO OPENTOFU (Alef)
 1. License and governance: MPL 2.0, under the Linux Foundation and the CNCF. No single company can relicense it.
-2. Drop-in, shown at scale: Fidelity moved 2,000+ apps and 50,000+ state files; "Changing the CLI in a pipeline is trivial", and OpenTofu is now its default for new deployments. And you'll see it in a minute, on our own server.
+2. Drop-in, shown at scale: Fidelity runs 2,000+ apps and 50,000+ state files on Terraform/OpenTofu; "Changing the CLI in a pipeline is trivial", and OpenTofu is now its default for new deployments. And you'll see it in a minute, on our own server.
 3. Features users asked for: state encryption, for_each on providers, -exclude, OCI registries.
 4. The ecosystem is moving: GitLab replaced its Terraform CI/CD templates with OpenTofu components, citing the BSL.
 5. Same providers, same code: everything learned so far still applies.
@@ -1108,7 +1108,7 @@ Honest caveats: the main backers (Spacelift, env0, Harness, Scalr) sell products
 3. Gradual migration: pulumi convert --from terraform; any Terraform provider works through its bridge; HCL can now run unchanged. Pulumi lets HashiCorp customers apply credits they bought from HashiCorp.
 4. A home for stranded CDK for Terraform users, now that CDKTF is archived.
 5. Leading on AI: Pulumi Neo. And reviews still work: pulumi preview is its plan.
-Honest caveats: Pulumi is also a single, VC-funded vendor, the same kind of company that relicensed in every case on the previous slide. A rewrite is the most expensive option. And general-purpose code can be harder to review than declarative HCL, which weakens the "reviewable infrastructure" argument this whole talk is built on.
+Honest caveats: Pulumi is also a single, VC-funded vendor, the same kind of company that relicensed in every case on the "This has happened before" slide. A rewrite is the most expensive option. And general-purpose code can be harder to review than declarative HCL, which weakens the "reviewable infrastructure" argument this whole talk is built on.
 
 [click] [S3, one line] Crossplane manages cloud resources from inside Kubernetes. It's a CNCF Graduated project, but it only makes sense if you already run everything on Kubernetes, and PortoBikes doesn't.
 -->
