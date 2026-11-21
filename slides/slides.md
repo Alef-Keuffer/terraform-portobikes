@@ -973,16 +973,16 @@ Before and after, side by side. We're not announcing a winner: this is what the 
   <div class="border-2 border-current rounded p-3"><b>Terraform Stacks</b><br>many modules, many environments (GA Sept 2025)</div>
 </div>
 
-<p class="pt-6">Each one reads the <b>plan</b> or the <b>state</b>. None of it works on a server someone set up by hand.</p>
+<p class="pt-6">Each one reads the <b>plan</b> or the <b>state</b>.</p>
 
 <!--
 [S3]
 
-So that was 2023 to 2025. Let's come back to now, 2026, and then look ten years ahead.
+That was 2023 to 2025. Now 2026, and then ten years ahead.
 
-First, what grew up around Terraform. Everything on this slide exists because infrastructure became reviewable code, and almost every box reads the plan or the state.
+First, what grew up around Terraform. Everything here exists because infrastructure became reviewable code.
 
-Policy as code, which you've already seen: rules checked against every plan. GitOps, with Argo CD and Flux: instead of someone running apply, an agent pulls the desired state from Git and keeps correcting drift on its own. Drift detection: HCP Terraform re-plans a workspace on a schedule and tells you when reality has moved. Platform engineering: modules wrapped in a self-service portal like Backstage. Security scanners like Checkov and Trivy read your Terraform and flag an open bucket before it exists. And Terraform Stacks, generally available since September 2025, deploys many modules together.
+Policy as code, which you've already seen: rules checked against every plan. GitOps, with Argo CD and Flux: instead of someone running apply, a controller pulls the desired state from Git and keeps correcting drift. Drift detection: HCP Terraform re-plans a workspace on a schedule and tells you when reality has moved. Platform engineering: modules wrapped in a self-service portal like Backstage. Security scanners like Checkov and Trivy read your Terraform and flag an open bucket before it exists. And Terraform Stacks, generally available since September 2025, deploys many modules together.
 
 Same idea, six times: the plan is the thing everyone checks.
 -->
@@ -1011,8 +1011,6 @@ The Terraform MCP server connects AI assistants, like Claude Code or GitHub Copi
 Pulumi has its own agent, Neo, which it calls an AI platform engineer, with human-in-the-loop approvals.
 
 And HCP Terraform has been rebuilt with agents in mind. Agents get credentials issued per run and revoked afterwards. Mandatory policy sits between plan and apply, where the agent can't skip it. And tfctl, HashiCorp's new command line from June, makes delete commands ask for interactive confirmation, which, in HashiCorp's words, makes them "effectively inoperable by autonomous agents, by design".
-
-Notice what every vendor reached for: the plan, as the guardrail.
 -->
 
 ---
@@ -1027,15 +1025,17 @@ Notice what every vendor reached for: the plan, as the guardrail.
 
 <v-click>
 
-<p class="pt-6 text-xl"><b>19%</b>: the best model tested, GPT-4, on IaC-Eval's Terraform tasks <span class="text-base opacity-80">(NeurIPS 2024; 2023–24 models)</span></p>
+<p class="pt-6 text-xl"><b>19%</b>: the best model tested, GPT-4, on IaC-Eval's Terraform tasks (2023–24 models)</p>
 
 </v-click>
 
 <v-click>
 
-<p class="text-xl"><b>77.8% valid, 0% secure</b>: one model's Terraform, scanned with Checkov <span class="text-base opacity-80">(SBSeg 2026)</span></p>
+<p class="text-xl"><b>77.8% valid, 0% secure</b>: one model's Terraform, scanned with Checkov</p>
 
 </v-click>
+
+<p class="text-sm opacity-80">IaC-Eval (NeurIPS 2024); "Security-First Evaluation of Text-to-Terraform" (SBSeg 2026).</p>
 
 <!--
 [S3]
@@ -1044,7 +1044,7 @@ So can AI write good Terraform? Three different questions hide in the word "good
 
 [click] Correct. IaC-Eval, a benchmark from NeurIPS 2024: 458 AWS scenarios, in Terraform. The best model they tested, GPT-4, got 19% right on the first try. The same GPT-4 scores 86.6% on a Python benchmark. To be fair, those were 2023 and 2024 models.
 
-[click] Secure. A 2026 paper at SBSeg, the Brazilian security symposium, tested seven models. One of them, WizardCoder, wrote Terraform that passed validate 77.8% of the time, and passed the Checkov security scanner 0% of the time. The best setup, Claude Opus 4 with detailed security prompts, reached 23% on Checkov. The authors' conclusion: validity and security are "largely independent", and "prompt engineering alone is insufficient".
+[click] Secure. A 2026 security paper tested seven models. One, WizardCoder, wrote Terraform that passed validate 77.8% of the time, and passed the Checkov security scanner 0% of the time. The best setup, Claude Opus 4 with detailed security prompts, reached 23% on Checkov. The authors' conclusion: validity and security are "largely independent", and "prompt engineering alone is insufficient".
 
 Valid is the easy part. The other two still need review.
 -->
@@ -1054,7 +1054,7 @@ Valid is the easy part. The other two still need review.
 # 📍 DataTalks.Club, February 2026
 
 - New laptop, but the **state** stayed on the old one. An AI coding agent runs `plan` and `apply`; nobody reads the plan
-- During cleanup, the agent restores an **old state file** that describes production
+- During cleanup, pointed at an archived folder, the agent restores an **old state file** that describes production
 - The agent proposes `terraform destroy`; it runs. VPC, database, cluster and load balancers are gone, and the automated snapshots with them
 - AWS support restores the database after about **24 hours**
 
@@ -1065,11 +1065,11 @@ Valid is the easy part. The other two still need review.
 <!--
 [S3]
 
-And here's what happens when nobody reviews. February 2026. Alexey Grigorev, who runs DataTalks.Club, is moving a second website onto AWS. To save five to ten dollars a month, he adds it to the same Terraform setup as the DataTalks.Club course platform.
+Here's what happens when nobody reviews. February 2026. Alexey Grigorev, who runs DataTalks.Club, adds a second website to the same Terraform setup as his course platform, to save five to ten dollars a month.
 
-He starts from a new laptop, but the state file is still on the old one, so Terraform thinks nothing exists. He lets Claude Code run plan and apply without reading the plan himself, and duplicates start appearing. He stops it and asks the agent to clean up. Along the way, the agent unpacks an old archived state file, the one that describes production, over the current one. Then it proposes terraform destroy. He lets it run, thinking only the duplicates will go. The VPC, the database, the cluster and the load balancers are deleted, and the automated snapshots go with the database. About 24 hours later, AWS support restores the database.
+He starts from a new laptop, but the state file is still on the old one, so Terraform thinks nothing exists. He lets Claude Code run plan and apply without reading the plan himself, and duplicates start appearing. He stops it and asks the agent to clean up. He points it at an archived folder, for comparison, and the agent unpacks the old state file there, the one that describes production, over the current one. Then it proposes terraform destroy. He lets it run, thinking only the duplicates will go. The VPC, the database, the cluster and the load balancers are deleted, snapshots included. About 24 hours later, AWS support restores the database.
 
-Now the fair part. This is not "AI went rogue". In his own post-mortem, Grigorev blames his own setup: "I over-relied on the AI agent to run Terraform commands." State on one laptop. "The database was too easy to delete." Backups he had assumed existed and never tested. Gruntwork agrees: "The operating model is what determined the blast radius." Every safeguard he was missing is from turning point 4: remote state, a reviewed plan, protected resources.
+Now the fair part. This is not "AI went rogue". In his own post-mortem, Grigorev blames his own setup: "I over-relied on the AI agent to run Terraform commands." State on one laptop. "The database was too easy to delete." Backups he had assumed existed and never tested. Gruntwork agrees: "The operating model is what determined the blast radius." Remote state and a reviewed plan are straight from turning point 4.
 
 It's Knight Capital again: a missing double-check, now with an AI agent in the operator's seat.
 -->
@@ -1112,7 +1112,7 @@ The agent writes the code and produces the plan. A human, plus the policies, dec
 
 So where does that leave PortoBikes in 2036? These are our bets. They're opinion, not fact, and you're welcome to disagree in the Q&A.
 
-[click] One: people review HCL far more than they write it, and agents write most of it. Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation by 2029, up from under 1% this year. Agents can only take over the writing because infrastructure became code that can be read.
+[click] One: people review HCL far more than they write it, and agents write most of it. Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation and drift remediation by 2029, up from under 1% this year. Agents can only take over the writing because infrastructure became code that can be read.
 
 [click] Two: no agent will be allowed to apply a destroy without a human approving the plan. That's HashiCorp's line, and DataTalks.Club is the price of skipping it. The honest counter-argument: Gartner, as reported by The Register, expects only 20% of AI-suggested actions to get human approval by 2029. We're betting that destroys, the changes you can't undo, stay human.
 
