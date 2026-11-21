@@ -1,4 +1,5 @@
-// Fails if the built deck requests anything outside localhost, so it can be presented with Wi-Fi off.
+// Fails if the built deck requests anything outside localhost, so it can be presented with Wi-Fi off,
+// or if the backup demo recording doesn't load.
 // Usage: npm run build && npm run check:offline
 import { preview } from 'vite'
 import { chromium } from 'playwright'
@@ -25,6 +26,11 @@ for (const view of views) {
     total = await page.locator('.slidev-page').count()
     // Without the live config the poll slides must fall back to their own content, not slide-quiz's error box.
     pollErrors = await page.locator('.sq-error').count()
+    // The backup demo recording must actually load, not just avoid the network.
+    await page.waitForFunction(() => {
+      const videos = [...document.querySelectorAll('video')]
+      return videos.length > 0 && videos.every(v => v.readyState >= 1)
+    }, null, { timeout: 15000 })
   }
 }
 
@@ -38,4 +44,4 @@ if (pollErrors) {
   console.error(`${pollErrors} poll slide(s) show a slide-quiz error instead of their static content.`)
   process.exit(1)
 }
-console.log(`OK: ${views.join(', ')} (${total} slides in the overview) load without leaving localhost.`)
+console.log(`OK: ${views.join(', ')} (${total} slides in the overview) load without leaving localhost; the backup recording loads.`)

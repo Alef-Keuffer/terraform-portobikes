@@ -47,8 +47,9 @@ const open = async (url) => {
   await page.waitForTimeout(2500)
   return page
 }
-const counts = async (page, slide) => {
-  const columns = page.locator(`.slidev-page-${slide} .sq-results`)
+// Counts on the slide on screen (Slidev keeps neighbouring slides mounted but hidden).
+const counts = async (page) => {
+  const columns = page.locator('.sq-results:visible')
   const out = []
   for (let i = 0; i < await columns.count(); i++)
     out.push((await columns.nth(i).locator('.sq-result-bar__count').allInnerTexts()).join(','))
@@ -72,21 +73,21 @@ const check = (label, actual, expected) => {
 }
 
 try {
-  // Slide numbers follow slides.md: 3 vote #1, 4 its results, 5 vote #2, 6 before and after.
-  const projector = await open(site + '3')
+  // The poll slides' routeAlias in slides.md: vote #1, its results, vote #2, then before and after.
+  const projector = await open(site + 'poll-vote-1')
   const phones = []
   for (let i = 0; i < 3; i++) phones.push(await open(`${site}quiz.html?wsUrl=${wsUrl}&quizGroupId=${group}`))
 
   await vote(phones, 'debate-1', ['A', 'B', 'B'])
   await next(projector)
-  check('vote #1, projector', await counts(projector, 4), '1,2,0')
-  check('vote #1, tab opened after voting', await counts(await open(site + '4'), 4), '1,2,0')
+  check('vote #1, projector', await counts(projector), '1,2,0')
+  check('vote #1, tab opened after voting', await counts(await open(site + 'poll-results-1')), '1,2,0')
 
   await next(projector)
   await vote(phones, 'debate-2', ['C', 'C', 'A'])
   await next(projector)
-  check('before and after, projector', await counts(projector, 6), '1,2,0 | 1,0,2')
-  check('before and after, brand-new tab', await counts(await open(site + '6'), 6), '1,2,0 | 1,0,2')
+  check('before and after, projector', await counts(projector), '1,2,0 | 1,0,2')
+  check('before and after, brand-new tab', await counts(await open(site + 'poll-compare')), '1,2,0 | 1,0,2')
 }
 finally {
   await browser.close()

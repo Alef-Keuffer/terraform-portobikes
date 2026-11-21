@@ -39,7 +39,7 @@ However the script ends (finished, Ctrl+C or an error), it destroys the demo con
 
 **Pressed Ctrl+C by accident during the talk?** Switch the projector to the slides, run `./demo.sh -d` and press Enter quickly until you're back where you were. Reaching the debate takes about 30 seconds.
 
-If anything fails live, play `recording.mp4`. To re-record it after changing the demo: `brew install vhs && vhs recording.tape`.
+If anything fails live, play the backup slide right after "LIVE DEMO" in the deck (it plays `recording.mp4`, which lives in `../slides/public/` and is linked here). To re-record it after changing the demo: `brew install vhs && vhs recording.tape`.
 
 ## The steps
 
