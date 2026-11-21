@@ -30,7 +30,7 @@ Alef opens, closes, drives the demo and argues for OpenTofu in the debate. Danie
 2. A black screen with only: **Friday, 18:00. The booking server is down.**
 
 **Speaker notes**
-> Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in the next 40 minutes has happened to a real company, and we'll show you which one. It's Friday, 18:00, peak rental time, and the booking server just died. It was set up by hand three years ago, by someone who has since left. So: how long would it take *you* to rebuild it? Hold that number. We'll come back to it.
+> Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in this talk has happened to a real company, and we'll show you which one. It's Friday, 18:00, peak rental time, and the booking server just died. It was set up by hand three years ago, by someone who has since left. So: how long would it take *you* to rebuild it? Hold that number. We'll come back to it.
 
 ---
 
@@ -197,7 +197,27 @@ Demo-day risks:
    - one model's code passed Terraform's validity check 77.8% of the time, with 0% security compliance (SBSeg 2026)
 4. 📍 **Real anchor: DataTalks.Club, February 2026.** An AI coding agent restored an outdated state file and ran `terraform destroy`, taking down the production setup. AWS support restored the database after about 24 hours.
 5. HashiCorp's own line: *"The agent can propose. It should not decide."*
-6. **"Our bets for 2036":** 2–3 predictions the group commits to, clearly labelled as opinion. Raw material: DORA 2025 and Gartner forecasts (Gartner second-hand via press and vendors; label them as reported opinion).
+6. **"Our bets for 2036":** 2–3 predictions the group commits to, clearly labelled as opinion. Picked from the candidates below.
+
+**Candidate bets for 2036**
+
+> **Group: pick 2–3 of these by 2026-11-23**. All five are **opinion**, not fact, and the slide must say so. Every Gartner number below is **second-hand (!)**: we only have it as quoted by The Register or a vendor, never from Gartner itself.
+
+1. **Opinion: in 2036, people review HCL far more than they write it. Agents write most of it.**
+   *Why:* Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation and drift remediation by 2029, up from under 1% in 2026 **(second-hand, !)**. The Terraform MCP server is already GA (June 2026) [P].
+   *Ties to the argument:* agents can only take over the writing because infrastructure became code that can be read and reviewed.
+2. **Opinion: in 2036, no agent will be allowed to apply a destroy without a human approving the plan.**
+   *Why:* HashiCorp's "The agent can propose. It should not decide.", and tfctl's delete commands are "effectively inoperable by autonomous agents, by design" [P]. DataTalks.Club shows the cost of skipping that review [P]. Against it: Gartner, as reported by The Register, says only 20% of AI-suggested actions will get human approval by 2029 **(second-hand, !)**.
+   *Ties to the argument:* the plan is the review point. This bet says it stays human for the changes that can't be undone.
+3. **Opinion: in 2036, most plan review is machine-to-machine. Policy and scanners check every plan before a person sees it.**
+   *Why:* Sentinel and OPA already sit between plan and apply [P]. The SBSeg 2026 paper found validity and security "largely independent" (one model: 77.8% valid, 0% Checkov compliance) [P], so generated code needs an automatic security check.
+   *Ties to the argument:* once the plan was a reviewable artifact, machines could review it as well as people.
+4. **Opinion: in 2036, Git is no longer the whole source of truth. A live graph of the estate is, and code is one input to it.**
+   *Why:* HashiCorp's Infragraph covers managed *and unmanaged* resources and is pitched as "the knowledge foundation" for AI workflows [P]. Adam Jacob (System Initiative): "We've taken that idea [declarative configuration] as far as it can go" [S, its 2026 status not checked **(!)**].
+   *Ties to the argument:* the risky bet. If infrastructure stops being code, review has to find a new form.
+5. **Opinion: in 2036, there is no single standard. The Terraform CLI (IBM) and OpenTofu (Linux Foundation / CNCF) both survive, and HCL is what they share.**
+   *Why:* the governance fork shapes which tool agents are trained and tooled for (`research/06-future.md`, trend 5). Features only one tool has, such as Stacks or state encryption, make switching a one-way door (`research/05-license-change.md`). Both are the research author's own reading, not a sourced forecast, and the compatibility details behind the second are [S] **(!)**.
+   *Ties to the argument:* the license change mattered because whoever controls the reviewable-code format controls the standard.
 
 **Speaker notes**
 > Tell the DataTalks.Club story fairly. In his own post-mortem, the author, Alexey Grigorev, blames his own setup: local state, no deletion protection, backups never tested. Gruntwork agrees: *"The operating model is what determined the blast radius."* It isn't "AI bad". It's "an agent skipped human review of the plan." That's turning point 1 again: Knight Capital's missing double-check, now with an AI agent in the operator's seat.
