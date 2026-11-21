@@ -866,6 +866,129 @@ So PortoBikes now has a team, a pipeline, policies, and maybe a certified engine
 -->
 
 ---
+
+# August 2023: the Terraform CLI moves to the BSL
+
+From version 1.6, the Terraform CLI is under the **Business Source License**. Up to 1.5.7 it stays MPL 2.0.
+
+<v-click>
+
+PortoBikes' lawyer asks: **"Are we affected?"**
+
+</v-click>
+
+<div v-click class="grid grid-cols-2 gap-8 pt-4">
+<div>
+
+**Allowed:** using it in production, even in a company. Writing modules. Building providers.
+
+</div>
+<div>
+
+**Forbidden:** offering the Terraform CLI to others, hosted or embedded, to compete with the vendor's paid versions.
+
+</div>
+</div>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: HashiCorp, "HashiCorp adopts the Business Source License" (2023-08-10); Terraform LICENSE file (BUSL 1.1), github.com/hashicorp/terraform</p>
+
+<!--
+[S3] On the tenth of August 2023, HashiCorp changed the rules. From version 1.6, the Terraform CLI is no longer open source. It moves from the Mozilla Public License to the Business Source License, the BSL. Everything up to 1.5.7 stays open source.
+
+[click] PortoBikes' lawyer asks the obvious question: are we affected?
+
+[click] For PortoBikes: no. The license explicitly allows production use, including inside a commercial company. You can still write modules and build providers, and the providers themselves were never relicensed.
+
+What it forbids is offering Terraform to other people, hosted or embedded, in a product that competes with HashiCorp's paid versions. So who was affected? HashiCorp's competitors: companies like Spacelift, env0 and Scalr, which sell hosted Terraform runs.
+
+HashiCorp's reason: "commercial open source models need to evolve", because some vendors were profiting from the open-source project without contributing back.
+
+Detail if there's time: since the acquisition, the license text names IBM, not HashiCorp, as the company you may not compete with. And each version turns back into MPL four years after release.
+-->
+
+---
+
+# Six weeks later: OpenTofu
+
+<div class="grid grid-cols-[1fr_auto_1fr] gap-4 items-center pt-6 pb-6 text-center">
+  <div><div class="text-xl font-bold">10 Aug 2023</div><div>The BSL change</div></div>
+  <div class="text-3xl">→</div>
+  <div><div class="text-xl font-bold">20 Sep 2023</div><div>OpenTofu, at the Linux Foundation</div></div>
+</div>
+
+<v-clicks>
+
+- Backed by the very companies the BSL targeted: Spacelift, env0, Scalr, Harness, Gruntwork…
+- A fork of the last open-source Terraform, under **MPL 2.0**. First stable release: January 2024.
+- In the **CNCF Sandbox** since April 2025. Now it has features of its own, like state encryption.
+
+</v-clicks>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: OpenTofu manifesto (opentofu.org/manifesto); The Register (2023-09-20); CNCF project page (cncf.io/projects/opentofu)</p>
+
+<!--
+[S3] The reaction was fast. Within days, a group of companies published a manifesto asking HashiCorp to go back to an open-source license. HashiCorp didn't answer, so they forked. On the twentieth of September, about six weeks after the change, the Linux Foundation announced OpenTofu.
+
+[click] And who backed it? The very companies the BSL was aimed at: Spacelift, env0, Scalr, Harness, Gruntwork. More than 140 organisations pledged support.
+
+[click] It's a fork of the last open-source version, under the old MPL license. The first stable release came in January 2024.
+
+[click] Since April 2025 it's a CNCF Sandbox project, so no single company owns it. And it's no longer just a copy: it has its own features, like encrypting the state file, which often holds secrets in plain text. Terraform has features OpenTofu doesn't have either. They are drifting apart.
+-->
+
+---
+
+# 2025: IBM buys HashiCorp
+
+<p class="text-5xl font-bold pt-4 pb-6">$6.4B, completed 27 Feb 2025</p>
+
+<v-click>
+
+Since then:
+
+- The license is still the BSL
+- CDK for Terraform: archived, December 2025
+- The old free tier of HCP Terraform: ended March 2026
+- New Terraform features keep shipping: Stacks, `terraform query`, Terraform Policy
+
+</v-click>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: IBM newsroom (2024-04-24, 2025-02-27); HashiCorp blog; Terraform release notes</p>
+
+<!--
+[S3] Then, in April 2024, IBM announced it was buying HashiCorp, for 6.4 billion dollars. The deal closed on the twenty-seventh of February 2025.
+
+[click] What changed since? The license is still the BSL: no move back to open source. CDK for Terraform, the tool for writing Terraform in programming languages, was archived in December 2025. The old free tier of HCP Terraform ended in March 2026; the new one is capped at 500 resources.
+
+To be fair: Terraform itself is very much alive: Stacks went GA in 2025, terraform query came in 1.14, and Terraform Policy in 1.17 last month. HashiCorp still ships every few weeks.
+-->
+
+---
+
+# This has happened before
+
+| Company | Moved to a source-available license | Added an open-source (AGPL) license back |
+|---|---|---|
+| MongoDB | 2018 | no |
+| Elastic | 2021 | 2024 |
+| Redis | 2024 | 2025 |
+| HashiCorp | 2023 | <v-click>?</v-click> |
+
+<p class="pt-4">Each time, one company changes the license to stop rivals profiting. Usually a fork appears: OpenSearch, Valkey, OpenTofu.</p>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: MongoDB SSPL press release (2018-10-16); Elastic, "Licensing change" (2021) and "Elasticsearch is open source. Again!" (2024-08-29); Redis blog (2024-03-20, 2025-05-01)</p>
+
+<!--
+[S3] And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting. Except for MongoDB, a fork appears.
+
+But look at the last column. Elastic added an open-source license back in 2024, with the headline "Elasticsearch is open source. Again!". Redis did the same in 2025, and admitted the change had hurt its relationship with the community.
+
+[click] HashiCorp, now IBM: not so far. Will it? Nobody knows.
+
+So: when a tool becomes the standard, who controls its license matters as much as its features. Which brings us to PortoBikes' decision.
+-->
+
+---
 layout: poll
 poll: vote
 routeAlias: poll-vote-1
@@ -886,9 +1009,11 @@ options:
 <p class="opacity-70">Show of hands.</p>
 
 <!--
-Vote #1, before the debate. Scan the QR code and vote. [wait for the bars to settle]
+[S3] THE DEBATE. PortoBikes must decide. Vote #1, before the debate: scan the QR code and vote. [wait for the bars to settle]
 
-If the QR code fails: timekeeper, count a show of hands for A, B and C and note the numbers.
+If no bars move within about 30 seconds, the QR code has failed. Don't troubleshoot on stage: switch the projector to the Mentimeter window opened before the talk (docs/poll-checklist.md), let people vote, screenshot the result, switch back.
+
+TIMEKEEPER: if Mentimeter fails too, count a show of hands. Read out "A, Stay on Terraform", "B, Move to OpenTofu", "C, Rewrite in Pulumi", count each, and write the three numbers down: they are vote #1, needed for the comparison after the debate.
 -->
 
 ---
@@ -912,6 +1037,83 @@ Here's where the room stands before anyone argues. Hold on to it.
 -->
 
 ---
+
+# Three options, 90 seconds each
+
+<div class="grid grid-cols-3 gap-6 pt-4">
+
+<div v-click>
+
+### A. Stay on Terraform
+
+<p class="text-sm opacity-70">[speaker TBD]</p>
+
+- The full product, plus HCP Terraform
+- Newest features: Stacks, `terraform query`, Terraform Policy
+- The biggest community and job market
+
+</div>
+
+<div v-click>
+
+### B. Move to OpenTofu
+
+<p class="text-sm opacity-70">Alef</p>
+
+- Open-source license, neutral governance
+- Its own features: state encryption
+- Real migrations, at scale
+
+</div>
+
+<div v-click>
+
+### C. Rewrite in Pulumi
+
+<p class="text-sm opacity-70">[speaker TBD]</p>
+
+- Real programming languages
+- Now reads HCL directly
+- Accepts credits bought from HashiCorp
+
+</div>
+
+</div>
+
+<p v-click class="pt-8 opacity-70">And Crossplane: the option nobody argued for.</p>
+
+<!--
+THE DEBATE. One click per side, as each speaker starts. TIMEKEEPER: 90 seconds per side. Show the "30 seconds" card at 60 s and "stop" at 90 s. Nobody announces a winner, on a slide or out loud.
+
+[click] A. STAY ON TERRAFORM ([speaker TBD])
+1. The license doesn't apply to us. PortoBikes uses Terraform internally, and the BSL explicitly allows production use.
+2. It's the standard. 18.4% of Stack Overflow's 2025 respondents use it. In one vendor survey (Firefly's State of IaC 2025, 350+ respondents), Terraform had 62% "market share", and 12% were using OpenTofu. Say "62% vs 12% in one vendor survey", never a precise ratio: they're measured differently. Hiring, certifications and tutorials all assume Terraform.
+3. Features only Terraform has: Stacks, actions and terraform query, Terraform Policy, and the HCP Terraform platform around it.
+4. A large vendor: IBM offers enterprise support, and Terraform still ships every few weeks (1.17.1 in October).
+5. Switching has a cost, even when it's "trivial": CI images, procurement, tools with Terraform hard-coded, retraining. And it's not perfectly drop-in: tofu init rewrites the provider lock file (.terraform.lock.hcl) to OpenTofu's registry, so the two tools can't share one without re-running init. "Drop-in, mostly."
+Honest caveat: we found no named company publicly saying it's staying on Terraform. Say it openly: "companies that stay don't write blog posts about it."
+Expect this counter: IBM can change the terms again, and every change since the acquisition went against users (BSL kept, free tier capped, CDKTF archived). Each Terraform-only feature makes leaving more expensive later.
+
+[click] B. MOVE TO OPENTOFU (Alef)
+1. License and governance: MPL 2.0, under the Linux Foundation and the CNCF. No single company can relicense it.
+2. Drop-in, shown at scale: Fidelity runs 2,000+ apps and 50,000+ state files on Terraform/OpenTofu; "Changing the CLI in a pipeline is trivial", and OpenTofu is now its default for new deployments. And you'll see it in a minute, on our own server.
+3. Features users asked for: state encryption, for_each on providers, -exclude, OCI registries.
+4. The ecosystem is moving: GitLab replaced its Terraform CI/CD templates with OpenTofu components, citing the BSL.
+5. Same providers, same code: everything learned so far still applies.
+Honest caveats: the main backers (Spacelift, env0, Harness, Scalr) sell products that compete with HCP Terraform, so their support is also a business decision. The tools are drifting apart: once a team uses .tofu files or state encryption, moving back is a one-way door. Its usage share is still a fraction of Terraform's.
+
+[click] C. REWRITE IN PULUMI ([speaker TBD])
+1. Real programming languages: TypeScript, Python, Go, .NET, Java. Loops, types, unit tests, IDE support.
+2. Apache 2.0 from the start, and says it doesn't rely on BSL software.
+3. Gradual migration: pulumi convert --from terraform; any Terraform provider works through its bridge; HCL can now run unchanged. Pulumi lets HashiCorp customers apply credits they bought from HashiCorp.
+4. A home for stranded CDK for Terraform users, now that CDKTF is archived.
+5. Leading on AI: Pulumi Neo. And reviews still work: pulumi preview is its plan.
+Honest caveats: Pulumi is also a single, VC-funded vendor, the same kind of company that relicensed in every case on the "This has happened before" slide. A rewrite is the most expensive option. And general-purpose code can be harder to review than declarative HCL, which weakens the "reviewable infrastructure" argument this whole talk is built on.
+
+[click] [S3, one line] Crossplane manages cloud resources from inside Kubernetes. It's a CNCF Graduated project, but it only makes sense if you already run everything on Kubernetes, and PortoBikes doesn't.
+-->
+
+---
 layout: poll
 poll: vote
 routeAlias: poll-vote-2
@@ -932,9 +1134,11 @@ options:
 <p class="opacity-70">Show of hands.</p>
 
 <!--
-Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
+[S3] Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
 
-If the QR code fails: timekeeper, count a show of hands again.
+If the poll failed at vote #1, use the same backup again: Mentimeter's second slide, then a show of hands.
+
+TIMEKEEPER: if counting hands, count A, B and C again and write the numbers next to vote #1's. On the next slide, read both sets out: "Before: A …, B …, C …. After: A …, B …, C …". Numbers only, no winner.
 -->
 
 ---
@@ -955,9 +1159,84 @@ options:
 <p class="opacity-70">The live results from the talk will be shown here.</p>
 
 <!--
-Before and after, side by side. We're not announcing a winner: this is what the room thinks.
+[S3] Before and after, side by side. We're not announcing a winner: the honest answer is "it depends on the company". This is just what the room thinks.
+
+If the backup was Mentimeter: show the two screenshots one after the other. If it was a show of hands: the timekeeper reads out both sets of numbers.
+
+After the talk: screenshot this slide and the two results slides for the GitHub Pages copy (docs/poll-checklist.md, teardown).
 -->
 
+---
+
+# 📍 What companies actually did
+
+<v-clicks>
+
+- **Fidelity Investments:** 50,000+ state files on Terraform/OpenTofu. OpenTofu is now the default for new deployments.
+  > *"a technical drop-in"* · *"Changing the CLI in a pipeline is trivial."*
+- **GitLab:** replaced its Terraform CI/CD templates with OpenTofu components, because of the BSL.
+
+</v-clicks>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: OpenTofu blog (2025-10-06), opentofu.org/blog/fidelity-investment-migration; GitLab issue 438010 and epic 12401</p>
+
+<!--
+[S3] So what did real companies do?
+
+[click] Fidelity Investments: more than 50,000 state files on Terraform and OpenTofu. They made OpenTofu the default for new deployments. In their words, "a technical drop-in", and "changing the CLI in a pipeline is trivial". Their lesson: the code change is the easy part; versioning, CI/CD and governance are the hard parts.
+
+[click] GitLab removed its Terraform CI/CD templates and ships OpenTofu components instead, and the BSL is the stated reason. GitLab still supports Terraform itself.
+
+And the other side: we found no named company publicly announcing it's staying on Terraform. That proves nothing: a company that stays just says nothing.
+
+"Drop-in" is a big claim. Alef, show us.
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# → LIVE: `tofu plan`
+
+<p class="text-2xl pt-4">Alef switches to the terminal</p>
+
+<p class="opacity-60 pt-8">The server Terraform built in the demo, read by OpenTofu</p>
+
+<!--
+HAND-OFF TO THE TERMINAL. Alef switches the projector to the demo window left open since turning point 3 and presses Enter: demo.sh continues with "Same code, same server, different tool: OpenTofu".
+
+If it fails at any point: switch back to the slides and go to the NEXT slide (the backup recording). If it works, skip the next slide.
+
+`tofu init`: "OpenTofu downloads the same Docker provider, from its own registry."
+
+`tofu plan` → "No changes. Your infrastructure matches the configuration.":
+"A different tool read Terraform's state, compared it with the real server, and has nothing to do. That's what drop-in means."
+
+`tofu destroy` → type yes → "Destroy complete!":
+"And it can clean up what Terraform built."
+
+Honest caveat, one sentence: "Drop-in, mostly: tofu init rewrote the lock file to OpenTofu's registry, so a team can't share one lock file between the two tools without re-running init."
+
+Then switch the projector back to the slides. The demo is over: demo.sh restores main.tf and the lock file by itself.
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# Backup: `tofu plan`, recorded
+
+<video src="/recording.mp4#t=79.9" controls preload="auto" class="mx-auto max-h-[55vh] rounded shadow"></video>
+
+<p class="text-sm opacity-50 pt-2">Only if the live <code>tofu</code> step fails.</p>
+
+<!--
+ONLY IF THE LIVE TOFU STEP FAILED. If it worked, skip this slide.
+
+Press play: it starts at the OpenTofu part of the recording. Alef says the same lines as in the notes on the previous slide: "No changes. Your infrastructure matches the configuration."
+-->
 ---
 
 <!-- ===== Turning point 6: the future (2026 → 2036). S3. ~6 min ===== -->
