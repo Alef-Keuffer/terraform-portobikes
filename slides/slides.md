@@ -19,7 +19,7 @@ PortoBikes is invented. Every incident in this talk really happened somewhere.
 </p>
 
 <!--
-Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in the next 40 minutes has happened to a real company, and we'll show you which one.
+Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in this talk has happened to a real company, and we'll show you which one.
 -->
 
 ---
