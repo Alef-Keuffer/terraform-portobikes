@@ -15,7 +15,7 @@ const PREVIEW = process.argv.includes('--preview')
 const OUT = join(WORK, PREVIEW ? 'preview.mp4' : 'presentation.mp4')
 const URL = process.env.VOICESTUDIO_URL ?? 'http://127.0.0.1:3900'
 // One narrator for every shot: a Kokoro preset is always the same speaker (OmniVoice's 'default' is not).
-const MODEL = process.env.NARRATE_MODEL ?? 'mlx-audio'
+const MODEL = process.env.NARRATE_MODEL ?? 'mlx-audio' // VoiceStudio's engine that runs Kokoro
 const VOICE = process.env.NARRATE_VOICE ?? 'am_michael'
 const INSTRUCT = process.env.NARRATE_INSTRUCT
 const GAP = 0.6 // seconds of silence after each shot
