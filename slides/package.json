@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@anycable/serverless-js": "^0.2.3",
+    "@netlify/blobs": "^11.1.9",
     "@slidev/cli": "^53.1.0",
     "@slidev/theme-seriph": "^0.25.0",
     "slidev-addon-slide-quiz": "^0.5.2",

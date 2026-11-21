@@ -4,8 +4,25 @@ import { getQuizPresenter } from 'slide-quiz'
 // Only the Netlify build sets VITE_SLIDE_QUIZ_WS_URL. Without it the slide shows its own Markdown
 // instead, so the local and GitHub Pages decks never open a WebSocket to a torn-down AnyCable app.
 const wsUrl: string | undefined = import.meta.env.VITE_SLIDE_QUIZ_WS_URL
-const config = wsUrl ? { wsUrl, quizGroupId: 'portobikes-debate', quizUrl: '/quiz.html' } : null
+// A new group ID starts from zero votes: change it after the phone test so its votes don't show at the talk.
+const quizGroupId: string = import.meta.env.VITE_SLIDE_QUIZ_GROUP_ID || 'portobikes-debate'
+const config = wsUrl ? { wsUrl, quizGroupId, quizUrl: '/quiz.html' } : null
 const manager = config ? getQuizPresenter(config) : null
+
+// A tab only counts the votes broadcast while it is connected, so on every (re)connect it also loads
+// the saved ones. The tally is per voter, so votes it already counted aren't counted twice.
+manager?.store.connection.listen(async (state) => {
+  if (state !== 'connected') return
+  try {
+    const res = await fetch(`/.netlify/functions/quiz-votes?quizGroupId=${encodeURIComponent(quizGroupId)}`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    // shortcut: onResultsMessage is private in slide-quiz 0.7.2 (the path a live vote takes); recheck it when upgrading.
+    for (const vote of (await res.json()).votes) (manager as any).onResultsMessage(vote)
+  }
+  catch (err) {
+    console.error('[poll] loading saved votes failed:', err)
+  }
+})
 </script>
 
 <script setup lang="ts">
