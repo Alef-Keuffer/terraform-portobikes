@@ -30,7 +30,7 @@ Alef opens, closes, drives the demo and argues for OpenTofu in the debate. Danie
 2. A black screen with only: **Friday, 18:00. The booking server is down.**
 
 **Speaker notes**
-> Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in the next 40 minutes has happened to a real company, and we'll show you which one. It's Friday, 18:00, peak rental time, and the booking server just died. It was set up by hand three years ago, by someone who has since left. So: how long would it take *you* to rebuild it? Hold that number. We'll come back to it.
+> Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in this talk has happened to a real company, and we'll show you which one. It's Friday, 18:00, peak rental time, and the booking server just died. It was set up by hand three years ago, by someone who has since left. So: how long would it take *you* to rebuild it? Hold that number. We'll come back to it.
 
 ---
 

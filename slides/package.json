@@ -1,0 +1,19 @@
+{
+  "name": "terraform-portobikes-slides",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "slidev build",
+    "preview": "vite preview --outDir dist",
+    "check:offline": "node check-offline.mjs"
+  },
+  "dependencies": {
+    "@slidev/cli": "^53.1.0",
+    "@slidev/theme-seriph": "^0.25.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.1"
+  }
+}
