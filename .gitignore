@@ -4,3 +4,6 @@
 *.tfstate.*
 crash.log
 *.tfvars
+
+# Local Netlify folder
+.netlify
