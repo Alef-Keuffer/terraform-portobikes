@@ -197,11 +197,11 @@ Demo-day risks:
    - one model's code passed Terraform's validity check 77.8% of the time, with 0% security compliance (SBSeg 2026)
 4. 📍 **Real anchor: DataTalks.Club, February 2026.** An AI coding agent restored an outdated state file and ran `terraform destroy`, taking down the production setup. AWS support restored the database after about 24 hours.
 5. HashiCorp's own line: *"The agent can propose. It should not decide."*
-6. **"Our bets for 2036":** 2–3 predictions the group commits to, clearly labelled as opinion. Picked from the candidates below.
+6. **"Our bets for 2036":** the group's picks (bets 1–3 below), clearly labelled as opinion.
 
 **Candidate bets for 2036**
 
-> **Group: pick 2–3 of these by 2026-11-23**. All five are **opinion**, not fact, and the slide must say so. Every Gartner number below is **second-hand (!)**: we only have it as quoted by The Register or a vendor, never from Gartner itself.
+> **The group picked bets 1, 2 and 3** (2026-11-21); 4 and 5 stay here as Q&A material. All five are **opinion**, not fact, and the slide must say so. Every Gartner number below is **second-hand (!)**: we only have it as quoted by The Register or a vendor, never from Gartner itself.
 
 1. **Opinion: in 2036, people review HCL far more than they write it. Agents write most of it.**
    *Why:* Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation and drift remediation by 2029, up from under 1% in 2026 **(second-hand, !)**. The Terraform MCP server is already GA (June 2026) [P].

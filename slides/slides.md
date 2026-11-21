@@ -959,6 +959,169 @@ Before and after, side by side. We're not announcing a winner: this is what the 
 -->
 
 ---
+
+<!-- ===== Turning point 6: the future (2026 → 2036). S3. ~6 min ===== -->
+
+# IaC in 2026: everything checks the plan
+
+<div class="grid grid-cols-3 gap-4 pt-6 text-center">
+  <div class="border-2 border-current rounded p-3"><b>Policy as code</b><br>Sentinel, OPA, Terraform Policy</div>
+  <div class="border-2 border-current rounded p-3"><b>GitOps</b><br>Argo CD, Flux</div>
+  <div class="border-2 border-current rounded p-3"><b>Drift detection</b><br>scheduled re-plans in HCP Terraform</div>
+  <div class="border-2 border-current rounded p-3"><b>Platform engineering</b><br>Backstage portals</div>
+  <div class="border-2 border-current rounded p-3"><b>Security scanners</b><br>Checkov, Trivy</div>
+  <div class="border-2 border-current rounded p-3"><b>Terraform Stacks</b><br>many modules, many environments (GA Sept 2025)</div>
+</div>
+
+<p class="pt-6">Each one reads the <b>plan</b> or the <b>state</b>. None of it works on a server someone set up by hand.</p>
+
+<!--
+[S3]
+
+So that was 2023 to 2025. Let's come back to now, 2026, and then look ten years ahead.
+
+First, what grew up around Terraform. Everything on this slide exists because infrastructure became reviewable code, and almost every box reads the plan or the state.
+
+Policy as code, which you've already seen: rules checked against every plan. GitOps, with Argo CD and Flux: instead of someone running apply, an agent pulls the desired state from Git and keeps correcting drift on its own. Drift detection: HCP Terraform re-plans a workspace on a schedule and tells you when reality has moved. Platform engineering: modules wrapped in a self-service portal like Backstage. Security scanners like Checkov and Trivy read your Terraform and flag an open bucket before it exists. And Terraform Stacks, generally available since September 2025, deploys many modules together.
+
+Same idea, six times: the plan is the thing everyone checks.
+-->
+
+---
+
+# AI + IaC today
+
+<div class="grid grid-cols-3 gap-4 pt-6">
+  <div class="border-2 border-current rounded p-3"><b>Terraform MCP server</b><br>connects AI assistants to Terraform. GA June 2026. Run-creating tools are <b>off by default</b></div>
+  <div class="border-2 border-current rounded p-3"><b>Pulumi Neo</b><br>an AI "platform engineer" agent, with human-in-the-loop approvals</div>
+  <div class="border-2 border-current rounded p-3"><b>HCP Terraform, for agents</b><br>per-run credentials, mandatory policy between plan and apply, deletes an agent can't confirm (tfctl)</div>
+</div>
+
+<p class="pt-6">Every vendor reached for the same guardrail: the <b>plan</b>.</p>
+
+<p class="text-sm opacity-80">HashiCorp: MCP server GA, README, tfctl and agent-control blog posts (2026). Pulumi blog (2025).</p>
+
+<!--
+[S3]
+
+And now the newest writer of infrastructure code: AI.
+
+The Terraform MCP server connects AI assistants, like Claude Code or GitHub Copilot, to Terraform. It became generally available in June. Notice the default: the tools that create runs are switched off unless you turn them on.
+
+Pulumi has its own agent, Neo, which it calls an AI platform engineer, with human-in-the-loop approvals.
+
+And HCP Terraform has been rebuilt with agents in mind. Agents get credentials issued per run and revoked afterwards. Mandatory policy sits between plan and apply, where the agent can't skip it. And tfctl, HashiCorp's new command line from June, makes delete commands ask for interactive confirmation, which, in HashiCorp's words, makes them "effectively inoperable by autonomous agents, by design".
+
+Notice what every vendor reached for: the plan, as the guardrail.
+-->
+
+---
+
+# Valid ≠ correct ≠ secure
+
+<div class="grid grid-cols-3 gap-4 pt-4 text-center">
+  <div class="border-2 border-current rounded p-3"><b>Valid</b><br><code>terraform validate</code> accepts it</div>
+  <div class="border-2 border-current rounded p-3"><b>Correct</b><br>it does what you asked</div>
+  <div class="border-2 border-current rounded p-3"><b>Secure</b><br>a security scanner passes it</div>
+</div>
+
+<v-click>
+
+<p class="pt-6 text-xl"><b>19%</b>: the best model tested, GPT-4, on IaC-Eval's Terraform tasks <span class="text-base opacity-80">(NeurIPS 2024; 2023–24 models)</span></p>
+
+</v-click>
+
+<v-click>
+
+<p class="text-xl"><b>77.8% valid, 0% secure</b>: one model's Terraform, scanned with Checkov <span class="text-base opacity-80">(SBSeg 2026)</span></p>
+
+</v-click>
+
+<!--
+[S3]
+
+So can AI write good Terraform? Three different questions hide in the word "good". Valid: does terraform validate accept it? Correct: does it do what you asked? Secure: would a security scanner pass it?
+
+[click] Correct. IaC-Eval, a benchmark from NeurIPS 2024: 458 AWS scenarios, in Terraform. The best model they tested, GPT-4, got 19% right on the first try. The same GPT-4 scores 86.6% on a Python benchmark. To be fair, those were 2023 and 2024 models.
+
+[click] Secure. A 2026 paper at SBSeg, the Brazilian security symposium, tested seven models. One of them, WizardCoder, wrote Terraform that passed validate 77.8% of the time, and passed the Checkov security scanner 0% of the time. The best setup, Claude Opus 4 with detailed security prompts, reached 23% on Checkov. The authors' conclusion: validity and security are "largely independent", and "prompt engineering alone is insufficient".
+
+Valid is the easy part. The other two still need review.
+-->
+
+---
+
+# 📍 DataTalks.Club, February 2026
+
+- New laptop, but the **state** stayed on the old one. An AI coding agent runs `plan` and `apply`; nobody reads the plan
+- During cleanup, the agent restores an **old state file** that describes production
+- The agent proposes `terraform destroy`; it runs. VPC, database, cluster and load balancers are gone, and the automated snapshots with them
+- AWS support restores the database after about **24 hours**
+
+<p class="pt-4">The author's own post-mortem: <em>"I over-relied on the AI agent to run Terraform commands."</em></p>
+
+<p class="text-sm opacity-80">Alexey Grigorev, post-mortem (2026-03-06); AI Incident Database #1424; Gruntwork (2026-04-15).</p>
+
+<!--
+[S3]
+
+And here's what happens when nobody reviews. February 2026. Alexey Grigorev, who runs DataTalks.Club, is moving a second website onto AWS. To save five to ten dollars a month, he adds it to the same Terraform setup as the DataTalks.Club course platform.
+
+He starts from a new laptop, but the state file is still on the old one, so Terraform thinks nothing exists. He lets Claude Code run plan and apply without reading the plan himself, and duplicates start appearing. He stops it and asks the agent to clean up. Along the way, the agent unpacks an old archived state file, the one that describes production, over the current one. Then it proposes terraform destroy. He lets it run, thinking only the duplicates will go. The VPC, the database, the cluster and the load balancers are deleted, and the automated snapshots go with the database. About 24 hours later, AWS support restores the database.
+
+Now the fair part. This is not "AI went rogue". In his own post-mortem, Grigorev blames his own setup: "I over-relied on the AI agent to run Terraform commands." State on one laptop. "The database was too easy to delete." Backups he had assumed existed and never tested. Gruntwork agrees: "The operating model is what determined the blast radius." Every safeguard he was missing is from turning point 4: remote state, a reviewed plan, protected resources.
+
+It's Knight Capital again: a missing double-check, now with an AI agent in the operator's seat.
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# *"The agent can propose. It should not decide."*
+
+<p class="opacity-80 pt-4">HashiCorp, on HCP Terraform as the control plane for AI (2026)</p>
+
+<!--
+[S3]
+
+HashiCorp puts it in one line: "The agent can propose. It should not decide."
+
+The agent writes the code and produces the plan. A human, plus the policies, decides whether it runs. And it's exactly what Grigorev changed afterwards: agents no longer execute commands for him. He reviews every plan, and runs anything destructive himself.
+-->
+
+---
+
+# Our bets for 2036
+
+<p class="inline-block border-2 border-amber-500 bg-amber-300 text-black rounded px-3 py-1 font-semibold">OPINION, not fact: our group's picks</p>
+
+<v-clicks>
+
+1. People **review** HCL far more than they write it. Agents write most of it.
+2. No agent applies a **destroy** without a human approving the plan.
+3. Most plan review is **machine to machine**: policy and scanners check every plan before a person sees it.
+
+</v-clicks>
+
+<p class="text-sm opacity-80 pt-6">Gartner figures in the notes are second-hand, as quoted by Itential and The Register.</p>
+
+<!--
+[S3]
+
+So where does that leave PortoBikes in 2036? These are our bets. They're opinion, not fact, and you're welcome to disagree in the Q&A.
+
+[click] One: people review HCL far more than they write it, and agents write most of it. Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation by 2029, up from under 1% this year. Agents can only take over the writing because infrastructure became code that can be read.
+
+[click] Two: no agent will be allowed to apply a destroy without a human approving the plan. That's HashiCorp's line, and DataTalks.Club is the price of skipping it. The honest counter-argument: Gartner, as reported by The Register, expects only 20% of AI-suggested actions to get human approval by 2029. We're betting that destroys, the changes you can't undo, stay human.
+
+[click] Three: most plan review becomes machine to machine. Policies and scanners check every plan before a person sees it, because, as you just saw, valid is not secure.
+
+[pause] Put together: the AI writes, the machines check, and a human still decides what can't be undone.
+-->
+
+---
 layout: center
 class: text-center
 ---
