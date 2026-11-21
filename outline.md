@@ -215,7 +215,7 @@ Demo-day risks:
 4. **Opinion: in 2036, Git is no longer the whole source of truth. A live graph of the estate is, and code is one input to it.**
    *Why:* HashiCorp's Infragraph covers managed *and unmanaged* resources and is pitched as "the knowledge foundation" for AI workflows [P]. Adam Jacob (System Initiative): "We've taken that idea [declarative configuration] as far as it can go" [S, its 2026 status not checked **(!)**].
    *Ties to the argument:* the risky bet. If infrastructure stops being code, review has to find a new form.
-5. **Opinion: in 2036, there is no single standard. the Terraform CLI (IBM) and OpenTofu (Linux Foundation / CNCF) both survive, and HCL is what they share.**
+5. **Opinion: in 2036, there is no single standard. The Terraform CLI (IBM) and OpenTofu (Linux Foundation / CNCF) both survive, and HCL is what they share.**
    *Why:* the governance fork shapes which tool agents are trained and tooled for (`research/06-future.md`, trend 5). Features only one tool has, such as Stacks or state encryption, make switching a one-way door (`research/05-license-change.md`). Both are the research author's own reading, not a sourced forecast, and the compatibility details behind the second are [S] **(!)**.
    *Ties to the argument:* the license change mattered because whoever controls the reviewable-code format controls the standard.
 
