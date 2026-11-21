@@ -9,6 +9,7 @@
     "check:offline": "node check-offline.mjs",
     "rehearse:poll": "node rehearse-poll.mjs",
     "narrate": "node narrate.mjs",
+    "narrate:preview": "node narrate.mjs --preview",
     "timing": "node timing.mjs"
   },
   "dependencies": {
