@@ -14,6 +14,8 @@ addons:
 transition: fade
 ---
 
+<!-- ===== Opening hook: Friday 18:00. Alef. ~1.5 min ===== -->
+
 # Infrastructure as Code with Terraform
 
 The PortoBikes story
@@ -46,6 +48,8 @@ Hold that number. We'll come back to it.
 -->
 
 ---
+
+<!-- ===== Turning point 1: ClickOps (2015). S1. ~5.5 min ===== -->
 
 # PortoBikes, 2015
 
@@ -239,6 +243,8 @@ The idea that matters for us: if infrastructure is a file, a change is a diff. A
 
 ---
 
+<!-- ===== Turning point 2: scripts and configuration management (2016). S1. ~4 min ===== -->
+
 # PortoBikes, 2016: scripts in Git
 
 ```bash
@@ -372,7 +378,7 @@ What PortoBikes wants is one tool and one workflow for everything. And that's wh
 
 ---
 
-<!-- ===== Turning point 3: Terraform arrives, plus the live demo (2017). S2 narrates, Alef drives the demo. ~13 min ===== -->
+<!-- ===== Turning point 3: Terraform arrives, plus the live demo (2017). S2 narrates, Alef drives the demo. ~7.5 min ===== -->
 
 # Terraform almost didn't make it
 
@@ -620,6 +626,8 @@ After that: 1.5 lets you import hand-made infrastructure through a reviewed plan
 
 ---
 
+<!-- ===== Turning point 4: the team grows (2019–2022). S2. ~7.5 min ===== -->
+
 # 2019: ten engineers, one state file
 
 - Two people run `terraform apply` at once: both read the same old **state**, and one write is lost
@@ -679,7 +687,7 @@ You open a pull request with your change. CI runs terraform plan and posts the r
 
 Why the plan? Because a three-line change in the code can hide something destructive, like an attribute that forces the database to be replaced. The code diff looks harmless. The plan says "must be replaced". You saw exactly that in the demo, when changing a price replaced our server.
 
-Three tools implement this same loop. Atlantis is open source and self-hosted. You comment "atlantis plan" on the pull request, and it can refuse to apply until someone other than the author has approved. GitHub Actions can run the plan in CI. And HCP Terraform, HashiCorp's hosted service, plans every pull request on its own.
+Three tools implement this loop. Atlantis, open source and self-hosted, plans when you comment on the pull request, and can refuse to apply until someone other than the author approves. GitHub Actions can run the plan in CI. And HCP Terraform plans every pull request on its own.
 
 This is where the talk's argument becomes concrete: reviewable code became reviewable change.
 -->
@@ -756,7 +764,7 @@ So that's the relationship between IaC and DevOps: the infrastructure goes throu
 
 Once a plan is something a person can review, it's also something a machine can check. That's policy as code.
 
-You write rules, like "no storage bucket open to the internet" or "nothing outside our region", and they're checked against every plan before apply. In HashiCorp's own words, HCP Terraform "checks the Terraform plan against the policy set during each run". If a policy fails, it can stop the run.
+You write rules, like "no storage bucket open to the internet" or "nothing outside our region", and they're checked against every plan before apply. If a rule fails, the run can stop.
 
 There are three main options. Sentinel is HashiCorp's own policy language. OPA, the Open Policy Agent, is open source and uses a language called Rego. And since Terraform 1.17, last month, there's Terraform Policy, written in HCL itself and built into the CLI, so policy checks no longer need the paid platform.
 
@@ -793,11 +801,11 @@ The reviewer is no longer only a colleague. It's a colleague plus a set of rules
 
 So who pays for all this? The Terraform CLI is free. Even HCP Terraform, HashiCorp's hosted service, has a free tier, and it already includes remote runs and single sign-on.
 
-Teams pay for the things that only matter once you're a team. More applies running at the same time. Drift detection, which tells you when someone clicked something in the console in production. Audit logs, for when someone asks who changed what. HCP Terraform charges per managed resource per month: ten cents, forty-seven cents or ninety-nine cents, depending on the tier. Those are the prices on HashiCorp's pricing page as of the fourth of November; the two higher tiers go through sales, so treat them as list prices.
+Teams pay for the things that only matter once you're a team. More applies running at the same time. Drift detection, which tells you when someone clicked something in the console in production. Audit logs, for when someone asks who changed what. HCP Terraform charges per managed resource per month: ten cents, forty-seven cents or ninety-nine cents, depending on the tier. List prices from HashiCorp's page on the fourth of November; the higher tiers go through sales.
 
 So people don't pay for the CLI. They pay for running it as a team: coordination and governance. And those needs grow with headcount, which is exactly what happened to PortoBikes.
 
-For scale: in its last quarterly report before IBM bought it, HashiCorp had 4,856 customers, and 946 of them paid more than a hundred thousand dollars a year. That's all HashiCorp products, not just HCP Terraform.
+Detail if there's time: in its last quarterly report before IBM bought it, HashiCorp had 4,856 customers, and 946 of them paid more than a hundred thousand dollars a year. That's all HashiCorp products, not just HCP Terraform.
 -->
 
 ---
@@ -858,11 +866,136 @@ The Professional costs two hundred dollars and takes ninety minutes. It covers e
 
 The Advanced exam is two hundred and ninety-five dollars, four hours, with hands-on labs on AWS or Azure.
 
-These are three separate, current exams. None replaced another. Each is valid for two years, and only the Advanced one includes a free retake.
+All three are current, each valid for two years.
 
 [pause]
 
 So PortoBikes now has a team, a pipeline, policies, and maybe a certified engineer or two. Everything depends on one tool, and one vendor: HashiCorp. In 2023, HashiCorp changed the rules.
+-->
+
+---
+
+<!-- ===== Turning point 5: the license change, plus the debate (2023–2025). S3 + all speakers. ~14 min ===== -->
+
+# August 2023: the Terraform CLI moves to the BSL
+
+From version 1.6, the Terraform CLI is under the **Business Source License**. Up to 1.5.7 it stays MPL 2.0.
+
+<v-click>
+
+PortoBikes' lawyer asks: **"Are we affected?"**
+
+</v-click>
+
+<div v-click class="grid grid-cols-2 gap-8 pt-4">
+<div>
+
+**Allowed:** using it in production, even in a company. Writing modules. Building providers.
+
+</div>
+<div>
+
+**Forbidden:** offering the Terraform CLI to others, hosted or embedded, to compete with the vendor's paid versions.
+
+</div>
+</div>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: HashiCorp, "HashiCorp adopts the Business Source License" (2023-08-10); Terraform LICENSE file (BUSL 1.1), github.com/hashicorp/terraform</p>
+
+<!--
+[S3] On the tenth of August 2023, HashiCorp changed the rules. From version 1.6, the Terraform CLI is no longer open source. It moves from the Mozilla Public License to the Business Source License, the BSL. Everything up to 1.5.7 stays open source.
+
+[click] PortoBikes' lawyer asks the obvious question: are we affected?
+
+[click] For PortoBikes: no. The license explicitly allows production use, including inside a commercial company. You can still write modules and build providers, and the providers themselves were never relicensed.
+
+What it forbids is offering Terraform to other people, hosted or embedded, in a product that competes with HashiCorp's paid versions. So who was affected? HashiCorp's competitors: companies like Spacelift, env0 and Scalr, which sell hosted Terraform runs.
+
+HashiCorp's reason: "commercial open source models need to evolve", because some vendors were profiting from the open-source project without contributing back.
+
+Detail if there's time: since the acquisition, the license text names IBM, not HashiCorp, as the company you may not compete with. And each version turns back into MPL four years after release.
+-->
+
+---
+
+# Six weeks later: OpenTofu
+
+<div class="grid grid-cols-[1fr_auto_1fr] gap-4 items-center pt-6 pb-6 text-center">
+  <div><div class="text-xl font-bold">10 Aug 2023</div><div>The BSL change</div></div>
+  <div class="text-3xl">→</div>
+  <div><div class="text-xl font-bold">20 Sep 2023</div><div>OpenTofu, at the Linux Foundation</div></div>
+</div>
+
+<v-clicks>
+
+- Backed by the very companies the BSL targeted: Spacelift, env0, Scalr, Harness, Gruntwork…
+- A fork of the last open-source Terraform, under **MPL 2.0**. First stable release: January 2024.
+- In the **CNCF Sandbox** since April 2025. Now it has features of its own, like state encryption.
+
+</v-clicks>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: OpenTofu manifesto (opentofu.org/manifesto); The Register (2023-09-20); CNCF project page (cncf.io/projects/opentofu)</p>
+
+<!--
+[S3] The reaction was fast. Within days, a group of companies published a manifesto asking HashiCorp to go back to an open-source license. HashiCorp didn't answer, so they forked. On the twentieth of September, about six weeks after the change, the Linux Foundation announced OpenTofu.
+
+[click] And who backed it? The very companies the BSL was aimed at: Spacelift, env0, Scalr, Harness, Gruntwork. More than 140 organisations pledged support.
+
+[click] It's a fork of the last open-source version, under the old MPL license. The first stable release came in January 2024.
+
+[click] Since April 2025 it's a CNCF Sandbox project, so no single company owns it. And it's no longer just a copy: it has its own features, like encrypting the state file, which often holds secrets in plain text. Terraform has features OpenTofu doesn't have either. They are drifting apart.
+-->
+
+---
+
+# 2025: IBM buys HashiCorp
+
+<p class="text-5xl font-bold pt-4 pb-6">$6.4B, completed 27 Feb 2025</p>
+
+<v-click>
+
+Since then:
+
+- The license is still the BSL
+- CDK for Terraform: archived, December 2025
+- The old free tier of HCP Terraform: ended March 2026
+- New Terraform features keep shipping: Stacks, `terraform query`, Terraform Policy
+
+</v-click>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: IBM newsroom (2024-04-24, 2025-02-27); HashiCorp blog; Terraform release notes</p>
+
+<!--
+[S3] Then, in April 2024, IBM announced it was buying HashiCorp, for 6.4 billion dollars. The deal closed on the twenty-seventh of February 2025.
+
+[click] What changed since? The license is still the BSL: no move back to open source. CDK for Terraform, the tool for writing Terraform in programming languages, was archived in December 2025. The old free tier of HCP Terraform ended in March 2026; the new one is capped at 500 resources.
+
+To be fair: Terraform itself is very much alive: Stacks went GA in 2025, terraform query came in 1.14, and Terraform Policy in 1.17 last month. HashiCorp still ships every few weeks.
+-->
+
+---
+
+# This has happened before
+
+| Company | Moved to a source-available license | Added an open-source (AGPL) license back |
+|---|---|---|
+| MongoDB | 2018 | no |
+| Elastic | 2021 | 2024 |
+| Redis | 2024 | 2025 |
+| HashiCorp | 2023 | <v-click>?</v-click> |
+
+<p class="pt-4">Each time, one company changes the license to stop rivals profiting. Usually a fork appears: OpenSearch, Valkey, OpenTofu.</p>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: MongoDB SSPL press release (2018-10-16); Elastic, "Licensing change" (2021) and "Elasticsearch is open source. Again!" (2024-08-29); Redis blog (2024-03-20, 2025-05-01)</p>
+
+<!--
+[S3] And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting. Except for MongoDB, a fork appears.
+
+But look at the last column. Elastic added an open-source license back in 2024, with the headline "Elasticsearch is open source. Again!". Redis did the same in 2025, and admitted the change had hurt its relationship with the community.
+
+[click] HashiCorp, now IBM: not so far. Will it? Nobody knows.
+
+So: when a tool becomes the standard, who controls its license matters as much as its features. Which brings us to PortoBikes' decision.
 -->
 
 ---
@@ -886,9 +1019,11 @@ options:
 <p class="opacity-70">Show of hands.</p>
 
 <!--
-Vote #1, before the debate. Scan the QR code and vote. [wait for the bars to settle]
+[S3] THE DEBATE. PortoBikes must decide. Vote #1, before the debate: scan the QR code and vote. [wait for the bars to settle]
 
-If the QR code fails: timekeeper, count a show of hands for A, B and C and note the numbers.
+If no bars move within about 30 seconds, the QR code has failed. Don't troubleshoot on stage: switch the projector to the Mentimeter window opened before the talk (docs/poll-checklist.md), let people vote, screenshot the result, switch back.
+
+TIMEKEEPER: if Mentimeter fails too, count a show of hands. Read out "A, Stay on Terraform", "B, Move to OpenTofu", "C, Rewrite in Pulumi", count each, and write the three numbers down: they are vote #1, needed for the comparison after the debate.
 -->
 
 ---
@@ -912,6 +1047,83 @@ Here's where the room stands before anyone argues. Hold on to it.
 -->
 
 ---
+
+# Three options, 90 seconds each
+
+<div class="grid grid-cols-3 gap-6 pt-4">
+
+<div v-click>
+
+### A. Stay on Terraform
+
+<p class="text-sm opacity-70">[Side A speaker]</p>
+
+- The full product, plus HCP Terraform
+- Newest features: Stacks, `terraform query`, Terraform Policy
+- The biggest community and job market
+
+</div>
+
+<div v-click>
+
+### B. Move to OpenTofu
+
+<p class="text-sm opacity-70">Alef</p>
+
+- Open-source license, neutral governance
+- Its own features: state encryption
+- Real migrations, at scale
+
+</div>
+
+<div v-click>
+
+### C. Rewrite in Pulumi
+
+<p class="text-sm opacity-70">[Side C speaker]</p>
+
+- Real programming languages
+- Now reads HCL directly
+- Accepts credits bought from HashiCorp
+
+</div>
+
+</div>
+
+<p v-click class="pt-8 opacity-70">And Crossplane: the option nobody argued for.</p>
+
+<!--
+THE DEBATE. One click per side, as each speaker starts. TIMEKEEPER: 90 seconds per side. Show the "30 seconds" card at 60 s and "stop" at 90 s. Nobody announces a winner, on a slide or out loud.
+
+[click] A. STAY ON TERRAFORM ([Side A speaker])
+1. The license doesn't apply to us. PortoBikes uses Terraform internally, and the BSL explicitly allows production use.
+2. It's the standard. 18.4% of Stack Overflow's 2025 respondents use it. In one vendor survey (Firefly's State of IaC 2025, 350+ respondents), Terraform had 62% "market share", and 12% were using OpenTofu. Say "62% vs 12% in one vendor survey", never a precise ratio: they're measured differently. Hiring, certifications and tutorials all assume Terraform.
+3. Features only Terraform has: Stacks, actions and terraform query, Terraform Policy, and the HCP Terraform platform around it.
+4. A large vendor: IBM offers enterprise support, and Terraform still ships every few weeks (1.17.1 in October).
+5. Switching has a cost, even when it's "trivial": CI images, procurement, tools with Terraform hard-coded, retraining. And it's not perfectly drop-in: tofu init rewrites the provider lock file (.terraform.lock.hcl) to OpenTofu's registry, so the two tools can't share one without re-running init. "Drop-in, mostly."
+Honest caveat: we found no named company publicly saying it's staying on Terraform. Say it openly: "companies that stay don't write blog posts about it."
+Expect this counter: IBM can change the terms again, and every change since the acquisition went against users (BSL kept, free tier capped, CDKTF archived). Each Terraform-only feature makes leaving more expensive later.
+
+[click] B. MOVE TO OPENTOFU (Alef)
+1. License and governance: MPL 2.0, under the Linux Foundation and the CNCF. No single company can relicense it.
+2. Drop-in, shown at scale: Fidelity runs 2,000+ apps and 50,000+ state files on Terraform/OpenTofu; "Changing the CLI in a pipeline is trivial", and OpenTofu is now its default for new deployments. And you'll see it in a minute, on our own server.
+3. Features users asked for: state encryption, for_each on providers, -exclude, OCI registries.
+4. The ecosystem is moving: GitLab replaced its Terraform CI/CD templates with OpenTofu components, citing the BSL.
+5. Same providers, same code: everything learned so far still applies.
+Honest caveats: the main backers (Spacelift, env0, Harness, Scalr) sell products that compete with HCP Terraform, so their support is also a business decision. The tools are drifting apart: once a team uses .tofu files or state encryption, moving back is a one-way door. Its usage share is still a fraction of Terraform's.
+
+[click] C. REWRITE IN PULUMI ([Side C speaker])
+1. Real programming languages: TypeScript, Python, Go, .NET, Java. Loops, types, unit tests, IDE support.
+2. Apache 2.0 from the start, and says it doesn't rely on BSL software.
+3. Gradual migration: pulumi convert --from terraform; any Terraform provider works through its bridge; HCL can now run unchanged. Pulumi lets HashiCorp customers apply credits they bought from HashiCorp.
+4. A home for stranded CDK for Terraform users, now that CDKTF is archived.
+5. Leading on AI: Pulumi Neo. And reviews still work: pulumi preview is its plan.
+Honest caveats: Pulumi is also a single, VC-funded vendor, the same kind of company that relicensed in every case on the "This has happened before" slide. A rewrite is the most expensive option. And general-purpose code can be harder to review than declarative HCL, which weakens the "reviewable infrastructure" argument this whole talk is built on.
+
+[click] [S3, one line] Crossplane manages cloud resources from inside Kubernetes. It's a CNCF Graduated project, but it only makes sense if you already run everything on Kubernetes, and PortoBikes doesn't.
+-->
+
+---
 layout: poll
 poll: vote
 routeAlias: poll-vote-2
@@ -932,9 +1144,11 @@ options:
 <p class="opacity-70">Show of hands.</p>
 
 <!--
-Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
+[S3] Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
 
-If the QR code fails: timekeeper, count a show of hands again.
+If the poll failed at vote #1, use the same backup again: Mentimeter's second slide, then a show of hands.
+
+TIMEKEEPER: if counting hands, count A, B and C again and write the numbers next to vote #1's. On the next slide, read both sets out: "Before: A …, B …, C …. After: A …, B …, C …". Numbers only, no winner.
 -->
 
 ---
@@ -955,13 +1169,253 @@ options:
 <p class="opacity-70">The live results from the talk will be shown here.</p>
 
 <!--
-Before and after, side by side. We're not announcing a winner: this is what the room thinks.
+[S3] Before and after, side by side. We're not announcing a winner: the honest answer is "it depends on the company". This is just what the room thinks.
+
+If the backup was Mentimeter: show the two screenshots one after the other. If it was a show of hands: the timekeeper reads out both sets of numbers.
+
+After the talk: screenshot this slide and the two results slides for the GitHub Pages copy (docs/poll-checklist.md, teardown).
+-->
+
+---
+
+# 📍 What companies actually did
+
+<v-clicks>
+
+- **Fidelity Investments:** 50,000+ state files on Terraform/OpenTofu. OpenTofu is now the default for new deployments.
+  > *"a technical drop-in"* · *"Changing the CLI in a pipeline is trivial."*
+- **GitLab:** replaced its Terraform CI/CD templates with OpenTofu components, because of the BSL.
+
+</v-clicks>
+
+<p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: OpenTofu blog (2025-10-06), opentofu.org/blog/fidelity-investment-migration; GitLab issue 438010 and epic 12401</p>
+
+<!--
+[S3] So what did real companies do?
+
+[click] Fidelity Investments: more than 50,000 state files on Terraform and OpenTofu. They made OpenTofu the default for new deployments. In their words, "a technical drop-in", and "changing the CLI in a pipeline is trivial". Their lesson: the code change is the easy part; versioning, CI/CD and governance are the hard parts.
+
+[click] GitLab removed its Terraform CI/CD templates and ships OpenTofu components instead, and the BSL is the stated reason. GitLab still supports Terraform itself.
+
+And the other side: we found no named company publicly announcing it's staying on Terraform. That proves nothing: a company that stays just says nothing.
+
+"Drop-in" is a big claim. Alef, show us.
 -->
 
 ---
 layout: center
 class: text-center
 ---
+
+# → LIVE: `tofu plan`
+
+<p class="text-2xl pt-4">Alef switches to the terminal</p>
+
+<p class="opacity-60 pt-8">The server Terraform built in the demo, read by OpenTofu</p>
+
+<!--
+HAND-OFF TO THE TERMINAL. Alef switches the projector to the demo window left open since turning point 3 and presses Enter: demo.sh continues with "Same code, same server, different tool: OpenTofu".
+
+If it fails at any point: switch back to the slides and go to the NEXT slide (the backup recording). If it works, skip the next slide.
+
+`tofu init`: "OpenTofu downloads the same Docker provider, from its own registry."
+
+`tofu plan` → "No changes. Your infrastructure matches the configuration.":
+"A different tool read Terraform's state, compared it with the real server, and has nothing to do. That's what drop-in means."
+
+`tofu destroy` → type yes → "Destroy complete!":
+"And it can clean up what Terraform built."
+
+Honest caveat, one sentence: "Drop-in, mostly: tofu init rewrote the lock file to OpenTofu's registry, so a team can't share one lock file between the two tools without re-running init."
+
+Then switch the projector back to the slides. The demo is over: demo.sh restores main.tf and the lock file by itself.
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# Backup: `tofu plan`, recorded
+
+<video src="/recording.mp4#t=79.9" controls preload="auto" class="mx-auto max-h-[55vh] rounded shadow"></video>
+
+<p class="text-sm opacity-50 pt-2">Only if the live <code>tofu</code> step fails.</p>
+
+<!--
+ONLY IF THE LIVE TOFU STEP FAILED. If it worked, skip this slide.
+
+Press play: it starts at the OpenTofu part of the recording. Alef says the same lines as in the notes on the previous slide: "No changes. Your infrastructure matches the configuration."
+-->
+---
+
+<!-- ===== Turning point 6: the future (2026 → 2036). S3. ~6 min ===== -->
+
+# IaC in 2026: everything checks the plan
+
+<div class="grid grid-cols-3 gap-4 pt-6 text-center">
+  <div class="border-2 border-current rounded p-3"><b>Policy as code</b><br>Sentinel, OPA, Terraform Policy</div>
+  <div class="border-2 border-current rounded p-3"><b>GitOps</b><br>Argo CD, Flux</div>
+  <div class="border-2 border-current rounded p-3"><b>Drift detection</b><br>scheduled re-plans in HCP Terraform</div>
+  <div class="border-2 border-current rounded p-3"><b>Platform engineering</b><br>Backstage portals</div>
+  <div class="border-2 border-current rounded p-3"><b>Security scanners</b><br>Checkov, Trivy</div>
+  <div class="border-2 border-current rounded p-3"><b>Terraform Stacks</b><br>many modules, many environments (GA Sept 2025)</div>
+</div>
+
+<p class="pt-6">Each one reads the <b>plan</b> or the <b>state</b>.</p>
+
+<!--
+[S3]
+
+That was 2023 to 2025. Now 2026, and then ten years ahead.
+
+First, what grew up around Terraform, all because infrastructure became reviewable code.
+
+Policy as code, which you've already seen: rules checked against every plan. GitOps, with Argo CD and Flux: instead of someone running apply, a controller pulls the desired state from Git and keeps correcting drift. Drift detection: HCP Terraform re-plans a workspace on a schedule and tells you when reality has moved. Platform engineering: modules wrapped in a self-service portal like Backstage. Security scanners like Checkov and Trivy read your Terraform and flag an open bucket before it exists. And Terraform Stacks, generally available since September 2025, deploys many modules together.
+
+Same idea, six times: the plan is the thing everyone checks.
+-->
+
+---
+
+# AI + IaC today
+
+<div class="grid grid-cols-3 gap-4 pt-6">
+  <div class="border-2 border-current rounded p-3"><b>Terraform MCP server</b><br>connects AI assistants to Terraform. GA June 2026. Run-creating tools are <b>off by default</b></div>
+  <div class="border-2 border-current rounded p-3"><b>Pulumi Neo</b><br>an AI "platform engineer" agent, with human-in-the-loop approvals</div>
+  <div class="border-2 border-current rounded p-3"><b>HCP Terraform, for agents</b><br>per-run credentials, mandatory policy between plan and apply, deletes an agent can't confirm (tfctl)</div>
+</div>
+
+<p class="pt-6">Every vendor reached for the same guardrail: the <b>plan</b>.</p>
+
+<p class="text-sm opacity-80">HashiCorp: MCP server GA, README, tfctl and agent-control blog posts (2026). Pulumi blog (2025).</p>
+
+<!--
+[S3]
+
+And now the newest writer of infrastructure code: AI.
+
+The Terraform MCP server connects AI assistants, like Claude Code or GitHub Copilot, to Terraform. It became generally available in June. By default, the tools that create runs are off.
+
+Pulumi has its own agent, Neo, with human approvals built in.
+
+And HCP Terraform has been rebuilt with agents in mind. Agents get credentials issued per run and revoked afterwards. Mandatory policy sits between plan and apply, where the agent can't skip it. And tfctl, HashiCorp's new command line from June, makes delete commands ask for interactive confirmation, which, in HashiCorp's words, makes them "effectively inoperable by autonomous agents, by design".
+-->
+
+---
+
+# Valid ≠ correct ≠ secure
+
+<div class="grid grid-cols-3 gap-4 pt-4 text-center">
+  <div class="border-2 border-current rounded p-3"><b>Valid</b><br><code>terraform validate</code> accepts it</div>
+  <div class="border-2 border-current rounded p-3"><b>Correct</b><br>it does what you asked</div>
+  <div class="border-2 border-current rounded p-3"><b>Secure</b><br>a security scanner passes it</div>
+</div>
+
+<v-click>
+
+<p class="pt-6 text-xl"><b>19%</b>: the best model tested, GPT-4, on IaC-Eval's Terraform tasks (2023–24 models)</p>
+
+</v-click>
+
+<v-click>
+
+<p class="text-xl"><b>77.8% valid, 0% secure</b>: one model's Terraform, scanned with Checkov</p>
+
+</v-click>
+
+<p class="text-sm opacity-80">IaC-Eval (NeurIPS 2024); "Security-First Evaluation of Text-to-Terraform" (SBSeg 2026).</p>
+
+<!--
+[S3]
+
+Can AI write good Terraform? "Good" hides three questions. Valid: does terraform validate accept it? Correct: does it do what you asked? Secure: would a security scanner pass it?
+
+[click] Correct. IaC-Eval, a benchmark from NeurIPS 2024: 458 AWS scenarios, in Terraform. The best model they tested, GPT-4, got 19% right on the first try. The same GPT-4 scores 86.6% on a Python benchmark. To be fair, those were 2023 and 2024 models.
+
+[click] Secure. A 2026 security paper tested seven models. One, WizardCoder, wrote Terraform that passed validate 77.8% of the time, and passed the Checkov security scanner 0% of the time. The best setup, Claude Opus 4 with detailed security prompts, reached 23% on Checkov. The authors' conclusion: validity and security are "largely independent".
+
+Valid is the easy part. The other two still need review.
+-->
+
+---
+
+# 📍 DataTalks.Club, February 2026
+
+- New laptop, but the **state** stayed on the old one. An AI coding agent runs `plan` and `apply`; nobody reads the plan
+- During cleanup, pointed at an archived folder, the agent restores an **old state file** that describes production
+- The agent proposes `terraform destroy`; it runs. VPC, database, cluster and load balancers are gone, and the automated snapshots with them
+- AWS support restores the database after about **24 hours**
+
+<p class="pt-4">The author's own post-mortem: <em>"I over-relied on the AI agent to run Terraform commands."</em></p>
+
+<p class="text-sm opacity-80">Alexey Grigorev, post-mortem (2026-03-06); AI Incident Database #1424; Gruntwork (2026-04-15).</p>
+
+<!--
+[S3]
+
+Here's what happens when nobody reviews. February 2026. Alexey Grigorev, who runs DataTalks.Club, adds a second website to the same Terraform setup as his course platform, to save five to ten dollars a month.
+
+He starts from a new laptop, but the state file is still on the old one, so Terraform thinks nothing exists. He lets Claude Code run plan and apply without reading the plan himself, and duplicates start appearing. He stops it and asks the agent to clean up. He points it at an archived folder, for comparison, and the agent unpacks the old state file there, the one that describes production, over the current one. Then it proposes terraform destroy. He lets it run, thinking only the duplicates will go. The VPC, the database, the cluster and the load balancers are deleted, snapshots included. About 24 hours later, AWS support restores the database.
+
+Now the fair part. This is not "AI went rogue". In his own post-mortem, Grigorev blames his own setup: "I over-relied on the AI agent to run Terraform commands." State on one laptop. "The database was too easy to delete." Backups he had assumed existed and never tested. Gruntwork agrees: "The operating model is what determined the blast radius." Remote state and a reviewed plan are straight from turning point 4.
+
+It's Knight Capital again: a missing double-check, now with an AI agent in the operator's seat.
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# *"The agent can propose. It should not decide."*
+
+<p class="opacity-80 pt-4">HashiCorp, on HCP Terraform as the control plane for AI (2026)</p>
+
+<!--
+[S3]
+
+HashiCorp puts it in one line: "The agent can propose. It should not decide."
+
+The agent writes the code and produces the plan. A human, plus the policies, decides whether it runs. And it's exactly what Grigorev changed afterwards: agents no longer execute commands for him. He reviews every plan, and runs anything destructive himself.
+-->
+
+---
+
+# Our bets for 2036
+
+<p class="inline-block border-2 border-amber-500 bg-amber-300 text-black rounded px-3 py-1 font-semibold">OPINION, not fact: our group's picks</p>
+
+<v-clicks>
+
+1. People **review** HCL far more than they write it. Agents write most of it.
+2. No agent applies a **destroy** without a human approving the plan.
+3. Most plan review is **machine to machine**: policy and scanners check every plan before a person sees it.
+
+</v-clicks>
+
+<p class="text-sm opacity-80 pt-6">Gartner figures in the notes are second-hand, as quoted by Itential and The Register.</p>
+
+<!--
+[S3]
+
+So where does that leave PortoBikes in 2036? These are our bets: opinion, not fact. Argue with us in the Q&A.
+
+[click] One: people review HCL far more than they write it, and agents write most of it. Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation and drift remediation by 2029, up from under 1% this year. Agents can only take over the writing because infrastructure became code that can be read.
+
+[click] Two: no agent will be allowed to apply a destroy without a human approving the plan. That's HashiCorp's line, and DataTalks.Club is the price of skipping it. The honest counter-argument: Gartner, as reported by The Register, expects only 20% of AI-suggested actions to get human approval by 2029. We're betting that destroys, the changes you can't undo, stay human.
+
+[click] Three: most plan review becomes machine to machine. Policies and scanners check every plan before a person sees it, because, as you just saw, valid is not secure.
+
+[pause] Put together: the AI writes, the machines check, and a human still decides what can't be undone.
+-->
+
+---
+layout: center
+class: text-center
+---
+
+<!-- ===== Closing: Friday 18:00, again. Alef. ~1 min ===== -->
 
 # Friday, 18:00. The booking server is down.
 

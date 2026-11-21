@@ -8,6 +8,7 @@ The talk follows PortoBikes, an invented startup, from ClickOps to AI-written in
 - `research/`: background research, one file per turning point, plus Q&A prep. Deliberately covers more than we present.
 - `outline.md`: the talk, one turning point at a time, with speaker notes
 - `docs/adr/`: decisions and the reasons behind them
+- `docs/day-of-checklist.md`: **presenting on 2026-11-25? Start here.** Timing per section, speaker slots to fill in, and what to do on the 24th and 25th
 - `demo/`: the live demo, scripted, with a backup recording
 - `slides/`: the deck, in [Slidev](https://sli.dev). Published to GitHub Pages on every push to `main` that touches `slides/`: https://alef-keuffer.github.io/terraform-portobikes/
 
@@ -21,6 +22,7 @@ npm run build     # static site in slides/dist
 npm run preview   # serve the build, works offline
 npm run check:offline   # after a build: fails if any slide fetches from the network (needs Google Chrome)
 npm run rehearse:poll   # rehearses the live poll locally with scripted phones (needs anycable-go, Chrome, internet)
+npm run timing    # speaking time per section, from the word counts in the speaker notes
 ```
 
 To present, build and preview on the laptop beforehand, then open the presenter view (`/presenter`) for the speaker notes. Nothing is fetched from the network, so it runs with Wi-Fi off. CI checks this on every pull request that touches `slides/`.
