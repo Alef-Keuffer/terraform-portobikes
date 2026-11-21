@@ -14,6 +14,8 @@ addons:
 transition: fade
 ---
 
+<!-- ===== Opening hook: Friday 18:00. Alef. ~1.5 min ===== -->
+
 # Infrastructure as Code with Terraform
 
 The PortoBikes story
@@ -46,6 +48,8 @@ Hold that number. We'll come back to it.
 -->
 
 ---
+
+<!-- ===== Turning point 1: ClickOps (2015). S1. ~5.5 min ===== -->
 
 # PortoBikes, 2015
 
@@ -239,6 +243,8 @@ The idea that matters for us: if infrastructure is a file, a change is a diff. A
 
 ---
 
+<!-- ===== Turning point 2: scripts and configuration management (2016). S1. ~4 min ===== -->
+
 # PortoBikes, 2016: scripts in Git
 
 ```bash
@@ -372,7 +378,7 @@ What PortoBikes wants is one tool and one workflow for everything. And that's wh
 
 ---
 
-<!-- ===== Turning point 3: Terraform arrives, plus the live demo (2017). S2 narrates, Alef drives the demo. ~13 min ===== -->
+<!-- ===== Turning point 3: Terraform arrives, plus the live demo (2017). S2 narrates, Alef drives the demo. ~7.5 min ===== -->
 
 # Terraform almost didn't make it
 
@@ -620,6 +626,8 @@ After that: 1.5 lets you import hand-made infrastructure through a reviewed plan
 
 ---
 
+<!-- ===== Turning point 4: the team grows (2019–2022). S2. ~7.5 min ===== -->
+
 # 2019: ten engineers, one state file
 
 - Two people run `terraform apply` at once: both read the same old **state**, and one write is lost
@@ -679,7 +687,7 @@ You open a pull request with your change. CI runs terraform plan and posts the r
 
 Why the plan? Because a three-line change in the code can hide something destructive, like an attribute that forces the database to be replaced. The code diff looks harmless. The plan says "must be replaced". You saw exactly that in the demo, when changing a price replaced our server.
 
-Three tools implement this same loop. Atlantis is open source and self-hosted. You comment "atlantis plan" on the pull request, and it can refuse to apply until someone other than the author has approved. GitHub Actions can run the plan in CI. And HCP Terraform, HashiCorp's hosted service, plans every pull request on its own.
+Three tools implement this loop. Atlantis, open source and self-hosted, plans when you comment on the pull request, and can refuse to apply until someone other than the author approves. GitHub Actions can run the plan in CI. And HCP Terraform plans every pull request on its own.
 
 This is where the talk's argument becomes concrete: reviewable code became reviewable change.
 -->
@@ -756,7 +764,7 @@ So that's the relationship between IaC and DevOps: the infrastructure goes throu
 
 Once a plan is something a person can review, it's also something a machine can check. That's policy as code.
 
-You write rules, like "no storage bucket open to the internet" or "nothing outside our region", and they're checked against every plan before apply. In HashiCorp's own words, HCP Terraform "checks the Terraform plan against the policy set during each run". If a policy fails, it can stop the run.
+You write rules, like "no storage bucket open to the internet" or "nothing outside our region", and they're checked against every plan before apply. If a rule fails, the run can stop.
 
 There are three main options. Sentinel is HashiCorp's own policy language. OPA, the Open Policy Agent, is open source and uses a language called Rego. And since Terraform 1.17, last month, there's Terraform Policy, written in HCL itself and built into the CLI, so policy checks no longer need the paid platform.
 
@@ -793,11 +801,11 @@ The reviewer is no longer only a colleague. It's a colleague plus a set of rules
 
 So who pays for all this? The Terraform CLI is free. Even HCP Terraform, HashiCorp's hosted service, has a free tier, and it already includes remote runs and single sign-on.
 
-Teams pay for the things that only matter once you're a team. More applies running at the same time. Drift detection, which tells you when someone clicked something in the console in production. Audit logs, for when someone asks who changed what. HCP Terraform charges per managed resource per month: ten cents, forty-seven cents or ninety-nine cents, depending on the tier. Those are the prices on HashiCorp's pricing page as of the fourth of November; the two higher tiers go through sales, so treat them as list prices.
+Teams pay for the things that only matter once you're a team. More applies running at the same time. Drift detection, which tells you when someone clicked something in the console in production. Audit logs, for when someone asks who changed what. HCP Terraform charges per managed resource per month: ten cents, forty-seven cents or ninety-nine cents, depending on the tier. List prices from HashiCorp's page on the fourth of November; the higher tiers go through sales.
 
 So people don't pay for the CLI. They pay for running it as a team: coordination and governance. And those needs grow with headcount, which is exactly what happened to PortoBikes.
 
-For scale: in its last quarterly report before IBM bought it, HashiCorp had 4,856 customers, and 946 of them paid more than a hundred thousand dollars a year. That's all HashiCorp products, not just HCP Terraform.
+Detail if there's time: in its last quarterly report before IBM bought it, HashiCorp had 4,856 customers, and 946 of them paid more than a hundred thousand dollars a year. That's all HashiCorp products, not just HCP Terraform.
 -->
 
 ---
@@ -858,7 +866,7 @@ The Professional costs two hundred dollars and takes ninety minutes. It covers e
 
 The Advanced exam is two hundred and ninety-five dollars, four hours, with hands-on labs on AWS or Azure.
 
-These are three separate, current exams. None replaced another. Each is valid for two years, and only the Advanced one includes a free retake.
+All three are current, each valid for two years.
 
 [pause]
 
@@ -866,6 +874,8 @@ So PortoBikes now has a team, a pipeline, policies, and maybe a certified engine
 -->
 
 ---
+
+<!-- ===== Turning point 5: the license change, plus the debate (2023–2025). S3 + all speakers. ~14 min ===== -->
 
 # August 2023: the Terraform CLI moves to the BSL
 
@@ -1046,7 +1056,7 @@ Here's where the room stands before anyone argues. Hold on to it.
 
 ### A. Stay on Terraform
 
-<p class="text-sm opacity-70">[speaker TBD]</p>
+<p class="text-sm opacity-70">[Side A speaker]</p>
 
 - The full product, plus HCP Terraform
 - Newest features: Stacks, `terraform query`, Terraform Policy
@@ -1070,7 +1080,7 @@ Here's where the room stands before anyone argues. Hold on to it.
 
 ### C. Rewrite in Pulumi
 
-<p class="text-sm opacity-70">[speaker TBD]</p>
+<p class="text-sm opacity-70">[Side C speaker]</p>
 
 - Real programming languages
 - Now reads HCL directly
@@ -1085,7 +1095,7 @@ Here's where the room stands before anyone argues. Hold on to it.
 <!--
 THE DEBATE. One click per side, as each speaker starts. TIMEKEEPER: 90 seconds per side. Show the "30 seconds" card at 60 s and "stop" at 90 s. Nobody announces a winner, on a slide or out loud.
 
-[click] A. STAY ON TERRAFORM ([speaker TBD])
+[click] A. STAY ON TERRAFORM ([Side A speaker])
 1. The license doesn't apply to us. PortoBikes uses Terraform internally, and the BSL explicitly allows production use.
 2. It's the standard. 18.4% of Stack Overflow's 2025 respondents use it. In one vendor survey (Firefly's State of IaC 2025, 350+ respondents), Terraform had 62% "market share", and 12% were using OpenTofu. Say "62% vs 12% in one vendor survey", never a precise ratio: they're measured differently. Hiring, certifications and tutorials all assume Terraform.
 3. Features only Terraform has: Stacks, actions and terraform query, Terraform Policy, and the HCP Terraform platform around it.
@@ -1102,7 +1112,7 @@ Expect this counter: IBM can change the terms again, and every change since the 
 5. Same providers, same code: everything learned so far still applies.
 Honest caveats: the main backers (Spacelift, env0, Harness, Scalr) sell products that compete with HCP Terraform, so their support is also a business decision. The tools are drifting apart: once a team uses .tofu files or state encryption, moving back is a one-way door. Its usage share is still a fraction of Terraform's.
 
-[click] C. REWRITE IN PULUMI ([speaker TBD])
+[click] C. REWRITE IN PULUMI ([Side C speaker])
 1. Real programming languages: TypeScript, Python, Go, .NET, Java. Loops, types, unit tests, IDE support.
 2. Apache 2.0 from the start, and says it doesn't rely on BSL software.
 3. Gradual migration: pulumi convert --from terraform; any Terraform provider works through its bridge; HCL can now run unchanged. Pulumi lets HashiCorp customers apply credits they bought from HashiCorp.
@@ -1259,7 +1269,7 @@ Press play: it starts at the OpenTofu part of the recording. Alef says the same 
 
 That was 2023 to 2025. Now 2026, and then ten years ahead.
 
-First, what grew up around Terraform. Everything here exists because infrastructure became reviewable code.
+First, what grew up around Terraform, all because infrastructure became reviewable code.
 
 Policy as code, which you've already seen: rules checked against every plan. GitOps, with Argo CD and Flux: instead of someone running apply, a controller pulls the desired state from Git and keeps correcting drift. Drift detection: HCP Terraform re-plans a workspace on a schedule and tells you when reality has moved. Platform engineering: modules wrapped in a self-service portal like Backstage. Security scanners like Checkov and Trivy read your Terraform and flag an open bucket before it exists. And Terraform Stacks, generally available since September 2025, deploys many modules together.
 
@@ -1285,9 +1295,9 @@ Same idea, six times: the plan is the thing everyone checks.
 
 And now the newest writer of infrastructure code: AI.
 
-The Terraform MCP server connects AI assistants, like Claude Code or GitHub Copilot, to Terraform. It became generally available in June. Notice the default: the tools that create runs are switched off unless you turn them on.
+The Terraform MCP server connects AI assistants, like Claude Code or GitHub Copilot, to Terraform. It became generally available in June. By default, the tools that create runs are off.
 
-Pulumi has its own agent, Neo, which it calls an AI platform engineer, with human-in-the-loop approvals.
+Pulumi has its own agent, Neo, with human approvals built in.
 
 And HCP Terraform has been rebuilt with agents in mind. Agents get credentials issued per run and revoked afterwards. Mandatory policy sits between plan and apply, where the agent can't skip it. And tfctl, HashiCorp's new command line from June, makes delete commands ask for interactive confirmation, which, in HashiCorp's words, makes them "effectively inoperable by autonomous agents, by design".
 -->
@@ -1319,11 +1329,11 @@ And HCP Terraform has been rebuilt with agents in mind. Agents get credentials i
 <!--
 [S3]
 
-So can AI write good Terraform? Three different questions hide in the word "good". Valid: does terraform validate accept it? Correct: does it do what you asked? Secure: would a security scanner pass it?
+Can AI write good Terraform? "Good" hides three questions. Valid: does terraform validate accept it? Correct: does it do what you asked? Secure: would a security scanner pass it?
 
 [click] Correct. IaC-Eval, a benchmark from NeurIPS 2024: 458 AWS scenarios, in Terraform. The best model they tested, GPT-4, got 19% right on the first try. The same GPT-4 scores 86.6% on a Python benchmark. To be fair, those were 2023 and 2024 models.
 
-[click] Secure. A 2026 security paper tested seven models. One, WizardCoder, wrote Terraform that passed validate 77.8% of the time, and passed the Checkov security scanner 0% of the time. The best setup, Claude Opus 4 with detailed security prompts, reached 23% on Checkov. The authors' conclusion: validity and security are "largely independent", and "prompt engineering alone is insufficient".
+[click] Secure. A 2026 security paper tested seven models. One, WizardCoder, wrote Terraform that passed validate 77.8% of the time, and passed the Checkov security scanner 0% of the time. The best setup, Claude Opus 4 with detailed security prompts, reached 23% on Checkov. The authors' conclusion: validity and security are "largely independent".
 
 Valid is the easy part. The other two still need review.
 -->
@@ -1389,7 +1399,7 @@ The agent writes the code and produces the plan. A human, plus the policies, dec
 <!--
 [S3]
 
-So where does that leave PortoBikes in 2036? These are our bets. They're opinion, not fact, and you're welcome to disagree in the Q&A.
+So where does that leave PortoBikes in 2036? These are our bets: opinion, not fact. Argue with us in the Q&A.
 
 [click] One: people review HCL far more than they write it, and agents write most of it. Gartner, as quoted by the vendor Itential, expects 70% of enterprises to use agentic AI for IaC generation and drift remediation by 2029, up from under 1% this year. Agents can only take over the writing because infrastructure became code that can be read.
 
@@ -1404,6 +1414,8 @@ So where does that leave PortoBikes in 2036? These are our bets. They're opinion
 layout: center
 class: text-center
 ---
+
+<!-- ===== Closing: Friday 18:00, again. Alef. ~1 min ===== -->
 
 # Friday, 18:00. The booking server is down.
 
