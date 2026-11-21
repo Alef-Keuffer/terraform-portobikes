@@ -4,20 +4,20 @@
 
 **The argument running through the talk:** Terraform made infrastructure reviewable code. That's why it became the standard, and also why the license change and IBM's purchase of HashiCorp matter.
 
-**Running order** (about 42 min; we have some slack):
+**Running order** (2026-11-25, in English; about 47 min in a one-hour slot, with Q&A after. Keep the rest as buffer, since we can't rehearse as a group):
 
 | # | Section | Speaker | ~min |
 |---|---|---|---|
-| 0 | Opening hook: Friday 18:00 | S1 | 2 |
-| 1 | ClickOps (2015) | S1 | 4 |
+| 0 | Opening hook: Friday 18:00 | Alef | 2 |
+| 1 | ClickOps (2015) | S1 | 5.5 |
 | 2 | Scripts and configuration management (2016) | S1 | 4 |
-| 3 | Terraform arrives, plus the live demo | S2 + demo driver | 11 |
-| 4 | The team grows (2019–2022) | S2 | 6 |
+| 3 | Terraform arrives, plus the live demo | S2 + Alef (demo driver) | 13 |
+| 4 | The team grows (2019–2022) | S2 | 7.5 |
 | 5 | The plot twist: the license change, plus the debate (2023–2025) | S3 + all speakers | 8 |
 | 6 | The future (2026 → 2036) | S3 | 6 |
-| 7 | Closing: Friday 18:00, again | S1 | 1 |
+| 7 | Closing: Friday 18:00, again | Alef | 1 |
 
-S1/S2/S3 are placeholders. Assign people later.
+Alef opens, closes, drives the demo and argues for OpenTofu in the debate. Daniella and Afonso speak, and S1–S3 get assigned once the slides are solid. S4 and S5 are optional slots for Al Mahmud and Sergio: they take debate sides first, then existing sections. Whoever doesn't speak keeps time with cards. Decisions and their reasons: `docs/grilling-2026-11-21.md`.
 
 ---
 
@@ -48,6 +48,7 @@ S1/S2/S3 are placeholders. Assign people later.
 4. 📍 **Real anchor: Knight Capital, 2012.** During a deployment, one of eight servers was missed. Nobody double-checked. The firm lost **$460M in 45 minutes**. SEC: *"a simple double-check… could have identified"* it.
 5. 📍 **Real anchor: AWS S3, 2017.** One mistyped input to a command run by hand took S3 in us-east-1 offline for about 4 hours.
 6. **Infrastructure as Code**, defined. The term emerged around 2009 from the DevOps, Puppet and Chef community.
+7. *(added 2026-11-21)* **What IaC buys you:** speed, consistency, an audit trail, disaster recovery, and identical copies of environments. Answers "what are the use cases and benefits?" from `ideas.md`. Facts still to be sourced from `research/01-clickops.md` Part 3.
 
 **Speaker notes**
 > Knight Capital is our main anchor because the SEC's own report says the missing ingredient was review: one person did it, and nobody checked. Remember that word, *review*. It's the thread of this talk. The S3 outage wasn't console clicking. It was a command typed by hand from a written procedure. Present it as "manual operations", not as ClickOps.
@@ -83,6 +84,7 @@ S1/S2/S3 are placeholders. Assign people later.
 3. The symbols in a plan: `+` create, `~` change, `-` destroy, `-/+` replace.
 4. → **LIVE DEMO**
 5. Backup slide: the same code targeting AWS. Only the provider block changes.
+6. *(added 2026-11-21)* **How Terraform changed, 0.x → 1.x:** HCL2 in 0.12, 1.0 in 2021 with its stability promise, up to today's 1.17. Answers "how did it change since it started?" from `ideas.md`. Source: `research/03-terraform-arrives.md` Part 3.
 
 **Demo script** (driver types; S2 narrates). Rehearsed on 2026-11-04 with Terraform 1.17.1 and the Docker provider 4.6.0. The outputs below are real. The driver runs `demo/demo.sh`, which types each command and waits for Enter, so nothing is typed by hand. Setup is in `demo/README.md`. The backup video is `demo/recording.mp4`.
 
@@ -118,10 +120,11 @@ Demo-day risks:
 **Slides**
 1. Ten engineers. Two people run `apply` at once → corrupted **state**. Fix: shared remote state with **locking**. (Since Terraform 1.11, S3 can lock state itself; the DynamoDB approach is deprecated.)
 2. **The pipeline:** pull request → CI runs `plan` → a colleague reviews the *plan*, not just the code → approval → `apply`. Tools: Atlantis, GitHub Actions, HCP Terraform.
-3. A plan that humans can review can also be checked by machines: **policy as code** (Sentinel, OPA, and since 1.17, Terraform Policy).
-4. **How HashiCorp makes money:** the CLI is free; teams pay for collaboration (remote runs, policy, single sign-on, audit logs) through **HCP Terraform**: $0.10, $0.47 or $0.99 per resource per month, depending on the tier. HashiCorp had 4,856 customers, 946 of them paying over $100k a year (figures for all HashiCorp products).
-5. **Why job ads ask for it:** 17.8% of developers use Terraform (Stack Overflow 2025). UK job ads mentioning Terraform: 2,390, up 49% year on year, with a median salary of £75k (IT Jobs Watch). *Don't use the "88% of job ads" figures; they have no source.*
-6. **Certifications:**
+3. *(added 2026-11-21)* **Where IaC sits in a DevOps pipeline**, as a diagram: code → CI → plan → review → apply → app deploy. Answers "what is the relationship to DevOps?" from `ideas.md`. Source: `research/04-team-grows.md` Part 7.
+4. A plan that humans can review can also be checked by machines: **policy as code** (Sentinel, OPA, and since 1.17, Terraform Policy).
+5. **How HashiCorp makes money:** the CLI is free; teams pay for collaboration (remote runs, policy, single sign-on, audit logs) through **HCP Terraform**: $0.10, $0.47 or $0.99 per resource per month, depending on the tier. HashiCorp had 4,856 customers, 946 of them paying over $100k a year (figures for all HashiCorp products).
+6. **Why job ads ask for it:** 17.8% of developers use Terraform (Stack Overflow 2025). UK job ads mentioning Terraform: 2,390, up 49% year on year, with a median salary of £75k (IT Jobs Watch). *Don't use the "88% of job ads" figures; they have no source.*
+7. **Certifications:**
 
    | Exam | Price | Length |
    |---|---|---|
@@ -155,13 +158,13 @@ Demo-day risks:
    | Redis | 2024 | 2025 |
    | HashiCorp | 2023 | no |
 
-5. **THE DEBATE:** "PortoBikes must decide." QR poll, vote #1.
+5. **THE DEBATE:** "PortoBikes must decide." QR poll (`slide-quiz`, see `docs/adr/0002-debate-poll-in-the-slides.md`), vote #1. If the QR fails, the timekeeper counts a show of hands.
 6. Three speakers, about 90 seconds each:
    - **Stay on Terraform:** the full product and HCP Terraform; newest features (Stacks, `terraform query`, Terraform Policy); the biggest community and job market.
-   - **Move to OpenTofu:** an open-source license under neutral governance; features of its own (state encryption); real migrations.
+   - **Move to OpenTofu** (Alef): an open-source license under neutral governance; features of its own (state encryption); real migrations.
    - **Rewrite in Pulumi:** real programming languages; Pulumi now reads HCL directly and offers credits to HashiCorp customers.
    - One line on Crossplane: "the option nobody argued for."
-7. QR poll, vote #2. Show both results side by side.
+7. QR poll, vote #2. Show both results side by side. (On the GitHub Pages copy, this slide shows screenshots of the results.)
 8. 📍 **Real anchors: what companies actually did.** Fidelity moved ~50k state files to OpenTofu (*"really is a drop-in"*). GitLab replaced its Terraform templates with OpenTofu ones.
    - 🎬 **Live** (the last part of `demo/demo.sh`): the OpenTofu speaker runs `tofu init`, then `tofu plan` against the server Terraform built. Result: `No changes. Your infrastructure matches the configuration.` Then `tofu destroy` cleans up. If it fails, play the end of `demo/recording.mp4`.
    - Honest caveat for the "stay" speaker: `tofu init` rewrites the provider lock file, so the two tools can't share one without re-running `init`. "Drop-in, mostly."
@@ -208,7 +211,7 @@ Demo-day risks:
 **Slides**
 1. **Friday, 18:00. The booking server is down.** → `terraform apply` → back within seconds.
 2. One sentence: *Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.*
-3. The repo link and QR code: "Run the demo yourself."
+3. The repo link and a QR code pointing to the GitHub repo (not to a deck, since the Netlify one is taken down after the talk): "Run the demo yourself."
 
 **Speaker notes**
 > At the start, we asked how long it would take you to rebuild that server. You just watched it take seconds.
