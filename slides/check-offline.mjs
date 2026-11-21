@@ -1,4 +1,5 @@
-// Fails if the built deck requests anything outside localhost, so it can be presented with Wi-Fi off.
+// Fails if the built deck requests anything outside localhost, so it can be presented with Wi-Fi off,
+// or if the backup demo recording doesn't load.
 // Usage: npm run build && npm run check:offline
 import { preview } from 'vite'
 import { chromium } from 'playwright'

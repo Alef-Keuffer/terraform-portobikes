@@ -160,7 +160,7 @@ The terminal then shows "Back to the slides". DON'T DESTROY: the server keeps ru
 Demo-day warnings:
 - Terraform does NOT print "Objects have changed outside of Terraform" when the container is deleted. The plan just says "will be created". Don't promise the class a warning message.
 - Never use -refresh=false or -minimal-refresh: both hide the drift.
-- Before the talk: terraform init on the demo laptop, nginx:alpine pre-pulled, port 8080 free, DOCKER_HOST set on Colima (demo/README.md). demo.sh checks these.
+- Before the talk: terraform init on the demo laptop, nginx:alpine pre-pulled, port 8080 free, DOCKER_HOST set on Colima (demo/README.md). demo.sh checks these. The provider version is pinned by the committed .terraform.lock.hcl.
 -->
 
 ---
@@ -170,14 +170,14 @@ class: text-center
 
 # Backup: the demo, recorded
 
-<video src="/recording.mp4#t=0,81" controls preload="auto" class="mx-auto max-h-[55vh] rounded shadow"></video>
+<video src="/recording.mp4#t=0,79.9" controls preload="auto" class="mx-auto max-h-[55vh] rounded shadow"></video>
 
 <p class="text-sm opacity-50 pt-2">Only if the live demo fails. Same steps, same output: it stops when turning point 3 is done.</p>
 
 <!--
 ONLY IF THE LIVE DEMO FAILED. If the demo worked, skip this slide.
 
-Press play. S2 says the same lines as in the demo notes on the previous slide, a little behind the video. The video stops by itself after step 6 (about 1:20), before the OpenTofu part, which belongs to the debate.
+Press play. S2 says the same lines as in the demo notes on the previous slide, a little behind the video. The video stops by itself at step 6's "Apply complete! Resources: 1 added" (about 1:20). Say "and the page is back" yourself: the frame that shows the page also shows the OpenTofu line from the debate, so the video stops just before it.
 
 If the live demo died partway through, drag the video to where it died: apply at the start, the price change after about 0:30, the deletion after about 0:55.
 -->
@@ -227,7 +227,7 @@ resource "docker_container" "web" {
 
 <div>
 
-**PortoBikes on AWS**
+**PortoBikes on AWS** <span class="opacity-50">(a sketch, not run)</span>
 
 ```hcl
 provider "aws" {
