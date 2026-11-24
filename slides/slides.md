@@ -459,7 +459,7 @@ class: text-center
 
 # → LIVE DEMO
 
-<p class="text-2xl pt-4">Alef switches to the terminal</p>
+<p class="text-2xl pt-4">Switching to the terminal</p>
 
 <p class="opacity-60 pt-8">Our booking server, written down as code</p>
 
@@ -875,7 +875,7 @@ So PortoBikes now has a team, a pipeline, policies, and maybe a certified engine
 
 ---
 
-<!-- ===== Turning point 5: the license change, plus the debate (2023–2025). S3 + all speakers. ~14 min ===== -->
+<!-- ===== Turning point 5: the license change, plus the debate (2023–2025). S4 + all speakers. ~14 min ===== -->
 
 # August 2023: the Terraform CLI moves to the BSL
 
@@ -903,7 +903,7 @@ PortoBikes' lawyer asks: **"Are we affected?"**
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: HashiCorp, "HashiCorp adopts the Business Source License" (2023-08-10); Terraform LICENSE file (BUSL 1.1), github.com/hashicorp/terraform</p>
 
 <!--
-[S3] On the tenth of August 2023, HashiCorp changed the rules. From version 1.6, the Terraform CLI is no longer open source. It moves from the Mozilla Public License to the Business Source License, the BSL. Everything up to 1.5.7 stays open source.
+[S4] On the tenth of August 2023, HashiCorp changed the rules. From version 1.6, the Terraform CLI is no longer open source. It moves from the Mozilla Public License to the Business Source License, the BSL. Everything up to 1.5.7 stays open source.
 
 [click] PortoBikes' lawyer asks the obvious question: are we affected?
 
@@ -937,7 +937,7 @@ Detail if there's time: since the acquisition, the license text names IBM, not H
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: OpenTofu manifesto (opentofu.org/manifesto); The Register (2023-09-20); CNCF project page (cncf.io/projects/opentofu)</p>
 
 <!--
-[S3] The reaction was fast. Within days, a group of companies published a manifesto asking HashiCorp to go back to an open-source license. HashiCorp didn't answer, so they forked. On the twentieth of September, about six weeks after the change, the Linux Foundation announced OpenTofu.
+[S4] The reaction was fast. Within days, a group of companies published a manifesto asking HashiCorp to go back to an open-source license. HashiCorp didn't answer, so they forked. On the twentieth of September, about six weeks after the change, the Linux Foundation announced OpenTofu.
 
 [click] And who backed it? The very companies the BSL was aimed at: Spacelift, env0, Scalr, Harness, Gruntwork. More than 140 organisations pledged support.
 
@@ -966,7 +966,7 @@ Since then:
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: IBM newsroom (2024-04-24, 2025-02-27); HashiCorp blog; Terraform release notes</p>
 
 <!--
-[S3] Then, in April 2024, IBM announced it was buying HashiCorp, for 6.4 billion dollars. The deal closed on the twenty-seventh of February 2025.
+[S4] Then, in April 2024, IBM announced it was buying HashiCorp, for 6.4 billion dollars. The deal closed on the twenty-seventh of February 2025.
 
 [click] What changed since? The license is still the BSL: no move back to open source. CDK for Terraform, the tool for writing Terraform in programming languages, was archived in December 2025. The old free tier of HCP Terraform ended in March 2026; the new one is capped at 500 resources.
 
@@ -989,7 +989,7 @@ To be fair: Terraform itself is very much alive: Stacks went GA in 2025, terrafo
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: MongoDB SSPL press release (2018-10-16); Elastic, "Licensing change" (2021) and "Elasticsearch is open source. Again!" (2024-08-29); Redis blog (2024-03-20, 2025-05-01)</p>
 
 <!--
-[S3] And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting. Except for MongoDB, a fork appears.
+[S4] And this isn't the first time. MongoDB did it in 2018. Elastic in 2021, and AWS forked it as OpenSearch. Redis in 2024, and the Linux Foundation forked it as Valkey. Every time, one company changes the license to stop cloud providers or rivals from profiting. Except for MongoDB, a fork appears.
 
 But look at the last column. Elastic added an open-source license back in 2024, with the headline "Elasticsearch is open source. Again!". Redis did the same in 2025, and admitted the change had hurt its relationship with the community.
 
@@ -1019,7 +1019,7 @@ options:
 <p class="opacity-70">Show of hands.</p>
 
 <!--
-[S3] THE DEBATE. PortoBikes must decide. Vote #1, before the debate: scan the QR code and vote. [wait for the bars to settle]
+[S4] THE DEBATE. PortoBikes must decide. Vote #1, before the debate: scan the QR code and vote. [wait for the bars to settle]
 
 If no bars move within about 30 seconds, the QR code has failed. Don't troubleshoot on stage: switch the projector to the Mentimeter window opened before the talk (docs/poll-checklist.md), let people vote, screenshot the result, switch back.
 
@@ -1056,8 +1056,6 @@ Here's where the room stands before anyone argues. Hold on to it.
 
 ### A. Stay on Terraform
 
-<p class="text-sm opacity-70">[Side A speaker]</p>
-
 - The full product, plus HCP Terraform
 - Newest features: Stacks, `terraform query`, Terraform Policy
 - The biggest community and job market
@@ -1068,8 +1066,6 @@ Here's where the room stands before anyone argues. Hold on to it.
 
 ### B. Move to OpenTofu
 
-<p class="text-sm opacity-70">Alef</p>
-
 - Open-source license, neutral governance
 - Its own features: state encryption
 - Real migrations, at scale
@@ -1079,8 +1075,6 @@ Here's where the room stands before anyone argues. Hold on to it.
 <div v-click>
 
 ### C. Rewrite in Pulumi
-
-<p class="text-sm opacity-70">[Side C speaker]</p>
 
 - Real programming languages
 - Now reads HCL directly
@@ -1095,7 +1089,7 @@ Here's where the room stands before anyone argues. Hold on to it.
 <!--
 THE DEBATE. One click per side, as each speaker starts. TIMEKEEPER: 90 seconds per side. Show the "30 seconds" card at 60 s and "stop" at 90 s. Nobody announces a winner, on a slide or out loud.
 
-[click] A. STAY ON TERRAFORM ([Side A speaker])
+[click] A. STAY ON TERRAFORM (S4)
 1. The license doesn't apply to us. PortoBikes uses Terraform internally, and the BSL explicitly allows production use.
 2. It's the standard. 18.4% of Stack Overflow's 2025 respondents use it. In one vendor survey (Firefly's State of IaC 2025, 350+ respondents), Terraform had 62% "market share", and 12% were using OpenTofu. Say "62% vs 12% in one vendor survey", never a precise ratio: they're measured differently. Hiring, certifications and tutorials all assume Terraform.
 3. Features only Terraform has: Stacks, actions and terraform query, Terraform Policy, and the HCP Terraform platform around it.
@@ -1112,7 +1106,7 @@ Expect this counter: IBM can change the terms again, and every change since the 
 5. Same providers, same code: everything learned so far still applies.
 Honest caveats: the main backers (Spacelift, env0, Harness, Scalr) sell products that compete with HCP Terraform, so their support is also a business decision. The tools are drifting apart: once a team uses .tofu files or state encryption, moving back is a one-way door. Its usage share is still a fraction of Terraform's.
 
-[click] C. REWRITE IN PULUMI ([Side C speaker])
+[click] C. REWRITE IN PULUMI (S5)
 1. Real programming languages: TypeScript, Python, Go, .NET, Java. Loops, types, unit tests, IDE support.
 2. Apache 2.0 from the start, and says it doesn't rely on BSL software.
 3. Gradual migration: pulumi convert --from terraform; any Terraform provider works through its bridge; HCL can now run unchanged. Pulumi lets HashiCorp customers apply credits they bought from HashiCorp.
@@ -1120,7 +1114,7 @@ Honest caveats: the main backers (Spacelift, env0, Harness, Scalr) sell products
 5. Leading on AI: Pulumi Neo. And reviews still work: pulumi preview is its plan.
 Honest caveats: Pulumi is also a single, VC-funded vendor, the same kind of company that relicensed in every case on the "This has happened before" slide. A rewrite is the most expensive option. And general-purpose code can be harder to review than declarative HCL, which weakens the "reviewable infrastructure" argument this whole talk is built on.
 
-[click] [S3, one line] Crossplane manages cloud resources from inside Kubernetes. It's a CNCF Graduated project, but it only makes sense if you already run everything on Kubernetes, and PortoBikes doesn't.
+[click] [S4, one line] Crossplane manages cloud resources from inside Kubernetes. It's a CNCF Graduated project, but it only makes sense if you already run everything on Kubernetes, and PortoBikes doesn't.
 -->
 
 ---
@@ -1144,7 +1138,7 @@ options:
 <p class="opacity-70">Show of hands.</p>
 
 <!--
-[S3] Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
+[S4] Vote #2, after the debate. Same question, same QR code. Vote again, even if you haven't changed your mind.
 
 If the poll failed at vote #1, use the same backup again: Mentimeter's second slide, then a show of hands.
 
@@ -1169,7 +1163,7 @@ options:
 <p class="opacity-70">The live results from the talk will be shown here.</p>
 
 <!--
-[S3] Before and after, side by side. We're not announcing a winner: the honest answer is "it depends on the company". This is just what the room thinks.
+[S4] Before and after, side by side. We're not announcing a winner: the honest answer is "it depends on the company". This is just what the room thinks.
 
 If the backup was Mentimeter: show the two screenshots one after the other. If it was a show of hands: the timekeeper reads out both sets of numbers.
 
@@ -1191,7 +1185,7 @@ After the talk: screenshot this slide and the two results slides for the GitHub 
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Sources: OpenTofu blog (2025-10-06), opentofu.org/blog/fidelity-investment-migration; GitLab issue 438010 and epic 12401</p>
 
 <!--
-[S3] So what did real companies do?
+[S4] So what did real companies do?
 
 [click] Fidelity Investments: more than 50,000 state files on Terraform and OpenTofu. They made OpenTofu the default for new deployments. In their words, "a technical drop-in", and "changing the CLI in a pipeline is trivial". Their lesson: the code change is the easy part; versioning, CI/CD and governance are the hard parts.
 
@@ -1209,7 +1203,7 @@ class: text-center
 
 # → LIVE: `tofu plan`
 
-<p class="text-2xl pt-4">Alef switches to the terminal</p>
+<p class="text-2xl pt-4">Switching to the terminal</p>
 
 <p class="opacity-60 pt-8">The server Terraform built in the demo, read by OpenTofu</p>
 
@@ -1249,7 +1243,7 @@ Press play: it starts at the OpenTofu part of the recording. Alef says the same 
 -->
 ---
 
-<!-- ===== Turning point 6: the future (2026 → 2036). S3. ~6 min ===== -->
+<!-- ===== Turning point 6: the future (2026 → 2036). S5. ~6 min ===== -->
 
 # IaC in 2026: everything checks the plan
 
@@ -1265,7 +1259,7 @@ Press play: it starts at the OpenTofu part of the recording. Alef says the same 
 <p class="pt-6">Each one reads the <b>plan</b> or the <b>state</b>.</p>
 
 <!--
-[S3]
+[S5]
 
 That was 2023 to 2025. Now 2026, and then ten years ahead.
 
@@ -1291,7 +1285,7 @@ Same idea, six times: the plan is the thing everyone checks.
 <p class="text-sm opacity-80">HashiCorp: MCP server GA, README, tfctl and agent-control blog posts (2026). Pulumi blog (2025).</p>
 
 <!--
-[S3]
+[S5]
 
 And now the newest writer of infrastructure code: AI.
 
@@ -1327,7 +1321,7 @@ And HCP Terraform has been rebuilt with agents in mind. Agents get credentials i
 <p class="text-sm opacity-80">IaC-Eval (NeurIPS 2024); "Security-First Evaluation of Text-to-Terraform" (SBSeg 2026).</p>
 
 <!--
-[S3]
+[S5]
 
 Can AI write good Terraform? "Good" hides three questions. Valid: does terraform validate accept it? Correct: does it do what you asked? Secure: would a security scanner pass it?
 
@@ -1352,7 +1346,7 @@ Valid is the easy part. The other two still need review.
 <p class="text-sm opacity-80">Alexey Grigorev, post-mortem (2026-03-06); AI Incident Database #1424; Gruntwork (2026-04-15).</p>
 
 <!--
-[S3]
+[S5]
 
 Here's what happens when nobody reviews. February 2026. Alexey Grigorev, who runs DataTalks.Club, adds a second website to the same Terraform setup as his course platform, to save five to ten dollars a month.
 
@@ -1373,7 +1367,7 @@ class: text-center
 <p class="opacity-80 pt-4">HashiCorp, on HCP Terraform as the control plane for AI (2026)</p>
 
 <!--
-[S3]
+[S5]
 
 HashiCorp puts it in one line: "The agent can propose. It should not decide."
 
@@ -1397,7 +1391,7 @@ The agent writes the code and produces the plan. A human, plus the policies, dec
 <p class="text-sm opacity-80 pt-6">Gartner figures in the notes are second-hand, as quoted by Itential and The Register.</p>
 
 <!--
-[S3]
+[S5]
 
 So where does that leave PortoBikes in 2036? These are our bets: opinion, not fact. Argue with us in the Q&A.
 
