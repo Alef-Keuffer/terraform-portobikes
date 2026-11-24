@@ -1440,11 +1440,11 @@ layout: center
 ---
 
 <p class="text-3xl leading-relaxed">
-[Alef] Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
+Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
 </p>
 
 <!--
-Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
+[Alef] Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
 -->
 
 ---

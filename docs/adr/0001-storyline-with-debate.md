@@ -11,3 +11,5 @@ The talk follows **PortoBikes**, an invented startup, through six **turning poin
 ## Consequences
 
 The company is invented, so credibility depends on saying so on the first slide and tagging every real anchor with its source.
+
+The closing line (slide 48) carries the argument toward *who reviews* the code (colleagues, policies, and now AI), not toward the license change. The licensing half of the argument lives in the debate at turning point 5.
