@@ -24,7 +24,15 @@ _Avoid_: "S3" as a speaker label; "optional slot" (all five speak)
 
 **Narrated video**:
 A pre-rendered, standalone version of the talk: the slides with a single AI narrator reading a script adapted from the speaker notes, for people who weren't in the room.
-_Avoid_: "recording" (that's the backup recording of the live demo), "presentation" (that's the live talk)
+_Avoid_: "recording" (that's the fallback recording of the live demo), "presentation" (that's the live talk)
+
+**Backup slide**:
+A slide that stays in its place in the deck but is skipped in the live talk, shown only if someone asks about it. The deck still reads in order if it isn't skipped. Only the speaker notes say it's a backup slide; the audience never sees the word.
+_Avoid_: "removed slide", "hidden slide" (it's still there and still shown in the narrated video)
+
+**Fallback recording**:
+A pre-recorded video of a live terminal step, shown only if that step fails on stage.
+_Avoid_: "backup" (that's a backup slide, which is skipped by choice, not because something failed)
 
 ### The practice
 

@@ -17,6 +17,8 @@
 | 6 | The future (2026 → 2036) | S5 | 6 |
 | 7 | Closing: Friday 18:00, again | Alef | 1 |
 
+**Backup slides** (Slidev numbers): 7 (AWS S3, 2017), 14 (Terraform almost didn't make it), 20 (Same workflow, another platform) and 28 (Certifications). Each stays in place but is skipped in the live talk, and shown only if someone asks. See `docs/grilling-2026-11-24-backup-slides.md`.
+
 All five speak, and each slot is one person for the whole talk. S1 has turning points 1–2. S2 has 3–4 and narrates the demo. S4 hosts turning point 5, both votes and the Crossplane line, and argues side A (stay on Terraform). S5 argues side C (rewrite in Pulumi), then gives turning point 6. Alef opens, closes, drives both demos and argues side B (OpenTofu). There is no S3: in the slides, S3 is the AWS service. The number → name map is in `docs/day-of-checklist.md`. Whoever isn't speaking keeps time with cards. Decisions and their reasons: `docs/grilling-2026-11-21.md` and `docs/grilling-2026-11-24.md`.
 
 ---

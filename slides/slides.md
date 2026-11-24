@@ -179,6 +179,8 @@ An engineer follows a playbook and types a command by hand.
 <p class="absolute bottom-4 left-14 right-14 text-xs opacity-60">Source: AWS, "Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region" (2017), aws.amazon.com/message/41926</p>
 
 <!--
+BACKUP SLIDE: skip it in the live talk; show it only if someone asks about another real outage.
+
 [S1] A second one, from AWS itself. February 2017. An S3 engineer, following an established playbook, runs a command to remove a few servers from a billing system. One input is typed wrong, and a much larger set of servers is removed, including the ones holding S3's index of where every object lives.
 
 [click] S3 in us-east-1 was down for about four hours.
@@ -396,6 +398,8 @@ What PortoBikes wants is one tool and one workflow for everything. And that's wh
 <p class="absolute bottom-6 text-sm opacity-50">Mitchell Hashimoto, "The Story of HashiCorp Terraform"</p>
 
 <!--
+BACKUP SLIDE: skip it in the live talk; show it only if someone asks about how Terraform started.
+
 S2: PortoBikes, 2017. The scripts from last time describe the steps. What we want is something that describes the result. That tool existed, but it almost didn't survive.
 
 In July 2014, Terraform 0.1 supported exactly two platforms, AWS and DigitalOcean. Two, on purpose: to prove that one workflow could drive several providers. Its creator, Mitchell Hashimoto, says downloads were "mostly stagnant for the first 18 months", and the team talked about "maybe shutting down the project".
@@ -420,6 +424,8 @@ flowchart LR
 <p class="text-center pt-4 text-xl">You describe <b>what should exist</b>. <code>plan</code> shows exactly what will change, <b>before</b> anything happens.</p>
 
 <!--
+If slide 14 was skipped, open with: "PortoBikes, 2017. The scripts describe the steps; what we want is something that describes the result."
+
 S2: Three inputs. The code: what we want. The state: Terraform's record of what it manages. And reality: what actually exists right now, which Terraform re-reads every time.
 
 From those three it builds a plan: exactly what it would create, change or destroy. A person reads the plan. Only then does apply change anything.
@@ -839,6 +845,8 @@ For jobs: in the UK, IT Jobs Watch counted about 2,300 permanent job ads mention
 [re-check this number the day before; it's a rolling window]
 
 And what do those jobs actually want? Our reading, not a measured fact: not someone who can type terraform apply on a laptop. They want the team workflow we just walked through: remote state, modules, CI/CD, policy. Every company at this stage needs someone who knows it.
+
+If slide 28 is skipped, close with: "So PortoBikes now has a team, a pipeline, policies, and maybe a certified engineer or two. Everything depends on one tool, and one vendor: HashiCorp. In 2023, HashiCorp changed the rules."
 -->
 
 ---
@@ -856,6 +864,8 @@ And what do those jobs actually want? Our reading, not a measured fact: not some
 <p class="text-sm opacity-80">HashiCorp's official certification pages (checked 2026-11-04, names re-checked 2026-11-21).</p>
 
 <!--
+BACKUP SLIDE: skip it in the live talk; show it only if someone asks about certifications.
+
 [S2]
 
 And if you want proof that you know this workflow, HashiCorp sells three certifications.
