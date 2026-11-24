@@ -19,7 +19,7 @@ A real, sourced event or company shown alongside a turning point to prove that t
 _Avoid_: "example" (doesn't say whether it's invented or real)
 
 **Speaker slot**:
-A numbered label (S1, S2, S4, S5) that stands for one speaker for the whole live talk. Alef is named directly, and a separate map gives each number's name. There is no S3, because S3 means the AWS service.
+A numbered label (S1, S2, S4, S5) that stands for one speaker for the whole live talk. Alef is named directly, and a separate map gives each number's name. There is no S3, because S3 means the AWS service. Labels and names go only in the speaker notes and section markers, never on a slide the audience sees.
 _Avoid_: "S3" as a speaker label; "optional slot" (all five speak)
 
 **Narrated video**:

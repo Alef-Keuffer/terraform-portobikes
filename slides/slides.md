@@ -459,7 +459,7 @@ class: text-center
 
 # → LIVE DEMO
 
-<p class="text-2xl pt-4">Alef switches to the terminal</p>
+<p class="text-2xl pt-4">Switching to the terminal</p>
 
 <p class="opacity-60 pt-8">Our booking server, written down as code</p>
 
@@ -1056,8 +1056,6 @@ Here's where the room stands before anyone argues. Hold on to it.
 
 ### A. Stay on Terraform
 
-<p class="text-sm opacity-70">S4</p>
-
 - The full product, plus HCP Terraform
 - Newest features: Stacks, `terraform query`, Terraform Policy
 - The biggest community and job market
@@ -1068,8 +1066,6 @@ Here's where the room stands before anyone argues. Hold on to it.
 
 ### B. Move to OpenTofu
 
-<p class="text-sm opacity-70">Alef</p>
-
 - Open-source license, neutral governance
 - Its own features: state encryption
 - Real migrations, at scale
@@ -1079,8 +1075,6 @@ Here's where the room stands before anyone argues. Hold on to it.
 <div v-click>
 
 ### C. Rewrite in Pulumi
-
-<p class="text-sm opacity-70">S5</p>
 
 - Real programming languages
 - Now reads HCL directly
@@ -1209,7 +1203,7 @@ class: text-center
 
 # → LIVE: `tofu plan`
 
-<p class="text-2xl pt-4">Alef switches to the terminal</p>
+<p class="text-2xl pt-4">Switching to the terminal</p>
 
 <p class="opacity-60 pt-8">The server Terraform built in the demo, read by OpenTofu</p>
 
