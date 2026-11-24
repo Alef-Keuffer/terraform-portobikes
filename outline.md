@@ -13,11 +13,11 @@
 | 2 | Scripts and configuration management (2016) | S1 | 4 |
 | 3 | Terraform arrives, plus the live demo | S2 + Alef (demo driver) | 7.5 |
 | 4 | The team grows (2019–2022) | S2 | 7.5 |
-| 5 | The plot twist: the license change, plus the debate (2023–2025) | S3 + all speakers | 14 |
-| 6 | The future (2026 → 2036) | S3 | 6 |
+| 5 | The plot twist: the license change, plus the debate (2023–2025) | S4 + all speakers | 14 |
+| 6 | The future (2026 → 2036) | S5 | 6 |
 | 7 | Closing: Friday 18:00, again | Alef | 1 |
 
-Alef opens, closes, drives the demo and argues for OpenTofu in the debate. Daniella and Afonso speak, and S1–S3 get assigned once the slides are solid. S4 and S5 are optional slots for Al Mahmud and Sergio: they take debate sides first, then existing sections. Whoever doesn't speak keeps time with cards. Decisions and their reasons: `docs/grilling-2026-11-21.md`.
+All five speak, and each slot is one person for the whole talk. S1 has turning points 1–2. S2 has 3–4 and narrates the demo. S4 hosts turning point 5, both votes and the Crossplane line, and argues side A (stay on Terraform). S5 argues side C (rewrite in Pulumi), then gives turning point 6. Alef opens, closes, drives both demos and argues side B (OpenTofu). There is no S3: in the slides, S3 is the AWS service. The number → name map is in `docs/day-of-checklist.md`. Whoever isn't speaking keeps time with cards. Decisions and their reasons: `docs/grilling-2026-11-21.md` and `docs/grilling-2026-11-24.md`.
 
 ---
 

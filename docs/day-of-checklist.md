@@ -1,6 +1,6 @@
 # Day-of checklist
 
-The talk is on 2026-11-25. This page covers the timing, the speaker slots still to fill, and what to do on the 24th and the 25th. The poll's own setup and teardown are in `poll-checklist.md`.
+The talk is on 2026-11-25. This page covers the timing, who has which speaker slot, and what to do on the 24th and the 25th. The poll's own setup and teardown are in `poll-checklist.md`.
 
 ## Timing
 
@@ -15,8 +15,8 @@ As of 2026-11-21 (`npm run timing` always has the current numbers):
 | 2. Scripts and config management | S1 | 4 | 455 | 3.5 |
 | 3. Terraform arrives, plus the demo | S2, Alef | 7.5 | 365 | 2.8 + 4 demo = 6.8 |
 | 4. The team grows | S2 | 7.5 | 1,019 | 7.8 |
-| 5. License change, plus the debate | S3, everyone | 14 | 657 | 5.1 + 8.5 (votes 2, debate 5, `tofu` 1.5) = 13.6 |
-| 6. The future | S3 | 6 | 845 | 6.5 |
+| 5. License change, plus the debate | S4, everyone | 14 | 657 | 5.1 + 8.5 (votes 2, debate 5, `tofu` 1.5) = 13.6 |
+| 6. The future | S5 | 6 | 845 | 6.5 |
 | Closing | Alef | 1 | 66 | 0.5 |
 | **Whole talk** | | **47** | | **45.0** |
 
@@ -26,28 +26,16 @@ If your read-through runs long, trim your notes, not the slides, and run `npm ru
 
 ## Speaker slots
 
-Fill these in once people are confirmed.
+The slides and the outline use the numbers. This is the map. There is no S3: in the slides, S3 is the AWS service.
 
-| Placeholder | Who | Where |
+| Slot | Who | Where |
 |---|---|---|
-| S1 | | Turning points 1 and 2 |
-| S2 | | Turning point 3 (narrates the demo) and 4 |
-| S3 | | Turning point 5 (hosts the votes and the debate) and 6 |
-| `[Side A speaker]` | | Debate: stay on Terraform. Shown on the slide. |
-| `[Side C speaker]` | | Debate: rewrite in Pulumi. Shown on the slide. |
-| S4, S5 (optional) | Al Mahmud, Sergio | If they join, they take debate sides A and C first |
+| S1 | Daniella | Turning points 1 and 2 |
+| S2 | Afonso | Turning point 3 (narrates the demo) and 4 |
+| S4 | Al Mahmud | Turning point 5: hosts both votes and says the Crossplane line; argues side A (stay on Terraform) |
+| S5 | Sergio | Argues side C (rewrite in Pulumi), then turning point 6 |
+| Alef | Alef | Opening, closing, both demos, side B (move to OpenTofu) |
 | Timekeeper | whoever isn't speaking | Cards: "2 min left" and "wrap up" per section; "30 seconds" and "stop" in the debate; counts the show of hands |
-
-Alef opens, closes, drives both demos and argues side B (OpenTofu).
-
-To fill them in, put the names in and run this from the repo root. `S3` is also an AWS service, so the S3 rule only touches the speaker labels:
-
-```sh
-perl -pi -e 's/\bS1\b/NAME1/g; s/\bS2\b/NAME2/g;
-  s/(\[|\)\. |\| |–)S3(?=[],.| ])(?! (?:locks|can|in|bucket))/${1}NAME3/g;
-  s/\[Side A speaker\]/NAMEA/g; s/\[Side C speaker\]/NAMEC/g' slides/slides.md outline.md
-git diff --word-diff   # check that only speaker labels changed
-```
 
 ## 24 November
 
