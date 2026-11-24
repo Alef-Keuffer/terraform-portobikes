@@ -25,7 +25,7 @@ PortoBikes is invented. Every incident in this talk really happened somewhere.
 </p>
 
 <!--
-Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in this talk has happened to a real company, and we'll show you which one.
+[Alef] Meet PortoBikes: a bike-rental startup here in Porto. It's invented, but everything that happens to it in this talk has happened to a real company, and we'll show you which one.
 -->
 
 ---
@@ -38,7 +38,7 @@ class: text-center bg-black text-white
 ## The booking server is down.
 
 <!--
-It's Friday, 18:00, peak rental time, and the booking server just died. It was set up by hand three years ago, by someone who has since left.
+[Alef] It's Friday, 18:00, peak rental time, and the booking server just died. It was set up by hand three years ago, by someone who has since left.
 
 So: how long would it take *you* to rebuild it?
 
@@ -1043,7 +1043,7 @@ options:
 <p class="opacity-70">The live results from the talk will be shown here.</p>
 
 <!--
-Here's where the room stands before anyone argues. Hold on to it.
+[S4] Here's where the room stands before anyone argues. Hold on to it.
 -->
 
 ---
@@ -1428,7 +1428,7 @@ terraform apply
 </v-click>
 
 <!--
-At the start, we asked how long it would take you to rebuild that server.
+[Alef] At the start, we asked how long it would take you to rebuild that server.
 
 [click] terraform apply.
 
@@ -1440,7 +1440,7 @@ layout: center
 ---
 
 <p class="text-3xl leading-relaxed">
-Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
+[Alef] Terraform turned infrastructure into reviewable code, and everything since has been about who reviews it: colleagues, policies, and now AI.
 </p>
 
 <!--
@@ -1459,5 +1459,5 @@ class: text-center
 [github.com/Alef-Keuffer/terraform-portobikes](https://github.com/Alef-Keuffer/terraform-portobikes)
 
 <!--
-Everything you saw, the demo included, is in this repo. Scan the code and run it yourself. Thank you, and now your questions.
+[Alef] Everything you saw, the demo included, is in this repo. Scan the code and run it yourself. Thank you, and now your questions.
 -->
